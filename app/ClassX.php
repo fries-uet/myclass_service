@@ -59,6 +59,18 @@ class ClassX extends Model {
 	public static function getCountStudentByClassId( $id ) {
 		$users = User::all()->where( 'class', $id );
 
-		return $users->count();
+		if ( $users->count() == 0 ) {
+			return 0;
+		}
+
+		$msvs = [ ];
+		foreach ( $users as $index => $u ) {
+			$msv = $u->msv;
+			if ( ! array_search( $msv, $msvs ) ) {
+				$msvs[] = $msv;
+			}
+		}
+
+		return count( $msvs );
 	}
 }

@@ -34,7 +34,6 @@ class User extends Model implements AuthenticatableContract,
 			'email',
 			'password',
 			'msv',
-			'pass_uet',
 			'type',
 			'class'
 		];
