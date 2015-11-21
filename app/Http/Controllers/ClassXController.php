@@ -33,7 +33,9 @@ class ClassXController extends Controller {
 			return response()->json( $response );
 		}
 
-		$user = $users->first();
+		$user     = $users->first();
+		$arrGroup = [ ];
+
 		if ( $base == 'class_xes' ) {
 			$id_class = $user->class;
 			$classX   = ClassX::all()->where( 'id', $id_class )->first();
@@ -56,7 +58,6 @@ class ClassXController extends Controller {
 				return response()->json( $response );
 			}
 
-			$arrGroup = [ ];
 			foreach ( $timeTables as $tt ) {
 				$sub_id = $tt->subClass;
 
@@ -89,6 +90,19 @@ class ClassXController extends Controller {
 				}
 			}
 		}
+
+		$filter    = [ ];
+		$filter[0] = $arrGroup[0];
+		$j         = 0;
+		for ( $i = 1; $i < count( $arrGroup ); $i ++ ) {
+			if ( $filter[ $j ]->maLMH != $arrGroup[ $i ]->maLMH
+			) {
+				$j ++;
+				$filter[ $j ] = $arrGroup[ $i ];
+			}
+		}
+
+		$arrGroup = $filter;
 
 		$response->error = false;
 		$response->group = $arrGroup;
