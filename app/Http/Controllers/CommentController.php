@@ -7,6 +7,7 @@ use App\Post;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use stdClass;
 
 class CommentController extends Controller {
 	public function comment( Request $request ) {
@@ -26,6 +27,13 @@ class CommentController extends Controller {
 
 		$c = Comment::getCommentInfoById( $comment->id );
 
-		return response()->json( $c );
+		/**
+		 * Dữ liệu trả về
+		 */
+		$response          = new stdClass();
+		$response->error   = false;
+		$response->comment = $c;
+
+		return response()->json( $response );
 	}
 }
