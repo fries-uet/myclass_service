@@ -149,23 +149,9 @@ class UserController extends Controller {
 			}
 		}
 
-		$response->error    = false;
-		$response->uid      = $user->getAttribute( 'id' );
-		$user_x             = new stdClass();
-		$user_x->name       = $user->getAttribute( 'name' );
-		$user_x->email      = $user->getAttribute( 'email' );
-		$user_x->avatar     = url( '/' ) . '/assets/img/avatar/ava-default.png';
-		$user_x->type       = $user->getAttribute( 'type' );
-		$user_x->lop        = ClassX::getClassName( $classX_id );
-		$user_x->mssv       = $user->getAttribute( 'msv' );
-		$user_x->created_at = $user->getAttribute( 'created_at' )
-		                           ->setTimezone( new DateTimeZone( 'Asia/Ho_Chi_Minh' ) )
-		                           ->format( 'Y-m-d H:m:i' );
-		$user_x->updated_at = $user->getAttribute( 'updated_at' )
-		                           ->setTimezone( new DateTimeZone( 'Asia/Ho_Chi_Minh' ) )
-		                           ->format( 'Y-m-d H:m:i' );
-
-		$response->user = $user_x;
+		$response->error = false;
+		$response->uid   = $user->getAttribute( 'id' );
+		$response->user  = User::getInfoById( $user->id );
 
 		return response()->json( $response );
 	}
@@ -216,22 +202,8 @@ class UserController extends Controller {
 		/**
 		 * Trả về dữ liệu người dùng
 		 */
-		$user_x             = new stdClass();
-		$user_x->name       = $user->getAttribute( 'name' );
-		$user_x->email      = $user->getAttribute( 'email' );
-		$user_x->avatar     = url( '/' ) . '/assets/img/avatar/ava-default.png';
-		$user_x->type       = $user->getAttribute( 'type' );
-		$user_x->lop
-		                    = ClassX::getClassName( $user->getAttribute( 'class' ) );
-		$user_x->mssv       = $user->getAttribute( 'msv' );
-		$user_x->created_at = $user->getAttribute( 'created_at' )
-		                           ->setTimezone( new DateTimeZone( 'Asia/Ho_Chi_Minh' ) )
-		                           ->format( 'Y-m-d H:m:i' );
-		$user_x->updated_at = $user->getAttribute( 'updated_at' )
-		                           ->setTimezone( new DateTimeZone( 'Asia/Ho_Chi_Minh' ) )
-		                           ->format( 'Y-m-d H:m:i' );
 
-		$response->user = $user_x;
+		$response->user = User::getInfoById( $user->id );
 
 		return response()->json( $response );
 	}
@@ -298,23 +270,9 @@ class UserController extends Controller {
 
 		$user = $users->first();
 
-		$response->error    = false;
-		$response->uid      = $user->id;
-		$user_x             = new stdClass();
-		$user_x->name       = $user->name;
-		$user_x->email      = $user->email;
-		$user_x->avatar     = url( '/' ) . '/assets/img/avatar/ava-default.png';
-		$user_x->type       = $user->type;
-		$user_x->lop        = ClassX::getClassName( $user->class );
-		$user_x->mssv       = $user->msv;
-		$user_x->created_at = date_create( $user->created_at )
-			->setTimezone( new DateTimeZone( 'Asia/Ho_Chi_Minh' ) )
-			->format( 'Y-m-d H:m:i' );
-		$user_x->updated_at = date_create( $user->updated_at )
-			->setTimezone( new DateTimeZone( 'Asia/Ho_Chi_Minh' ) )
-			->format( 'Y-m-d H:m:i' );
-
-		$response->user = $user_x;
+		$response->error = false;
+		$response->uid   = $user->id;
+		$response->user  = User::getInfoById( $user->id );
 
 		return response()->json( $response );
 	}

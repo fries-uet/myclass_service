@@ -63,6 +63,7 @@ class User extends Model implements AuthenticatableContract,
 		$u         = new stdClass();
 		$u->id     = $user->id;
 		$u->name   = $user->name;
+		$u->lop    = ClassX::getClassName( $user->class );
 		$u->email  = $user->email;
 		$u->avatar = url( '/' ) . '/assets/img/avatar/ava-default.png';
 		$u->type   = $user->type;
