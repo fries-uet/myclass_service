@@ -27,6 +27,7 @@ class PostController extends Controller {
 			'content',
 			'author',
 			'base',
+			'group',
 		] );
 
 		/**
@@ -46,24 +47,12 @@ class PostController extends Controller {
 		}
 
 		/**
-		 * Author
-		 */
-		$user     = $users->first();
-		$u        = new stdClass();
-		$u->id    = $user->id;
-		$u->name  = $user->name;
-		$u->type  = $user->type;
-		$u->email = $user->email;
-
-		$response->author = $u;
-
-		/**
 		 * Tạo post mới
 		 */
 		$post = Post::create( [
 			'title'   => $all['title'],
 			'content' => $all['content'],
-			'group'   => intval( $user->class ),
+			'group'   => intval( $all['group'] ),
 			'author'  => intval( $all['author'] ),
 			'base'    => $all['base'],
 		] );
@@ -71,18 +60,8 @@ class PostController extends Controller {
 		/**
 		 * Post
 		 */
-		$response->id          = $post->id;
-		$response->title       = $post->title;
-		$response->content     = $post->content;
-		$response->base        = $post->base;
-		$response->group       = $post->group;
-		$response->isIncognito = intval( $post->isIncognito );
-		$response->create_at   = date_create( $post->created_at )
-			->setTimezone( new DateTimeZone( 'Asia/Ho_Chi_Minh' ) )
-			->format( 'Y-m-d H:m:i' );
-		$response->updated_at  = date_create( $post->updated_at )
-			->setTimezone( new DateTimeZone( 'Asia/Ho_Chi_Minh' ) )
-			->format( 'Y-m-d H:m:i' );
+		$response->post  = Post::getPostInfoById( $post->id );
+		$response->error = false;
 
 		return response()->json( $response );
 	}
