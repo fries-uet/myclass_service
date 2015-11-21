@@ -17,6 +17,7 @@ return array(
     'CreateSubjectsTable' => $baseDir . '/database/migrations/2015_11_21_031738_create_subjects_table.php',
     'CreateTimeTablesTable' => $baseDir . '/database/migrations/2015_11_21_090853_create_time_tables_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
+    'CreateVotesTable' => $baseDir . '/database/migrations/2015_11_21_223205_create_votes_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',
