@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Like;
+use App\Post;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -19,10 +20,10 @@ class LikeConfirmedController extends Controller {
 		 */
 		$response = new stdClass();
 
-		$likes = Like::all()->where( 'user_id', $user_id )
-		             ->where( 'post_id', $post_id );
+		$likes = Like::all()->where( 'user_id', intval( $user_id ) )
+		             ->where( 'post_id', intval( $post_id ) );
 
-		if ( $likes == 0 ) {
+		if ( $likes->count() > 0 ) {
 			$response->error     = true;
 			$response->error_msg = 'Bạn đã cảm ơn bài viết này!';
 
@@ -34,8 +35,20 @@ class LikeConfirmedController extends Controller {
 			'post_id' => $post_id,
 		] );
 
-		$post = DB::table( 'posts' )->where( 'id', intval( $post_id ) );
+		$posts = Post::all()->where( 'id', intval( $post_id ) );
 
+		if ( $posts->count() == 0 ) {
+			$response->error     = true;
+			$response->error_msg = 'Bạn đã cảm ơn bài viết này!';
+
+			return response()->json( $response );
+		}
+
+		$count_like = intval( $posts->first()->like );
+		$count_like ++;
+
+		$p = DB::table( 'posts' )->where( 'id', intval( $post_id ) )
+		       ->update( [ 'like' => $count_like ] );
 
 		$response->error = false;
 		$response->msg   = 'Cảm ơn bạn!';
