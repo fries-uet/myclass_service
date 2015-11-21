@@ -48,7 +48,6 @@ class ClassXController extends Controller {
 
 		if ( $base == 'classSubject' ) {
 			$timeTables = TimeTable::all()->where( 'user', $user->id );
-
 			if ( $timeTables->count() == 0 ) {
 				$response->error     = true;
 				$response->error_msg = 'Tài khoản chưa có lớp môn học nào!';
@@ -64,7 +63,6 @@ class ClassXController extends Controller {
 					intval( $sub_id ) )->first();
 
 				$teacher_id = $subClassSubject->teacher;
-				$address    = $subClassSubject->address;
 
 				$lmh_id       = $subClassSubject->classSubject;
 				$classSubject = ClassSubject::all()
