@@ -111,7 +111,7 @@ class PostController extends Controller {
 			$arrPost[] = $p;
 		}
 
-		array_reverse( $arrPost );
+		$arrPost = array_reverse( $arrPost );
 
 		$response->error = false;
 		$response->posts = $arrPost;
