@@ -6,6 +6,7 @@ use App\ClassSubject;
 use App\ClassX;
 use App\Draft;
 use App\Subject;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -116,5 +117,39 @@ class SeedDataController extends Controller {
 				var_dump( $c );
 			}
 		}
+	}
+
+	public function createTeacherUser() {
+		$drafts = Draft::all();
+
+		$msv   = 99999999;
+		$pass  = 'uet2015';
+		$class = 0;
+		$type  = 'teacher';
+
+		foreach ( $drafts as $index => $draft ) {
+			$name  = ( trim( $draft->teacher ) );
+			$email = str_slug( $name ) . '@vnu.edu.vn';
+
+			$users = User::all()->where( 'email', $email );
+			if ( $users->count() == 0 ) {
+				$u = User::create( [
+					'name'     => $name,
+					'email'    => $email,
+					'msv'      => $msv,
+					'pass_uet' => '',
+					'class'    => $class,
+					'type'     => $type,
+					'password' => md5( $pass ),
+				] );
+
+				var_dump( $u->name );
+			}
+
+		}
+	}
+
+	public function seedSubClassSubject() {
+
 	}
 }
