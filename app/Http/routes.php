@@ -48,7 +48,7 @@ Route::group( [ 'prefix' => 'v1' ], function () {
 	/**
 	 * Vote
 	 */
-	Route::any( 'like', 'LikeConfirmedController@vote' );
+	Route::any( 'vote', 'LikeConfirmedController@vote' );
 
 	/**
 	 * Login
