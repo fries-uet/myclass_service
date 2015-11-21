@@ -29,7 +29,7 @@ class TimetableController extends Controller {
 		}
 
 		$arr_items = [ ];
-		foreach ( $timetable as $s ) {
+		foreach ( $timetable as $i => $s ) {
 			$s_id            = $s->subClass;
 			$subClassSubject = SubClassSubject::all()
 			                                  ->where( 'id', intval( $s_id ) )
@@ -54,10 +54,12 @@ class TimetableController extends Controller {
 			$item_s->soTiet  = $subClassSubject->soTiet;
 			$item_s->soSV    = $subClassSubject->soSV;
 			$item_s->nhom    = $subClassSubject->nhom;
+			$item_s->address = $subClassSubject->address;
 			$item_s->teacher = User::getInfoById( $subClassSubject->teacher );
 
 			$arr_items[] = $item_s;
 		}
+
 
 		$response->error     = false;
 		$response->timetable = $arr_items;
