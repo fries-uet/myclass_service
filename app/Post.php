@@ -30,6 +30,7 @@ class Post extends Model {
 		$p->title       = $post->title;
 		$p->content     = $post->content;
 		$p->group       = $post->group;
+		$p->like        = intval( $post->like );
 		$p->author      = User::getInfoById( $post->author );
 		$p->isIncognito = $post->isIncognito;
 		$p->type        = $post->type;

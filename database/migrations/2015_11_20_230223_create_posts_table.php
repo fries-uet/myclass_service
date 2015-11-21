@@ -17,6 +17,7 @@ class CreatePostsTable extends Migration {
 			$table->string( 'content' );
 			$table->integer( 'group' );//Nằm trong lớp nào
 			$table->integer( 'author' );
+			$table->integer( 'like' )->default( 0 );
 			$table->boolean( 'isIncognito' )->default( 0 );
 			$table->string( 'type' )->default( 'post' );
 			$table->string( 'base' );//Nằm trong bảng nào?
