@@ -33,6 +33,8 @@ Route::group( [ 'prefix' => 'v1' ], function () {
 		Route::any( 'comment', 'CommentController@comment' );
 	} );
 
+	Route::any( 'timetable', 'TimetableController@getTimetable' );
+
 	/**
 	 * Get post
 	 */
