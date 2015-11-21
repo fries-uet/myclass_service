@@ -43,7 +43,7 @@ class ClassXController extends Controller {
 			$class_x->base    = $base;
 			$class_x->name    = $classX->name;
 			$class_x->soSV    = ClassX::getCountStudentByClassId( $id_class );
-			$class_x->teacher = null;
+			$class_x->teacher = User::getInfoById( $classX->teacher );
 			$arrGroup         = [ $class_x ];
 		}
 

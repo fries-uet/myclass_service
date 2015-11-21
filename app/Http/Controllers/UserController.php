@@ -100,27 +100,22 @@ class UserController extends Controller {
 		foreach ( $timetable as $index => $t ) {
 			$maLMH = $t->maLMH;
 			$nhom  = $t->nhom;
-			if ( $nhom == 0 ) {
+			if ( $nhom == 0 ) {//Nhóm lý thuyết
 				$subClassSubject
 					= SubClassSubject::getSubClassSubjectsBymaLMH( $maLMH );
 
-				if ( count( $subClassSubject ) == 0 ) {
-					$response->error = true;
-					$response->error_msg
-					                 = 'Đã có lỗi gì đó xảy ra khi import thời khóa biểu!';
+				if ( count( $subClassSubject ) > 0 ) {
 
-					return response()->json( $response );
+					foreach ( $subClassSubject as $i => $sub ) {
+						$sub_id = $sub->id;
+
+						$tt = TimeTable::create( [
+							'user'     => $user->id,
+							'subClass' => $sub_id,
+						] );
+					}
 				}
-
-				foreach ( $subClassSubject as $i => $sub ) {
-					$sub_id = $sub->id;
-
-					$tt = TimeTable::create( [
-						'user'     => $user->id,
-						'subClass' => $sub_id,
-					] );
-				}
-			} else {
+			} else {//Nhóm thực hành
 				$subClassSubject
 					= SubClassSubject::getSubClassSubjectsBymaLMH( $maLMH );
 
@@ -148,6 +143,7 @@ class UserController extends Controller {
 		$user_x             = new stdClass();
 		$user_x->name       = $user->getAttribute( 'name' );
 		$user_x->email      = $user->getAttribute( 'email' );
+		$user_x->avatar     = url( '/' ) . '/assets/img/avatar/ava-default.png';
 		$user_x->type       = $user->getAttribute( 'type' );
 		$user_x->lop        = ClassX::getClassName( $classX_id );
 		$user_x->mssv       = $user->getAttribute( 'msv' );
@@ -185,6 +181,9 @@ class UserController extends Controller {
 
 		$users = User::all()->where( 'email', $all['email'] );
 		if ( $users->count() < 0 ) {//Không tồn tại người dùng
+			/**
+			 * Kiểm tra xem có phải là mã sinh viên
+			 */
 			$response->error     = true;
 			$response->error_msg = 'Không tồn tại người dùng này';
 
@@ -293,6 +292,7 @@ class UserController extends Controller {
 		$user_x             = new stdClass();
 		$user_x->name       = $user->name;
 		$user_x->email      = $user->email;
+		$user_x->avatar     = url( '/' ) . '/assets/img/avatar/ava-default.png';
 		$user_x->type       = $user->type;
 		$user_x->lop        = ClassX::getClassName( $user->class );
 		$user_x->mssv       = $user->msv;
