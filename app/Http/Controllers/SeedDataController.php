@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\ClassX;
+use App\Draft;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Storage;
 
 class SeedDataController extends Controller {
 	/**
@@ -47,6 +49,28 @@ class SeedDataController extends Controller {
 					] );
 				}
 			}
+		}
+	}
+
+	public function seedTimetable() {
+		$contents = Storage::disk( 'local' )->get( 'tkb.json' );
+
+		$obj = json_decode( $contents );
+		foreach ( $obj as $o ) {
+			$draf = Draft::create( [
+				'maMH'    => ( trim( $o->maMH ) ),
+				'tenMH'   => ( trim( $o->tenMH ) ),
+				'soTin'   => ( trim( $o->soTin ) ),
+				'maLMH'   => ( trim( $o->maLMH ) ),
+				'teacher' => ( trim( $o->teacher ) ),
+				'soSV'    => ( trim( $o->soSV ) ),
+				'thu'     => ( trim( $o->thu ) ),
+				'tiet'    => ( trim( $o->tiet ) ),
+				'address' => ( trim( $o->address ) ),
+				'note'    => ( trim( $o->note ) ),
+			] );
+
+			var_dump( $draf );
 		}
 	}
 }

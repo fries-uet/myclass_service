@@ -59,6 +59,7 @@ Route::group( [ 'prefix' => 'v1' ], function () {
  */
 Route::group( [ 'prefix' => 'seed' ], function () {
 	Route::get( 'classX', 'SeedDataController@seedDataClassX_es' );
+	Route::get( 'time', 'SeedDataController@seedTimetable' );
 } );
 
 /**
