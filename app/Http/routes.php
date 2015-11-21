@@ -17,11 +17,9 @@ Route::get( '/', function () {
 
 Route::group( [ 'prefix' => 'v1' ], function () {
 	/**
-	 * ClassX
+	 * Get group by base
 	 */
-	Route::group( [ 'prefix' => 'classX' ], function () {
-		Route::any( 'byId', 'ClassXController@getClassXById' );
-	} );
+	Route::any( 'getGroup', 'ClassXController@getGroup' );
 
 	/**
 	 * Post
