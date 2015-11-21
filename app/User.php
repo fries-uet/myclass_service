@@ -60,12 +60,13 @@ class User extends Model implements AuthenticatableContract,
 			return null;
 		}
 
-		$user     = $users->first();
-		$u        = new stdClass();
-		$u->id    = $user->id;
-		$u->name  = $user->name;
-		$u->email = $user->email;
-		$u->type  = $user->type;
+		$user      = $users->first();
+		$u         = new stdClass();
+		$u->id     = $user->id;
+		$u->name   = $user->name;
+		$u->email  = $user->email;
+		$u->avatar = url( '/' ) . '/assets/img/avatar/ava-default.png';
+		$u->type   = $user->type;
 		if ( $u->type == 'student' ) {
 			$u->mssv = $user->msv;
 		}

@@ -208,6 +208,7 @@ class UserController extends Controller {
 		$user_x             = new stdClass();
 		$user_x->name       = $user->getAttribute( 'name' );
 		$user_x->email      = $user->getAttribute( 'email' );
+		$user_x->avatar     = url( '/' ) . '/assets/img/avatar/ava-default.png';
 		$user_x->type       = $user->getAttribute( 'type' );
 		$user_x->lop
 		                    = ClassX::getClassName( $user->getAttribute( 'class' ) );
