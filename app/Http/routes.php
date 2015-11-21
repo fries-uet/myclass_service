@@ -59,11 +59,12 @@ Route::group( [ 'prefix' => 'v1' ], function () {
  */
 Route::group( [ 'prefix' => 'seed' ], function () {
 	Route::get( 'classX', 'SeedDataController@seedDataClassX_es' );
-	Route::get( 'time', 'SeedDataController@seedTimetable' );
-	Route::get( 'subject', 'SeedDataController@seedSubject' );
-	Route::get( 'classSubject', 'SeedDataController@seedClassSubject' );
-	Route::get( 'teacher', 'SeedDataController@createTeacherUser' );
-	Route::get( 'subClassSubject', 'SeedDataController@seedSubClassSubject' );
+	Route::get( 'time', 'SeedDataController@seedTimetable' );//1
+	Route::get( 'subject', 'SeedDataController@seedSubject' );//2
+	Route::get( 'classSubject', 'SeedDataController@seedClassSubject' );//3
+	Route::get( 'teacher', 'SeedDataController@createTeacherUser' );//4
+	Route::get( 'subClassSubject',
+		'SeedDataController@seedSubClassSubject' );//5
 } );
 
 /**
