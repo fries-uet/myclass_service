@@ -96,7 +96,6 @@ class UserController extends Controller {
 		/**
 		 * Import timetable
 		 */
-//		dd( $timetable );
 		foreach ( $timetable as $index => $t ) {
 			$maLMH = $t->maLMH;
 			$nhom  = $t->nhom;

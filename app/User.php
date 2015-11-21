@@ -66,7 +66,9 @@ class User extends Model implements AuthenticatableContract,
 		$u->name  = $user->name;
 		$u->email = $user->email;
 		$u->type  = $user->type;
-		$u->mssv  = $user->msv;
+		if ( $u->type == 'student' ) {
+			$u->mssv = $user->msv;
+		}
 
 		return $u;
 	}
