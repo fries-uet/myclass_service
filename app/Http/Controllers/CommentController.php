@@ -9,18 +9,18 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 class CommentController extends Controller {
-	public function commentToClassX( Request $request ) {
+	public function comment( Request $request ) {
 		onlyAllowPostRequest( $request );
 
 		$all = $request->only( [
-			'post_id',
-			'author_id',
+			'post',
+			'author',
 			'content',
 		] );
 
 		$comment = Comment::create( [
-			'post'    => intval( $all['post_id'] ),
-			'author'  => intval( $all['author_id'] ),
+			'post'    => intval( $all['post'] ),
+			'author'  => intval( $all['author'] ),
 			'content' => $all['content'],
 		] );
 
