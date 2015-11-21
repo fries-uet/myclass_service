@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\ClassSubject;
 use App\ClassX;
 use App\Draft;
+use App\Subject;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -71,6 +73,48 @@ class SeedDataController extends Controller {
 			] );
 
 			var_dump( $draf );
+		}
+	}
+
+	public function seedSubject() {
+		$drafts = Draft::all();
+
+		foreach ( $drafts as $index => $draft ) {
+			$maMH = $draft->maMH;
+
+			$subjects = Subject::all()->where( 'maMH', $maMH );
+			if ( $subjects->count() == 0 ) {
+				$s = Subject::create( [
+					'name'  => $draft->tenMH,
+					'maMH'  => $draft->maMH,
+					'soTin' => $draft->soTin,
+				] );
+
+				var_dump( $s );
+			}
+		}
+	}
+
+	public function seedClassSubject() {
+		$drafts = Draft::all();
+
+		foreach ( $drafts as $index => $draft ) {
+			$maMH  = $draft->maMH;
+			$maLMH = $draft->maLMH;
+
+			$classSubjects = ClassSubject::all()->where( 'maLMH', $maLMH );
+
+			$subject = Subject::all()->where( 'maMH', $maMH )->first();
+
+			$subject_id = $subject->id;
+			if ( $classSubjects->count() == 0 ) {
+				$c = ClassSubject::create( [
+					'maLMH'   => $maLMH,
+					'subject' => $subject_id,
+				] );
+
+				var_dump( $c );
+			}
 		}
 	}
 }
