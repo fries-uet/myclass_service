@@ -29,12 +29,12 @@ class Post extends Model {
 		$p->id          = $post->id;
 		$p->title       = $post->title;
 		$p->content     = $post->content;
-//		$p->group       = $post->group;
+		$p->group       = $post->group;
 		$p->author      = User::getInfoById( $post->author );
 		$p->isIncognito = $post->isIncognito;
 		$p->type        = $post->type;
-//		$p->base        = $post->base;
-		$p->comments = Comment::getCommentsByPostId( $post->id );
+		$p->base        = $post->base;
+		$p->comments    = Comment::getCommentsByPostId( $post->id );
 
 		return $p;
 	}
