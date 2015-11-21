@@ -8,8 +8,7 @@ class ClassX extends Model {
 	protected $table = 'class_xes';
 	protected $fillable
 		= [
-			'khoa',
-			'lop',
+			'name',
 		];
 
 	/**
@@ -27,7 +26,7 @@ class ClassX extends Model {
 
 		$class = $classes->first();
 
-		return $class->khoa . $class->lop;
+		return $class->name;
 	}
 
 	/**
@@ -38,16 +37,12 @@ class ClassX extends Model {
 	 * @return bool|int
 	 */
 	public static function getIdByClassName( $class_name ) {
-		$classXes = ClassX::all();
+		$classXes = ClassX::all()->where( 'name', $class_name );
 
-		foreach ( $classXes as $classX ) {
-			$name = $classX->khoa . $classX->lop;
-			$name = mb_strtolower( $name );
+		if ( $classXes->count() > 0 ) {
+			$class = $classXes->first();
 
-			if ( mb_strtolower( $class_name ) == $name ) {
-
-				return intval( $classX->id );
-			}
+			return $class->id;
 		}
 
 		return false;

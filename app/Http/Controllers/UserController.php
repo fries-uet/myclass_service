@@ -48,43 +48,40 @@ class UserController extends Controller {
 		}
 
 		/**
-		 * Xử lý tài khoản VNU - Đăng ký học
+		 * Get timetable UET
 		 */
-		$user_vnu = $all['mssv'];
-		$pass_vnu = $all['password'];
-
-		$login_vnu = getTimeTableVNU( $user_vnu, $pass_vnu );
-		if ( $login_vnu === false ) {
-			$response->error     = true;
-			$response->error_msg = 'Mã sinh viên hoặc mật khẩu không đúng!';
-
-			return response()->json( $response );
-		}
-
-		$user_name = $login_vnu['name'];
+		$res = getTimeTableUET( $all['mssv'] );
 
 		/**
-		 * Xử lý lớp khóa học
+		 * Dữ liệu trả về
 		 */
-		$classX   = $all['lop'];
-		$id_class = ClassX::getIdByClassName( $classX );
 
-		if ( $id_class == false ) {//Lớp khóa học không tồn tại
+		if ( $res == false ) {//Không tồn tại MSV
 			$response->error     = true;
-			$response->error_msg = 'Lớp khóa học không tồn tại';
+			$response->error_msg = 'Mã số sinh viên không hợp lệ!';
 
 			return response()->json( $response );
 		}
+
+
+		$name      = $res['name'];
+		$qh        = $res['qh'];
+		$timetable = $res['timetable'];
+
+		$classX = ClassX::create( [
+			'name' => $qh,
+		] );
+
+		$classX_id = $classX->id;
 
 		$type = 'student';//Mặc định người dùng đăng ký là sinh viên
 		$user = User::create( [
 			'email'    => $all['email'],
 			'password' => md5( $all['password'] ),
 			'msv'      => $all['mssv'],
-			'class'    => $id_class,
+			'class'    => $classX_id,
 			'type'     => $type,
-			'name'     => $user_name,
-			'pass_uet' => base64_encode( $pass_vnu ),
+			'name'     => $name,
 		] );
 
 		$response->error    = false;
@@ -93,7 +90,7 @@ class UserController extends Controller {
 		$user_x->name       = $user->getAttribute( 'name' );
 		$user_x->email      = $user->getAttribute( 'email' );
 		$user_x->type       = $user->getAttribute( 'type' );
-		$user_x->lop        = ClassX::getClassName( $id_class );
+		$user_x->lop        = ClassX::getClassName( $classX_id );
 		$user_x->mssv       = $user->getAttribute( 'msv' );
 		$user_x->created_at = $user->getAttribute( 'created_at' )
 		                           ->setTimezone( new DateTimeZone( 'Asia/Ho_Chi_Minh' ) )

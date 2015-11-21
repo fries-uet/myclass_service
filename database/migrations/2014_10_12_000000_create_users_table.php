@@ -16,7 +16,6 @@ class CreateUsersTable extends Migration {
 			$table->string( 'name' );
 			$table->string( 'email' )->unique();
 			$table->string( 'msv' );
-			$table->string( 'pass_uet' );
 			$table->integer( 'class' );//Lớp khóa học
 			$table->string( 'type' );
 			$table->string( 'password', 60 );

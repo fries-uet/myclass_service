@@ -13,8 +13,7 @@ class CreateClassXesTable extends Migration {
 		Schema::create( 'class_xes', function ( Blueprint $table ) {
 			$table->increments( 'id' );
 
-			$table->char( 'khoa' );
-			$table->char( 'lop' );
+			$table->char( 'name' );
 
 			$table->timestamps();
 		} );
