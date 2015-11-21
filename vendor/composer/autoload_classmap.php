@@ -14,6 +14,8 @@ return array(
     'CreatePostsTable' => $baseDir . '/database/migrations/2015_11_20_230223_create_posts_table.php',
     'CreateSubClassSubjectsTable' => $baseDir . '/database/migrations/2015_11_21_033125_create_sub_class_subjects_table.php',
     'CreateSubjectsTable' => $baseDir . '/database/migrations/2015_11_21_031738_create_subjects_table.php',
+    'CreateTDsTable' => $baseDir . '/database/migrations/2015_11_21_093628_create_t_ds_table.php',
+    'CreateTimeTablesTable' => $baseDir . '/database/migrations/2015_11_21_090853_create_time_tables_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
