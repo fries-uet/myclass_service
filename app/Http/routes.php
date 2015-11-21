@@ -40,9 +40,7 @@ Route::group( [ 'prefix' => 'v1' ], function () {
 	/**
 	 * Get post
 	 */
-	Route::group( [ 'prefix' => 'get' ], function () {
-		Route::any( 'classX', 'PostController@getFromClassX' );
-	} );
+	Route::any( 'getPosts', 'PostController@getPosts' );
 
 	/**
 	 * Login
