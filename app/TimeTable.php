@@ -10,6 +10,5 @@ class TimeTable extends Model {
 		= [
 			'user',
 			'subClass',
-			'isTD',
 		];
 }

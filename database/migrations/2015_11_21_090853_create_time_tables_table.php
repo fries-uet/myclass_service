@@ -15,7 +15,6 @@ class CreateTimeTablesTable extends Migration {
 
 			$table->integer( 'user' );
 			$table->integer( 'subClass' );
-			$table->boolean( 'isTD' )->default( 0 );
 
 			$table->timestamps();
 		} );

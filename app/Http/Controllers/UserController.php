@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\ClassX;
+use App\SubClassSubject;
+use App\TimeTable;
 use App\User;
 use DateTimeZone;
 use Illuminate\Http\Request;
@@ -68,11 +70,18 @@ class UserController extends Controller {
 		$qh        = $res['qh'];
 		$timetable = $res['timetable'];
 
-		$classX = ClassX::create( [
-			'name' => $qh,
-		] );
+		$classXes = ClassX::all()->where( 'name', $qh );
+		if ( $classXes->count() > 0 ) {
+			$classX_id = $classXes->first()->id;
 
-		$classX_id = $classX->id;
+		} else {
+			$classX = ClassX::create( [
+				'name' => $qh,
+			] );
+
+			$classX_id = $classX->id;
+		}
+
 
 		$type = 'student';//Mặc định người dùng đăng ký là sinh viên
 		$user = User::create( [
@@ -83,6 +92,56 @@ class UserController extends Controller {
 			'type'     => $type,
 			'name'     => $name,
 		] );
+
+		/**
+		 * Import timetable
+		 */
+//		dd( $timetable );
+		foreach ( $timetable as $index => $t ) {
+			$maLMH = $t->maLMH;
+			$nhom  = $t->nhom;
+			if ( $nhom == 0 ) {
+				$subClassSubject
+					= SubClassSubject::getSubClassSubjectsBymaLMH( $maLMH );
+
+				if ( count( $subClassSubject ) == 0 ) {
+					$response->error = true;
+					$response->error_msg
+					                 = 'Đã có lỗi gì đó xảy ra khi import thời khóa biểu!';
+
+					return response()->json( $response );
+				}
+
+				foreach ( $subClassSubject as $i => $sub ) {
+					$sub_id = $sub->id;
+
+					$tt = TimeTable::create( [
+						'user'     => $user->id,
+						'subClass' => $sub_id,
+					] );
+				}
+			} else {
+				$subClassSubject
+					= SubClassSubject::getSubClassSubjectsBymaLMH( $maLMH );
+
+				if ( count( $subClassSubject ) == 0 ) {
+					$response->error = true;
+					$response->error_msg
+					                 = 'Đã có lỗi gì đó xảy ra khi import thời khóa biểu!';
+
+					return response()->json( $response );
+				}
+
+				foreach ( $subClassSubject as $i => $sub ) {
+					if ( $sub->nhom == 0 || $sub->nhom == $nhom ) {
+						$tt = TimeTable::create( [
+							'user'     => $user->id,
+							'subClass' => $sub_id,
+						] );
+					}
+				}
+			}
+		}
 
 		$response->error    = false;
 		$response->uid      = $user->getAttribute( 'id' );
