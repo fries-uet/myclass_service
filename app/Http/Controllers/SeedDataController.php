@@ -77,7 +77,7 @@ class SeedDataController extends Controller {
 				'note'    => ( trim( $o->note ) ),
 			] );
 
-			var_dump( $draf );
+			var_dump( $draf->maMH );
 		}
 	}
 

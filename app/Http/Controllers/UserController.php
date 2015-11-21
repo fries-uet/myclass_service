@@ -7,7 +7,6 @@ use App\ClassX;
 use App\SubClassSubject;
 use App\TimeTable;
 use App\User;
-use DateTimeZone;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -40,6 +39,17 @@ class UserController extends Controller {
 		if ( ! filter_var( $all['email'], FILTER_VALIDATE_EMAIL ) ) {
 			$response->error     = true;
 			$response->error_msg = 'Email không hợp lệ!';
+
+			return response()->json( $response );
+		}
+
+		/**
+		 * Kiểm tra password
+		 */
+		if ( strlen( $all['password'] ) < 6 ) {
+			$response->error = true;
+			$response->error_msg
+			                 = 'Password quá ngắn! Yêu cầu tối thiểu trên 6 kí tự';
 
 			return response()->json( $response );
 		}
@@ -107,18 +117,19 @@ class UserController extends Controller {
 		 */
 		foreach ( $timetable as $index => $t ) {
 			$maLMH = $t->maLMH;
-			$nhom  = $t->nhom;
+			$nhom  = intval( $t->nhom );
 
 			if ( $nhom == 0 ) {//Nhóm lý thuyết
 				$lmhs = ClassSubject::all()->where( 'maLMH', $maLMH );
+
 				if ( $lmhs->count() > 0 ) {
 					$lmh    = $lmhs->first();
 					$lmh_id = $lmh->id;
 					$subs   = SubClassSubject::all()
 					                         ->where( 'classSubject', $lmh_id );
 
-					foreach ( $subs as $sub ) {
-						$sub_id = $sub->id;
+					foreach ( $subs as $s ) {
+						$sub_id = $s->id;
 
 						$tt = TimeTable::create( [
 							'user'     => $user->id,
@@ -128,16 +139,18 @@ class UserController extends Controller {
 				}
 			} else {//Nhóm thực hành
 				$lmhs = ClassSubject::all()->where( 'maLMH', $maLMH );
+
 				if ( $lmhs->count() > 0 ) {
 					$lmh    = $lmhs->first();
 					$lmh_id = $lmh->id;
 					$subs   = SubClassSubject::all()
 					                         ->where( 'classSubject', $lmh_id );
-
 					if ( $subs->count() > 0 ) {
-						foreach ( $subs as $sub ) {
-							$sub_id = $sub->id;
-							if ( $sub->nhom == 0 || $sub->nhom == $nhom ) {
+						foreach ( $subs as $s ) {
+							$sub_id = $s->id;
+							if ( intval( $s->nhom ) == 0
+							     || intval( $s->nhom == $nhom )
+							) {
 								$tt = TimeTable::create( [
 									'user'     => $user->id,
 									'subClass' => $sub_id,
