@@ -39,7 +39,7 @@ class ClassXController extends Controller {
 		$class_x         = new stdClass();
 		$class_x->id     = $classX->id;
 		$class_x->base   = $base;
-		$class_x->name   = $classX->khoa . $classX->lop;
+		$class_x->name   = $classX->name;
 		$class_x->soSV   = ClassX::getCountStudentByClassId( $id_class );
 		$response->group = $class_x;
 
