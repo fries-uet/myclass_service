@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\ClassSubject;
 use App\ClassX;
 use App\Draft;
+use App\SubClassSubject;
 use App\Subject;
 use App\User;
 use Illuminate\Http\Request;
@@ -150,6 +151,54 @@ class SeedDataController extends Controller {
 	}
 
 	public function seedSubClassSubject() {
+		$drafts = Draft::all();
+		foreach ( $drafts as $index => $draft ) {
+			$teacher_name = ( trim( $draft->teacher ) );
+			$email        = str_slug( $teacher_name ) . '@vnu.edu.vn';
 
+			$teacher    = User::all()->where( 'email', $email )->first();
+			$teacher_id = $teacher->id;
+
+			$tietX = $draft->tiet;
+			$arr   = explode( '-', $tietX );
+			if ( count( $arr ) == 2 ) {
+				$t_begin = intval( $arr[0] );
+				$t_end   = intval( $arr[1] );
+
+				$thu = intval( $draft->thu );
+
+				$viTri  = ( $thu - 2 ) * 10 + $t_begin;
+				$soTiet = $t_end - $t_begin + 1;
+
+				$nhom_X = $draft->note;
+				$nhom   = 0;
+				if ( strtolower( $nhom_X ) == 'n1' ) {
+					$nhom = 1;
+				}
+
+				if ( strtolower( $nhom_X ) == 'n2' ) {
+					$nhom = 2;
+				}
+
+				if ( strtolower( $nhom_X ) == 'n3' ) {
+					$nhom = 3;
+				}
+
+				$classSubject = ClassSubject::all()
+				                            ->where( 'maLMH', $draft->maLMH )
+				                            ->first();
+
+				$sub = SubClassSubject::create( [
+					'teacher'      => $teacher_id,
+					'address'      => trim( $draft->address ),
+					'viTri'        => intval( $viTri ),
+					'soTiet'       => intval( $soTiet ),
+					'soSV'         => intval( $draft->soSV ),
+					'classSubject' => intval( $classSubject->id ),
+					'nhom'         => intval( $nhom ),
+				] );
+				var_dump( $index );
+			}
+		}
 	}
 }

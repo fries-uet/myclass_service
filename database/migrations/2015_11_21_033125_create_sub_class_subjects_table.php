@@ -18,6 +18,7 @@ class CreateSubClassSubjectsTable extends Migration {
 			$table->integer( 'viTri' );
 			$table->integer( 'soTiet' );
 			$table->integer( 'soSV' );
+			$table->integer( 'nhom' );
 			$table->integer( 'classSubject' );
 
 			$table->timestamps();
