@@ -144,6 +144,10 @@ function getTimeTableUET( $maSV ) {
 	$trs       = explode( '</tr>', $content );
 	$count_str = count( $trs );
 
+	if ( $count_str == 2 ) {
+		return false;
+	}
+
 	$tr_first = $trs[0];
 	//Name
 	$name_sv = explode( '<td style="width: 100px">', $tr_first )[1];
@@ -166,9 +170,15 @@ function getTimeTableUET( $maSV ) {
 			$nhom = 0;
 		}
 
+		$isTD = false;
+		if ( strpos( $maLMH, 'PES' ) !== false ) {
+			$isTD = true;
+		}
+
 		$lmh        = new stdClass();
 		$lmh->maLMH = $maLMH;
 		$lmh->nhom  = intval( $nhom );
+		$lmh->isTD  = $isTD;
 
 		$arrLMH[] = $lmh;
 	}
