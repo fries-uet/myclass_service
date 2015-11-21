@@ -60,9 +60,19 @@ class TimetableController extends Controller {
 			$arr_items[] = $item_s;
 		}
 
-
+		$filter    = [ ];
+		$filter[0] = $arr_items[0];
+		$j         = 0;
+		for ( $i = 1; $i < count( $arr_items ); $i ++ ) {
+			if ( $filter[ $j ]->maLMH != $arr_items[ $i ]->maLMH
+			     || $filter[ $j ]->nhom != $arr_items[ $i ]->nhom
+			) {
+				$j ++;
+				$filter[ $j ] = $arr_items[ $i ];
+			}
+		}
 		$response->error     = false;
-		$response->timetable = $arr_items;
+		$response->timetable = $filter;
 
 		return response()->json( $response );
 	}
