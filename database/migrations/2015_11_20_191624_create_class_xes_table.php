@@ -14,6 +14,7 @@ class CreateClassXesTable extends Migration {
 			$table->increments( 'id' );
 
 			$table->char( 'name' );
+			$table->integer( 'teacher' );
 
 			$table->timestamps();
 		} );

@@ -56,6 +56,9 @@ class SeedDataController extends Controller {
 		}
 	}
 
+	/**
+	 * Init data origin timetable
+	 */
 	public function seedTimetable() {
 		$contents = Storage::disk( 'local' )->get( 'tkb.json' );
 
@@ -78,12 +81,18 @@ class SeedDataController extends Controller {
 		}
 	}
 
+	/**
+	 * Init data subject
+	 */
 	public function seedSubject() {
 		$drafts = Draft::all();
 
 		foreach ( $drafts as $index => $draft ) {
 			$maMH = $draft->maMH;
 
+			/**
+			 * Kiểm tra xem mã môn học đã có chưa?
+			 */
 			$subjects = Subject::all()->where( 'maMH', $maMH );
 			if ( $subjects->count() == 0 ) {
 				$s = Subject::create( [
@@ -92,7 +101,7 @@ class SeedDataController extends Controller {
 					'soTin' => $draft->soTin,
 				] );
 
-				var_dump( $s );
+				var_dump( $s->name );
 			}
 		}
 	}
@@ -105,8 +114,7 @@ class SeedDataController extends Controller {
 			$maLMH = $draft->maLMH;
 
 			$classSubjects = ClassSubject::all()->where( 'maLMH', $maLMH );
-
-			$subject = Subject::all()->where( 'maMH', $maMH )->first();
+			$subject       = Subject::all()->where( 'maMH', $maMH )->first();
 
 			$subject_id = $subject->id;
 			if ( $classSubjects->count() == 0 ) {
@@ -115,11 +123,14 @@ class SeedDataController extends Controller {
 					'subject' => $subject_id,
 				] );
 
-				var_dump( $c );
+				var_dump( $c->maLMH );
 			}
 		}
 	}
 
+	/**
+	 * Create data teacher
+	 */
 	public function createTeacherUser() {
 		$drafts = Draft::all();
 
