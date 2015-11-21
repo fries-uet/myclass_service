@@ -138,7 +138,6 @@ class SeedDataController extends Controller {
 					'name'     => $name,
 					'email'    => $email,
 					'msv'      => $msv,
-					'pass_uet' => '',
 					'class'    => $class,
 					'type'     => $type,
 					'password' => md5( $pass ),
