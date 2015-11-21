@@ -38,12 +38,13 @@ class ClassXController extends Controller {
 			$id_class = $user->class;
 			$classX   = ClassX::all()->where( 'id', $id_class )->first();
 
-			$class_x       = new stdClass();
-			$class_x->id   = $classX->id;
-			$class_x->base = $base;
-			$class_x->name = $classX->name;
-			$class_x->soSV = ClassX::getCountStudentByClassId( $id_class );
-			$arrGroup      = [ $class_x ];
+			$class_x          = new stdClass();
+			$class_x->id      = $classX->id;
+			$class_x->base    = $base;
+			$class_x->name    = $classX->name;
+			$class_x->soSV    = ClassX::getCountStudentByClassId( $id_class );
+			$class_x->teacher = null;
+			$arrGroup         = [ $class_x ];
 		}
 
 		if ( $base == 'classSubject' ) {

@@ -65,11 +65,13 @@ class UserController extends Controller {
 			return response()->json( $response );
 		}
 
-
 		$name      = $res['name'];
 		$qh        = $res['qh'];
 		$timetable = $res['timetable'];
 
+		/**
+		 * Tìm kiếm lớp khóa học
+		 */
 		$classXes = ClassX::all()->where( 'name', $qh );
 		if ( $classXes->count() > 0 ) {
 			$classX_id = $classXes->first()->id;
@@ -81,7 +83,6 @@ class UserController extends Controller {
 
 			$classX_id = $classX->id;
 		}
-
 
 		$type = 'student';//Mặc định người dùng đăng ký là sinh viên
 		$user = User::create( [

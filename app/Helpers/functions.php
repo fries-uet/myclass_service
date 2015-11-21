@@ -127,9 +127,10 @@ function getTimeTableVNU( $user, $pass ) {
 }
 
 function getTimeTableUET( $maSV ) {
-	$url = 'http://203.113.130.218:50223/congdaotao/module/qldt/';
-	$url .= '?SinhvienLmh[masvTitle]=' . $maSV
-	        . '&SinhvienLmh[hotenTitle]=&SinhvienLmh[ngaysinhTitle]=&SinhvienLmh[lopkhoahocTitle]=&SinhvienLmh[tenlopmonhocTitle]=&SinhvienLmh[tenmonhocTitle]=&SinhvienLmh[nhom]=&SinhvienLmh[sotinchiTitle]=&SinhvienLmh[ghichu]=&SinhvienLmh[term_id]=019&SinhvienLmh_page=1&ajax=sinhvien-lmh-grid';
+	$url
+		= 'http://203.113.130.218:50223/congdaotao/module/qldt/?SinhvienLmh%5BmasvTitle%5D='
+		  . $maSV
+		  . '&SinhvienLmh%5BhotenTitle%5D=&SinhvienLmh%5BngaysinhTitle%5D=&SinhvienLmh%5BlopkhoahocTitle%5D=&SinhvienLmh%5BtenlopmonhocTitle%5D=&SinhvienLmh%5BtenmonhocTitle%5D=&SinhvienLmh%5Bnhom%5D=&SinhvienLmh%5BsotinchiTitle%5D=&SinhvienLmh%5Bghichu%5D=&SinhvienLmh%5Bterm_id%5D=019&SinhvienLmh_page=1&ajax=sinhvien-lmh-grid';
 
 	$browser        = new fCurl();
 	$browser->refer = $url;
