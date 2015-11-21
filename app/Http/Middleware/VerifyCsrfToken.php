@@ -20,5 +20,6 @@ class VerifyCsrfToken extends BaseVerifier {
 			'v1/post/comment',
 			'v1/getPosts',
 			'v1/timetable',
+			'v1/like',
 		];
 }

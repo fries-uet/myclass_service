@@ -41,6 +41,11 @@ Route::group( [ 'prefix' => 'v1' ], function () {
 	Route::any( 'getPosts', 'PostController@getPosts' );
 
 	/**
+	 * Like
+	 */
+	Route::any( 'like', 'LikeConfirmedController@like' );
+
+	/**
 	 * Login
 	 */
 	Route::any( 'login', 'UserController@login' );
