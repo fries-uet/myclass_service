@@ -32,7 +32,7 @@ class Comment extends Model {
 		$c            = new stdClass();
 		$c->id        = $comment->id;
 		$c->content   = $comment->content;
-		$c->confirmed = intval( $comment->confirmed );
+		$c->confirmed = boolval( $comment->confirmed );
 		$c->author    = User::getInfoById( $comment->author );
 
 		return $c;

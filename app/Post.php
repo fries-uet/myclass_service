@@ -32,7 +32,7 @@ class Post extends Model {
 		$p->group       = $post->group;
 		$p->like        = intval( $post->like );
 		$p->author      = User::getInfoById( $post->author );
-		$p->isIncognito = $post->isIncognito;
+		$p->isIncognito = boolval( $post->isIncognito );
 		$p->type        = $post->type;
 		$p->base        = $post->base;
 		$p->comments    = Comment::getCommentsByPostId( $post->id );
