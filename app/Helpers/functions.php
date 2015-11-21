@@ -170,15 +170,9 @@ function getTimeTableUET( $maSV ) {
 			$nhom = 0;
 		}
 
-		$isTD = false;
-		if ( strpos( $maLMH, 'PES' ) !== false ) {
-			$isTD = true;
-		}
-
 		$lmh        = new stdClass();
 		$lmh->maLMH = $maLMH;
 		$lmh->nhom  = intval( $nhom );
-		$lmh->isTD  = $isTD;
 
 		$arrLMH[] = $lmh;
 	}
