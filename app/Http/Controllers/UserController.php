@@ -37,6 +37,13 @@ class UserController extends Controller {
 		 */
 		$response = new stdClass();
 
+		if ( ! filter_var( $all['email'], FILTER_VALIDATE_EMAIL ) ) {
+			$response->error     = true;
+			$response->error_msg = 'Email không hợp lệ!';
+
+			return response()->json( $response );
+		}
+
 		/**
 		 * Tìm user đã tồn tại chưa?
 		 */
