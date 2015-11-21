@@ -9,6 +9,7 @@ class ClassX extends Model {
 	protected $fillable
 		= [
 			'name',
+			'teacher'
 		];
 
 	/**
