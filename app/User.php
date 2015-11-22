@@ -65,13 +65,12 @@ class User extends Model implements AuthenticatableContract,
 		$u->name  = $user->name;
 		$u->lop   = ClassX::getClassName( $user->class );
 		$u->email = $user->email;
+		$u->type  = $user->type;
 		if ( $u->type == 'teacher' ) {
 			$u->avatar = '0';
 		} else {
 			$u->avatar = '1';
 		}
-
-		$u->type = $user->type;
 		if ( $u->type == 'student' ) {
 			$u->mssv = $user->msv;
 		} else {
