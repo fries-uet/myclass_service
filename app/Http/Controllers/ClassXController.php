@@ -53,56 +53,52 @@ class ClassXController extends Controller {
 			/**
 			 * Giáo viên
 			 */
-			$usersX = User::all()->where( 'id', intval( $id_user ) );
-			if ( $usersX->count() > 0 ) {
-				$u_x = $usersX->first();
-				if ( $u_x->type == 'teacher' ) {
-					$u_x_id     = $u_x->id;
-					$classSubXS = SubClassSubject::all()
-					                             ->where( 'teacher',
-						                             intval( $u_x_id ) )
-					                             ->where( 'nhom', 0 );
+			if ( $user->type == 'teacher' ) {
+				$u_x_id     = $user->id;
+				$classSubXS = SubClassSubject::all()
+				                             ->where( 'teacher',
+					                             intval( $u_x_id ) )
+				                             ->where( 'nhom', 0 );
 
-					if ( $classSubXS->count() == 0 ) {
-						$response->error = true;
-						$response->error_msg
-						                 = 'Đã có vấn đề xảy ra! Bạn vui long quay lại sau.';
+				if ( $classSubXS->count() == 0 ) {
+					$response->error = true;
+					$response->error_msg
+					                 = 'Đã có vấn đề xảy ra! Bạn vui long quay lại sau.';
 
-						return response()->json( $response );
-					}
+					return response()->json( $response );
+				}
 
-					$arrGroup = [ ];
-					foreach ( $classSubXS as $k => $cls ) {
-						$sub_id = $cls->id;
+				$arrGroup = [ ];
+				foreach ( $classSubXS as $k => $cls ) {
+					$sub_id = $cls->id;
 
-						$subClassSubject = SubClassSubject::all()->where( 'id',
-							intval( $sub_id ) )->first();
+					$subClassSubject = SubClassSubject::all()->where( 'id',
+						intval( $sub_id ) )->first();
 
-						$teacher_id = $subClassSubject->teacher;
+					$teacher_id = $subClassSubject->teacher;
 
-						$lmh_id       = $subClassSubject->classSubject;
-						$classSubject = ClassSubject::all()
-						                            ->where( 'id',
-							                            intval( $lmh_id ) )
-						                            ->first();
+					$lmh_id       = $subClassSubject->classSubject;
+					$classSubject = ClassSubject::all()
+					                            ->where( 'id',
+						                            intval( $lmh_id ) )
+					                            ->first();
 
-						$maLMH      = $classSubject->maLMH;
-						$subject_id = $classSubject->subject;
-						$subject    = Subject::all()
-						                     ->where( 'id',
-							                     intval( $subject_id ) )
-						                     ->first();
+					$maLMH      = $classSubject->maLMH;
+					$subject_id = $classSubject->subject;
+					$subject    = Subject::all()
+					                     ->where( 'id',
+						                     intval( $subject_id ) )
+					                     ->first();
 
-						$cl          = new stdClass();
-						$cl->base    = 'classSubject';
-						$cl->id      = $classSubject->id;
-						$cl->maLMH   = $maLMH;
-						$cl->name    = $subject->name;
-						$cl->soSV    = $subClassSubject->soSV;
-						$cl->teacher = User::getInfoById( $teacher_id );
+					$cl          = new stdClass();
+					$cl->base    = 'classSubject';
+					$cl->id      = $classSubject->id;
+					$cl->maLMH   = $maLMH;
+					$cl->name    = $subject->name;
+					$cl->soSV    = $subClassSubject->soSV;
+					$cl->teacher = User::getInfoById( $teacher_id );
 
-						$arrGroup[] = $cl;
-					}
+					$arrGroup[] = $cl;
 				}
 			} else {
 				$timeTables = TimeTable::all()->where( 'user', $user->id );
