@@ -52,7 +52,7 @@ class PostController extends Controller {
 		 * Tạo post mới
 		 */
 		$post = Post::create( [
-			'title'   => $all['title'],
+			'title'   => ucfirst( $all['title'] ),
 			'content' => ucfirst( $all['content'] ),
 			'group'   => intval( $all['group'] ),
 			'author'  => intval( $all['author'] ),
