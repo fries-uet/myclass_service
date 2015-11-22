@@ -50,43 +50,100 @@ class ClassXController extends Controller {
 		}
 
 		if ( $base == 'classSubject' ) {
-			$timeTables = TimeTable::all()->where( 'user', $user->id );
-			if ( $timeTables->count() == 0 ) {
-				$response->error     = true;
-				$response->error_msg = 'Tài khoản chưa có lớp môn học nào!';
+			/**
+			 * Giáo viên
+			 */
+			$usersX = User::all()->where( 'id', intval( $id_user ) );
+			if ( $usersX->count() > 0 ) {
+				$u_x = $usersX->first();
+				if ( $u_x->type == 'teacher' ) {
+					$u_x_id     = $u_x->id;
+					$classSubXS = SubClassSubject::all()
+					                             ->where( 'teacher',
+						                             intval( $u_x_id ) )
+					                             ->where( 'nhom', 0 );
 
-				return response()->json( $response );
-			}
+					if ( $classSubXS->count() == 0 ) {
+						$response->error = true;
+						$response->error_msg
+						                 = 'Đã có vấn đề xảy ra! Bạn vui long quay lại sau.';
 
-			foreach ( $timeTables as $tt ) {
-				$sub_id = $tt->subClass;
+						return response()->json( $response );
+					}
 
-				$subClassSubject = SubClassSubject::all()->where( 'id',
-					intval( $sub_id ) )->first();
+					$arrGroup = [ ];
+					foreach ( $classSubXS as $k => $cls ) {
+						$sub_id = $cls->id;
 
-				$teacher_id = $subClassSubject->teacher;
+						$subClassSubject = SubClassSubject::all()->where( 'id',
+							intval( $sub_id ) )->first();
 
-				$lmh_id       = $subClassSubject->classSubject;
-				$classSubject = ClassSubject::all()
-				                            ->where( 'id', intval( $lmh_id ) )
-				                            ->first();
+						$teacher_id = $subClassSubject->teacher;
 
-				$maLMH      = $classSubject->maLMH;
-				$subject_id = $classSubject->subject;
-				$subject    = Subject::all()
-				                     ->where( 'id', intval( $subject_id ) )
-				                     ->first();
+						$lmh_id       = $subClassSubject->classSubject;
+						$classSubject = ClassSubject::all()
+						                            ->where( 'id',
+							                            intval( $lmh_id ) )
+						                            ->first();
 
-				$cl          = new stdClass();
-				$cl->base    = 'classSubject';
-				$cl->id      = $classSubject->id;
-				$cl->maLMH   = $maLMH;
-				$cl->name    = $subject->name;
-				$cl->soSV    = $subClassSubject->soSV;
-				$cl->teacher = User::getInfoById( $teacher_id );
+						$maLMH      = $classSubject->maLMH;
+						$subject_id = $classSubject->subject;
+						$subject    = Subject::all()
+						                     ->where( 'id',
+							                     intval( $subject_id ) )
+						                     ->first();
 
-				if ( $subClassSubject->nhom == 0 ) {
-					$arrGroup[] = $cl;
+						$cl          = new stdClass();
+						$cl->base    = 'classSubject';
+						$cl->id      = $classSubject->id;
+						$cl->maLMH   = $maLMH;
+						$cl->name    = $subject->name;
+						$cl->soSV    = $subClassSubject->soSV;
+						$cl->teacher = User::getInfoById( $teacher_id );
+
+						$arrGroup[] = $cl;
+					}
+				}
+			} else {
+				$timeTables = TimeTable::all()->where( 'user', $user->id );
+				if ( $timeTables->count() == 0 ) {
+					$response->error     = true;
+					$response->error_msg = 'Tài khoản chưa có lớp môn học nào!';
+
+					return response()->json( $response );
+				}
+
+				foreach ( $timeTables as $tt ) {
+					$sub_id = $tt->subClass;
+
+					$subClassSubject = SubClassSubject::all()->where( 'id',
+						intval( $sub_id ) )->first();
+
+					$teacher_id = $subClassSubject->teacher;
+
+					$lmh_id       = $subClassSubject->classSubject;
+					$classSubject = ClassSubject::all()
+					                            ->where( 'id',
+						                            intval( $lmh_id ) )
+					                            ->first();
+
+					$maLMH      = $classSubject->maLMH;
+					$subject_id = $classSubject->subject;
+					$subject    = Subject::all()
+					                     ->where( 'id', intval( $subject_id ) )
+					                     ->first();
+
+					$cl          = new stdClass();
+					$cl->base    = 'classSubject';
+					$cl->id      = $classSubject->id;
+					$cl->maLMH   = $maLMH;
+					$cl->name    = $subject->name;
+					$cl->soSV    = $subClassSubject->soSV;
+					$cl->teacher = User::getInfoById( $teacher_id );
+
+					if ( $subClassSubject->nhom == 0 ) {
+						$arrGroup[] = $cl;
+					}
 				}
 			}
 		}
