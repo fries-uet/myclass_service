@@ -191,9 +191,6 @@ class UserController extends Controller {
 
 		$users = User::all()->where( 'email', $all['email'] );
 		if ( $users->count() < 0 ) {//Không tồn tại người dùng
-			/**
-			 * Kiểm tra xem có phải là mã sinh viên
-			 */
 			$response->error     = true;
 			$response->error_msg = 'Không tồn tại người dùng này';
 

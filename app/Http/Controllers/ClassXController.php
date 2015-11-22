@@ -109,4 +109,28 @@ class ClassXController extends Controller {
 
 		return response()->json( $response );
 	}
+
+	public static function getArrEmail( $id ) {
+//		if ( $base == true ) {
+		$class_xes = ClassX::all()->where( 'id', intval( $id ) );
+
+		if ( $class_xes->count() == 0 ) {
+			return [ ];
+		}
+
+		$arrEmail = [ ];
+		$users    = User::all()->where( 'class', intval( $id ) );
+		if ( $users->count() == 0 ) {
+			return [ ];
+		}
+
+		foreach ( $users as $index => $u ) {
+			$arrEmail[] = $u->email;
+		}
+
+		return $arrEmail;
+//		}
+
+
+	}
 }
