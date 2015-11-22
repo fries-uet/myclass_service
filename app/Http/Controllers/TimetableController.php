@@ -50,7 +50,7 @@ class TimetableController extends Controller {
 
 			$arr_items = [ ];
 			foreach ( $classSubXS as $i => $s ) {
-				$s_id            = $s->subClass;
+				$s_id = $s->id;
 				$subClassSubject = SubClassSubject::all()
 				                                  ->where( 'id',
 					                                  intval( $s_id ) )
