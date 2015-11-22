@@ -49,36 +49,37 @@ class TimetableController extends Controller {
 			}
 
 			$arr_items = [ ];
-			foreach ( $classSubXS as $k => $cls ) {
-				$sub_id = $cls->id;
+			foreach ( $classSubXS as $i => $s ) {
+				$s_id            = $s->subClass;
+				$subClassSubject = SubClassSubject::all()
+				                                  ->where( 'id',
+					                                  intval( $s_id ) )
+				                                  ->first();
 
-				$subClassSubject = SubClassSubject::all()->where( 'id',
-					intval( $sub_id ) )->first();
-
-				$teacher_id = $subClassSubject->teacher;
-
-				$lmh_id       = $subClassSubject->classSubject;
+				$class_id     = $subClassSubject->classSubject;
 				$classSubject = ClassSubject::all()
-				                            ->where( 'id',
-					                            intval( $lmh_id ) )
+				                            ->where( 'id', intval( $class_id ) )
 				                            ->first();
 
-				$maLMH      = $classSubject->maLMH;
 				$subject_id = $classSubject->subject;
-				$subject    = Subject::all()
-				                     ->where( 'id',
-					                     intval( $subject_id ) )
-				                     ->first();
 
-				$cl          = new stdClass();
-				$cl->base    = 'classSubject';
-				$cl->id      = $classSubject->id;
-				$cl->maLMH   = $maLMH;
-				$cl->name    = $subject->name;
-				$cl->soSV    = $subClassSubject->soSV;
-				$cl->teacher = User::getInfoById( $teacher_id );
+				$subject = Subject::all()->where( 'id', intval( $subject_id ) )
+				                  ->first();
 
-				$arr_items[] = $cl;
+				$item_s          = new stdClass();
+				$item_s->maMH    = $subject->maMH;
+				$item_s->maLMH   = $classSubject->maLMH;
+				$item_s->name    = $subject->name;
+				$item_s->soTin   = $subject->soTin;
+				$item_s->viTri   = $subClassSubject->viTri;
+				$item_s->soTiet  = $subClassSubject->soTiet;
+				$item_s->soSV    = $subClassSubject->soSV;
+				$item_s->nhom    = $subClassSubject->nhom;
+				$item_s->address = $subClassSubject->address;
+				$item_s->teacher
+				                 = User::getInfoById( $subClassSubject->teacher );
+
+				$arr_items[] = $item_s;
 			}
 		} else {
 
