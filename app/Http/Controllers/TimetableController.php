@@ -19,45 +19,110 @@ class TimetableController extends Controller {
 		/**
 		 * Dữ liệu trả về
 		 */
-		$response  = new stdClass();
-		$timetable = TimeTable::all()->where( 'user', intval( $user_id ) );
-		if ( $timetable->count() == 0 ) {
-			$response->error     = true;
-			$response->error_msg = 'Bạn chưa đồng bộ thời khóa biểu!';
+		$response = new stdClass();
+
+		$user = User::getInfoById( $user_id );
+		if ( $user == null ) {
+			$response->error = true;
+			$response->error_msg
+			                 = 'Đã có vấn đề xảy ra! Bạn vui long quay lại sau.';
 
 			return response()->json( $response );
 		}
 
-		$arr_items = [ ];
-		foreach ( $timetable as $i => $s ) {
-			$s_id            = $s->subClass;
-			$subClassSubject = SubClassSubject::all()
-			                                  ->where( 'id', intval( $s_id ) )
-			                                  ->first();
+		/**
+		 * Giáo viên
+		 */
+		if ( $user->type == 'teacher' ) {
+			$u_x_id     = $user->id;
+			$classSubXS = SubClassSubject::all()
+			                             ->where( 'teacher',
+				                             intval( $u_x_id ) )
+			                             ->where( 'nhom', 0 );
 
-			$class_id     = $subClassSubject->classSubject;
-			$classSubject = ClassSubject::all()
-			                            ->where( 'id', intval( $class_id ) )
-			                            ->first();
+			if ( $classSubXS->count() == 0 ) {
+				$response->error = true;
+				$response->error_msg
+				                 = 'Đã có vấn đề xảy ra! Bạn vui long quay lại sau.';
 
-			$subject_id = $classSubject->subject;
+				return response()->json( $response );
+			}
 
-			$subject = Subject::all()->where( 'id', intval( $subject_id ) )
-			                  ->first();
+			$arr_items = [ ];
+			foreach ( $classSubXS as $k => $cls ) {
+				$sub_id = $cls->id;
 
-			$item_s          = new stdClass();
-			$item_s->maMH    = $subject->maMH;
-			$item_s->maLMH   = $classSubject->maLMH;
-			$item_s->name    = $subject->name;
-			$item_s->soTin   = $subject->soTin;
-			$item_s->viTri   = $subClassSubject->viTri;
-			$item_s->soTiet  = $subClassSubject->soTiet;
-			$item_s->soSV    = $subClassSubject->soSV;
-			$item_s->nhom    = $subClassSubject->nhom;
-			$item_s->address = $subClassSubject->address;
-			$item_s->teacher = User::getInfoById( $subClassSubject->teacher );
+				$subClassSubject = SubClassSubject::all()->where( 'id',
+					intval( $sub_id ) )->first();
 
-			$arr_items[] = $item_s;
+				$teacher_id = $subClassSubject->teacher;
+
+				$lmh_id       = $subClassSubject->classSubject;
+				$classSubject = ClassSubject::all()
+				                            ->where( 'id',
+					                            intval( $lmh_id ) )
+				                            ->first();
+
+				$maLMH      = $classSubject->maLMH;
+				$subject_id = $classSubject->subject;
+				$subject    = Subject::all()
+				                     ->where( 'id',
+					                     intval( $subject_id ) )
+				                     ->first();
+
+				$cl          = new stdClass();
+				$cl->base    = 'classSubject';
+				$cl->id      = $classSubject->id;
+				$cl->maLMH   = $maLMH;
+				$cl->name    = $subject->name;
+				$cl->soSV    = $subClassSubject->soSV;
+				$cl->teacher = User::getInfoById( $teacher_id );
+
+				$arr_items[] = $cl;
+			}
+		} else {
+
+			$timetable = TimeTable::all()->where( 'user', intval( $user_id ) );
+			if ( $timetable->count() == 0 ) {
+				$response->error     = true;
+				$response->error_msg = 'Bạn chưa đồng bộ thời khóa biểu!';
+
+				return response()->json( $response );
+			}
+
+			$arr_items = [ ];
+			foreach ( $timetable as $i => $s ) {
+				$s_id            = $s->subClass;
+				$subClassSubject = SubClassSubject::all()
+				                                  ->where( 'id',
+					                                  intval( $s_id ) )
+				                                  ->first();
+
+				$class_id     = $subClassSubject->classSubject;
+				$classSubject = ClassSubject::all()
+				                            ->where( 'id', intval( $class_id ) )
+				                            ->first();
+
+				$subject_id = $classSubject->subject;
+
+				$subject = Subject::all()->where( 'id', intval( $subject_id ) )
+				                  ->first();
+
+				$item_s          = new stdClass();
+				$item_s->maMH    = $subject->maMH;
+				$item_s->maLMH   = $classSubject->maLMH;
+				$item_s->name    = $subject->name;
+				$item_s->soTin   = $subject->soTin;
+				$item_s->viTri   = $subClassSubject->viTri;
+				$item_s->soTiet  = $subClassSubject->soTiet;
+				$item_s->soSV    = $subClassSubject->soSV;
+				$item_s->nhom    = $subClassSubject->nhom;
+				$item_s->address = $subClassSubject->address;
+				$item_s->teacher
+				                 = User::getInfoById( $subClassSubject->teacher );
+
+				$arr_items[] = $item_s;
+			}
 		}
 
 		$filter    = [ ];
