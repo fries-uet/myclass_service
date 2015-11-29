@@ -63,8 +63,7 @@ function getTimeTableVNU( $user, $pass ) {
 	$source_html = $browser->return;
 
 	$timeTable
-		       = explode( '<table style="border:none; width: 100%; border-collapse:collapse;">',
-		$source_html )[1];
+		       = explode( '<table style="border:none; width: 100%; border-collapse:collapse;">', $source_html )[1];
 	$timeTable = explode( '</table>', $timeTable )[0];
 
 	$trs       = explode( '<tr>', $timeTable );
@@ -128,8 +127,7 @@ function getTimeTableVNU( $user, $pass ) {
 
 function getTimeTableUET( $maSV ) {
 	$url
-		= 'http://203.113.130.218:50223/congdaotao/module/qldt/?SinhvienLmh%5BmasvTitle%5D='
-		  . $maSV
+		= 'http://203.113.130.218:50223/congdaotao/module/qldt/?SinhvienLmh%5BmasvTitle%5D=' . $maSV
 		  . '&SinhvienLmh%5BhotenTitle%5D=&SinhvienLmh%5BngaysinhTitle%5D=&SinhvienLmh%5BlopkhoahocTitle%5D=&SinhvienLmh%5BtenlopmonhocTitle%5D=&SinhvienLmh%5BtenmonhocTitle%5D=&SinhvienLmh%5Bnhom%5D=&SinhvienLmh%5BsotinchiTitle%5D=&SinhvienLmh%5Bghichu%5D=&SinhvienLmh%5Bterm_id%5D=019&SinhvienLmh_page=1&ajax=sinhvien-lmh-grid';
 
 	$browser        = new fCurl();

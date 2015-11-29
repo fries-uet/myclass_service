@@ -114,8 +114,7 @@ class PostController extends Controller {
 			}
 		}
 
-		$postClassXes = Post::all()->where( 'base', $base )
-		                    ->where( 'group', intval( $id_classX ) );
+		$postClassXes = Post::all()->where( 'base', $base )->where( 'group', intval( $id_classX ) );
 		if ( $postClassXes->count() == 0 ) {//Chưa có bài viết nào
 			$response->error     = true;
 			$response->error_msg = 'Chưa có bài viết nào trong lớp!';

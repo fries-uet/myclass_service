@@ -35,10 +35,7 @@ class TimetableController extends Controller {
 		 */
 		if ( $user->type == 'teacher' ) {
 			$u_x_id     = $user->id;
-			$classSubXS = SubClassSubject::all()
-			                             ->where( 'teacher',
-				                             intval( $u_x_id ) )
-			                             ->where( 'nhom', 0 );
+			$classSubXS = SubClassSubject::all()->where( 'teacher', intval( $u_x_id ) )->where( 'nhom', 0 );
 
 			if ( $classSubXS->count() == 0 ) {
 				$response->error = true;
@@ -50,21 +47,15 @@ class TimetableController extends Controller {
 
 			$arr_items = [ ];
 			foreach ( $classSubXS as $i => $s ) {
-				$s_id = $s->id;
-				$subClassSubject = SubClassSubject::all()
-				                                  ->where( 'id',
-					                                  intval( $s_id ) )
-				                                  ->first();
+				$s_id            = $s->id;
+				$subClassSubject = SubClassSubject::all()->where( 'id', intval( $s_id ) )->first();
 
 				$class_id     = $subClassSubject->classSubject;
-				$classSubject = ClassSubject::all()
-				                            ->where( 'id', intval( $class_id ) )
-				                            ->first();
+				$classSubject = ClassSubject::all()->where( 'id', intval( $class_id ) )->first();
 
 				$subject_id = $classSubject->subject;
 
-				$subject = Subject::all()->where( 'id', intval( $subject_id ) )
-				                  ->first();
+				$subject = Subject::all()->where( 'id', intval( $subject_id ) )->first();
 
 				$item_s          = new stdClass();
 				$item_s->maMH    = $subject->maMH;
@@ -94,20 +85,14 @@ class TimetableController extends Controller {
 			$arr_items = [ ];
 			foreach ( $timetable as $i => $s ) {
 				$s_id            = $s->subClass;
-				$subClassSubject = SubClassSubject::all()
-				                                  ->where( 'id',
-					                                  intval( $s_id ) )
-				                                  ->first();
+				$subClassSubject = SubClassSubject::all()->where( 'id', intval( $s_id ) )->first();
 
 				$class_id     = $subClassSubject->classSubject;
-				$classSubject = ClassSubject::all()
-				                            ->where( 'id', intval( $class_id ) )
-				                            ->first();
+				$classSubject = ClassSubject::all()->where( 'id', intval( $class_id ) )->first();
 
 				$subject_id = $classSubject->subject;
 
-				$subject = Subject::all()->where( 'id', intval( $subject_id ) )
-				                  ->first();
+				$subject = Subject::all()->where( 'id', intval( $subject_id ) )->first();
 
 				$item_s          = new stdClass();
 				$item_s->maMH    = $subject->maMH;

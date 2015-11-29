@@ -61,8 +61,7 @@ class UserController extends Controller {
 
 		if ( $user->count() > 0 ) {//Đã tồn tại người dùng
 			$response->error     = true;
-			$response->error_msg = 'Đã tồn tại người dùng với email '
-			                       . $all['email'];
+			$response->error_msg = 'Đã tồn tại người dùng với email ' . $all['email'];
 
 			return response()->json( $response );
 		}
@@ -125,8 +124,7 @@ class UserController extends Controller {
 				if ( $lmhs->count() > 0 ) {
 					$lmh    = $lmhs->first();
 					$lmh_id = $lmh->id;
-					$subs   = SubClassSubject::all()
-					                         ->where( 'classSubject', $lmh_id );
+					$subs   = SubClassSubject::all()->where( 'classSubject', $lmh_id );
 
 					foreach ( $subs as $s ) {
 						$sub_id = $s->id;
@@ -143,8 +141,7 @@ class UserController extends Controller {
 				if ( $lmhs->count() > 0 ) {
 					$lmh    = $lmhs->first();
 					$lmh_id = $lmh->id;
-					$subs   = SubClassSubject::all()
-					                         ->where( 'classSubject', $lmh_id );
+					$subs   = SubClassSubject::all()->where( 'classSubject', $lmh_id );
 					if ( $subs->count() > 0 ) {
 						foreach ( $subs as $s ) {
 							$sub_id = $s->id;

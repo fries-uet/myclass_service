@@ -75,8 +75,7 @@ Route::group( [ 'prefix' => 'seed' ], function () {
 	Route::get( 'subject', 'SeedDataController@seedSubject' );//2
 	Route::get( 'classSubject', 'SeedDataController@seedClassSubject' );//3
 	Route::get( 'teacher', 'SeedDataController@createTeacherUser' );//4
-	Route::get( 'subClassSubject',
-		'SeedDataController@seedSubClassSubject' );//5
+	Route::get( 'subClassSubject', 'SeedDataController@seedSubClassSubject' );//5
 } );
 
 /**

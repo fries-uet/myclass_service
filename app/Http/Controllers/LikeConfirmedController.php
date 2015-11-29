@@ -23,8 +23,7 @@ class LikeConfirmedController extends Controller {
 		 */
 		$response = new stdClass();
 
-		$likes = Like::all()->where( 'user_id', intval( $user_id ) )
-		             ->where( 'post_id', intval( $post_id ) );
+		$likes = Like::all()->where( 'user_id', intval( $user_id ) )->where( 'post_id', intval( $post_id ) );
 
 		if ( $likes->count() > 0 ) {
 			$response->error     = true;
@@ -50,8 +49,7 @@ class LikeConfirmedController extends Controller {
 		$count_like = intval( $posts->first()->like );
 		$count_like ++;
 
-		$p = DB::table( 'posts' )->where( 'id', intval( $post_id ) )
-		       ->update( [ 'like' => $count_like ] );
+		$p = DB::table( 'posts' )->where( 'id', intval( $post_id ) )->update( [ 'like' => $count_like ] );
 
 		$response->error = false;
 		$response->msg   = 'Cảm ơn bạn!';
@@ -85,8 +83,7 @@ class LikeConfirmedController extends Controller {
 			return response()->json( $response );
 		}
 
-		$p = DB::table( 'comments' )->where( 'id', intval( $comment_id ) )
-		       ->update( [ 'confirmed' => 1 ] );
+		$p = DB::table( 'comments' )->where( 'id', intval( $comment_id ) )->update( [ 'confirmed' => 1 ] );
 
 		$response->error     = false;
 		$response->error_msg = 'Cảm ơn bạn đã xác nhận đây là bình luận hay!';

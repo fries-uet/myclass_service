@@ -22,7 +22,10 @@ class FCurl {
 	}
 
 	public function get(
-		$url = null, $hasbody = false, $hheader = 1, $CKFile = self::CKFile
+		$url = null,
+		$hasbody = false,
+		$hheader = 1,
+		$CKFile = self::CKFile
 	) {
 		if ( $hasbody == true ) {
 			$gbody = false;
@@ -46,7 +49,10 @@ class FCurl {
 	}
 
 	public function post(
-		$url = null, $pfield = null, $hasbody = false, $hheader = 1,
+		$url = null,
+		$pfield = null,
+		$hasbody = false,
+		$hheader = 1,
 		$CKFile = self::CKFile
 	) {
 		if ( $hasbody == true ) {

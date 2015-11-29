@@ -194,9 +194,7 @@ class SeedDataController extends Controller {
 					$nhom = 3;
 				}
 
-				$classSubject = ClassSubject::all()
-				                            ->where( 'maLMH', $draft->maLMH )
-				                            ->first();
+				$classSubject = ClassSubject::all()->where( 'maLMH', $draft->maLMH )->first();
 
 				$sub = SubClassSubject::create( [
 					'teacher'      => $teacher_id,
