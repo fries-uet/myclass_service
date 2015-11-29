@@ -59,27 +59,27 @@ class PostController extends Controller {
 			'base'    => $all['base'],
 		] );
 
-		if ( $all['base'] == 'class_xes' ) {
-			/**
-			 * Thông báo qua email
-			 */
-			$mail = new MailController();
-			$arrEmail
-			      = ClassXController::getArrEmail( intval( $all['group'] ) );
-
-			foreach ( $arrEmail as $i => $a ) {
-				if ( $a == $email_u ) {
-					unset( $arrEmail[ $i ] );
-				}
-			}
-
-			$q = ClassX::all()->where( 'id', intval( $all['group'] ) )->first();
-
-			$email_subject = 'Email được gửi từ ' . $q->name;
-			$email_body    = $u->name . ' gửi tới nội dung sau:<br>';
-			$email_body .= '<p>' . ucfirst( $all['content'] ) . '</p>';
-			$mail->sendMail( $email_subject, $email_body, $arrEmail );
-		}
+//		if ( $all['base'] == 'class_xes' ) {
+//			/**
+//			 * Thông báo qua email
+//			 */
+//			$mail = new MailController();
+//			$arrEmail
+//			      = ClassXController::getArrEmail( intval( $all['group'] ) );
+//
+//			foreach ( $arrEmail as $i => $a ) {
+//				if ( $a == $email_u ) {
+//					unset( $arrEmail[ $i ] );
+//				}
+//			}
+//
+//			$q = ClassX::all()->where( 'id', intval( $all['group'] ) )->first();
+//
+//			$email_subject = 'Email được gửi từ ' . $q->name;
+//			$email_body    = $u->name . ' gửi tới nội dung sau:<br>';
+//			$email_body .= '<p>' . ucfirst( $all['content'] ) . '</p>';
+//			$mail->sendMail( $email_subject, $email_body, $arrEmail );
+//		}
 
 		/**
 		 * Post
