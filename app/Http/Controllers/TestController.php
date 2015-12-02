@@ -59,29 +59,59 @@ class TestController extends Controller {
 		/**
 		 * Lấy source trang thời khóa biểu
 		 */
-		$url_time
-			= 'http://dangkyhoc.daotao.vnu.edu.vn/danh-sach-mon-hoc/1/1';
+		$url_time = 'http://dangkyhoc.daotao.vnu.edu.vn/danh-sach-mon-hoc/1/2';
 		$browser->post( $url_time, null, 1, 0 );
 		$source_html = $browser->return;
 
 		$source_html = html_entity_decode( $source_html );
+		$source_html = trim( $source_html );
 
 		$arr = explode( '<tr title="', $source_html );
 
-		$maLMH = 'PES1035';
+		$maLMH = [
+			'PES1035 5',
+			'PES1035 6',
+			'PES1035 8',
+		];
 
 		foreach ( $arr as $index => $a ) {
-			if ( strpos( $a, $maLMH ) !== false ) {
-				if ( strpos( $a, 'checkbox' ) !== false ) {
-					$content_email = $a;
-					$subject       = $maLMH . ' còn trống!';
+			if ( $a == '' ) {
+				continue;
+			}
 
-					$sender = new MailController();
-					if ( $sender->sendMail( $subject, $content_email, [ 'tutv95@gmail.com' ] ) ) {
-						echo 'success';
+			foreach ( $maLMH as $i => $lmh ) {
+				if ( strpos( $a, $lmh ) !== false ) {
+					// Input checkbox
+					$input = explode( 'text-align:center;">', $a )[1];
+					$input = explode( '</td>', $input )[0];
+					$input = trim( $input );
+
+					// Name subject
+					$name = explode( '<td>', $a )[1];
+					$name = explode( '</td>', $name )[0];
+					$name = trim( $name );
+
+					if ( strpos( $a, 'checkbox' ) !== false ) {
+						//dk
+						$row_index = explode( 'data-rowindex="', $input )[1];
+						$row_index = explode( '"', $row_index )[0];
+
+						$url_choose = 'http://dangkyhoc.daotao.vnu.edu.vn/chon-mon-hoc/' . $row_index . '/1/2';
+						$browser->post( $url_choose, null, 1, 0 );
+
+						$url_confirm = 'http://dangkyhoc.daotao.vnu.edu.vn/xac-nhan-dang-ky/1';
+						$browser->post( $url_confirm, null, 1, 0 );
+
+						$content_email = 'Đã đăng kí thành công môn ' . $name . ' :]]]';
+						$subject       = $name . ' còn trống!';
+
+						$sender = new MailController();
+						if ( $sender->sendMail( $subject, $content_email, [ 'tutv95@gmail.com' ] ) ) {
+							echo 'success';
+						}
+					} else {
+						echo 'Full HD';
 					}
-				} else {
-					echo 'full HD';
 				}
 			}
 		}
