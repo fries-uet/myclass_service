@@ -44,9 +44,10 @@ class TestController extends Controller {
 	 */
 	public function tuantm() {
 		$mssv = '14020520';
+		$pass = 'thaibinhcity';
 
-		$sv      = RegSubject::all()->where( 'msv', $mssv )->first();
-		$pass    = $sv->pass;
+//		$sv      = RegSubject::all()->where( 'msv', $mssv )->first();
+//		$pass    = $sv->pass;
 		$arr_lmh = [
 			'PES1025 5',
 			'PES1025 4',
