@@ -17,6 +17,6 @@ class MailController extends Controller {
 			$friesMap->addTo( $a );
 		}
 
-		$friesMap->sendMail();
+		return $friesMap->sendMail();
 	}
 }
