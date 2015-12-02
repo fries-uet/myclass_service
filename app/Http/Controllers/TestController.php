@@ -68,7 +68,7 @@ class TestController extends Controller {
 
 		$arr = explode( '<tr title="', $source_html );
 
-		$maLMH = 'PES1550 44';
+		$maLMH = 'PES1035';
 
 		foreach ( $arr as $index => $a ) {
 			if ( strpos( $a, $maLMH ) !== false ) {
