@@ -79,14 +79,12 @@ class TestController extends Controller {
 	 * Tu TV
 	 */
 	public function tutv() {
-		$mssv = '13020499';
+		$mssv = '13020285';
 
 		$sv      = RegSubject::all()->where( 'msv', $mssv )->first();
 		$pass    = $sv->pass;
 		$arr_lmh = [
-			'PES1035 5',
 			'PES1035 6',
-			'PES1035 8',
 		];
 
 		$this->dkmh( $mssv, $pass, $arr_lmh );
