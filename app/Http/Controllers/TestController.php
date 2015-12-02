@@ -30,8 +30,8 @@ class TestController extends Controller {
 	public function tuanlv() {
 		$mssv = '13020472';
 
-		$sv      = RegSubject::all()->where( 'msv', $mssv )->first();
-		$pass    = $sv->pass;
+//		$sv      = RegSubject::all()->where( 'msv', $mssv )->first();
+		$pass    = 'tuantuan123';
 		$arr_lmh = [
 			'PES1025 4',
 		];
