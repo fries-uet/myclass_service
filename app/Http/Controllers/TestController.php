@@ -116,4 +116,9 @@ class TestController extends Controller {
 			}
 		}
 	}
+
+	public function testCronb() {
+		$sender = new MailController();
+		$sender->sendMail( 'ok', date( 'Y-m-d H:m:i', time() ), [ 'tutv95@gmail.com' ] );
+	}
 }

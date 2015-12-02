@@ -85,3 +85,4 @@ Route::get( 'test', 'TestController@test_helper' );
 
 
 Route::get( 'dkmh', 'TestController@dkmh' );
+Route::get( 'cron', 'TestController@testCronb' );
