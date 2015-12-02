@@ -88,3 +88,4 @@ Route::get( 'dkmh', 'TestController@tutv' );
 
 Route::get( 'dkmh/tutv', 'TestController@tutv' );
 Route::get( 'dkmh/tuanlv', 'TestController@tuanlv' );
+Route::get( 'dkmh/tuantm', 'TestController@tuantm' );

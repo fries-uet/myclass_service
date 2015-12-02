@@ -40,6 +40,22 @@ class TestController extends Controller {
 	}
 
 	/**
+	 * Tuan TM
+	 */
+	public function tuantm() {
+		$mssv = '14020520';
+
+		$sv      = RegSubject::all()->where( 'msv', $mssv )->first();
+		$pass    = $sv->pass;
+		$arr_lmh = [
+			'PES1025 5',
+			'PES1025 4',
+		];
+
+		$this->dkmh( $mssv, $pass, $arr_lmh );
+	}
+
+	/**
 	 * Tu TV
 	 */
 	public function tutv() {
