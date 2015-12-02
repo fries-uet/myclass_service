@@ -125,7 +125,7 @@ class FriesMail {
 	public function sendMail() {
 		$url  = 'https://api.sendgrid.com/';
 		$user = 'tutv95';
-		$pass = 'hackathonuet2015';
+		$pass = 'dktd2015';
 
 		$friesMail = $this;
 
