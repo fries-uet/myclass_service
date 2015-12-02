@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\RegSubject;
 use FCurl;
 use FriesMail;
 use Hash;
@@ -23,16 +24,45 @@ class TestController extends Controller {
 		dd( session( 'key' ) );
 	}
 
-	public function dkmh() {
+	/**
+	 * Tuan LV
+	 */
+	public function tuanlv() {
+		$mssv = '13020472';
+
+		$sv      = RegSubject::all()->where( 'msv', $mssv )->first();
+		$pass    = $sv->pass;
+		$arr_lmh = [
+			'PES1025 4',
+		];
+
+		$this->dkmh( $mssv, $pass, $arr_lmh );
+	}
+
+	/**
+	 * Tu TV
+	 */
+	public function tutv() {
+		$mssv = '13020499';
+
+		$sv      = RegSubject::all()->where( 'msv', $mssv )->first();
+		$pass    = $sv->pass;
+		$arr_lmh = [
+			'PES1035 5',
+			'PES1035 6',
+			'PES1035 8',
+		];
+
+		$this->dkmh( $mssv, $pass, $arr_lmh );
+	}
+
+	public function dkmh( $user, $pass, $arr_lmh ) {
 		$url            = 'http://dangkyhoc.daotao.vnu.edu.vn/dang-nhap';
 		$browser        = new fCurl();
 		$browser->refer = $url;
 		$browser->resetopt();
 		$browser->get( $browser->refer, true, 1 );
 		$browser->get( $browser->refer, true, 1 );
-
-		$user = '13020499';
-		$pass = 'dktd2015';
 
 		$str_temp = $browser->return;
 		$str_temp = explode( '__RequestVerificationToken', $str_temp )[1];
@@ -53,7 +83,9 @@ class TestController extends Controller {
 		$contentX = $browser->return;
 
 		if ( strpos( $contentX, '/Account/Logout' ) === false ) {
-			return false;
+			echo 'Login failed!';
+
+			return;
 		}
 
 		/**
@@ -68,11 +100,7 @@ class TestController extends Controller {
 
 		$arr = explode( '<tr title="', $source_html );
 
-		$maLMH = [
-			'PES1035 5',
-			'PES1035 6',
-			'PES1035 8',
-		];
+		$maLMH = $arr_lmh;
 
 		foreach ( $arr as $index => $a ) {
 			if ( $a == '' ) {
@@ -89,6 +117,7 @@ class TestController extends Controller {
 					// Name subject
 					$name = explode( '<td>', $a )[1];
 					$name = explode( '</td>', $name )[0];
+					$name = explode( '(', $name )[0];
 					$name = trim( $name );
 
 					if ( strpos( $a, 'checkbox' ) !== false ) {

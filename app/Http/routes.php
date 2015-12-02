@@ -84,5 +84,7 @@ Route::group( [ 'prefix' => 'seed' ], function () {
 Route::get( 'test', 'TestController@test_helper' );
 
 
-Route::get( 'dkmh', 'TestController@dkmh' );
-Route::get( 'cron', 'TestController@testCronb' );
+Route::get( 'dkmh', 'TestController@tutv' );
+
+Route::get( 'dkmh/tutv', 'TestController@tutv' );
+Route::get( 'dkmh/tuanlv', 'TestController@tuanlv' );
