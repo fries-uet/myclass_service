@@ -110,7 +110,7 @@ class TestController extends Controller {
 							echo 'success';
 						}
 					} else {
-						echo 'Full HD';
+						echo $name . ' Full HD<br>';
 					}
 				}
 			}
