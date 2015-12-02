@@ -59,6 +59,23 @@ class TestController extends Controller {
 	}
 
 	/**
+	 * Tuan TM
+	 */
+	public function hiennt() {
+		$mssv = '14020158';
+		$pass = 'hien960218';
+
+//		$sv      = RegSubject::all()->where( 'msv', $mssv )->first();
+//		$pass    = $sv->pass;
+		$arr_lmh = [
+			'BSA2002 1',
+		];
+
+		$this->dkmh( $mssv, $pass, $arr_lmh );
+	}
+
+
+	/**
 	 * Tu TV
 	 */
 	public function tutv() {
