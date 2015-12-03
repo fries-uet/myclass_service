@@ -87,6 +87,6 @@ Route::get( 'test', 'TestController@test_helper' );
 Route::get( 'dkmh', 'TestController@tutv' );
 
 Route::get( 'dkmh/tutv', 'TestController@tutv' );
-Route::get( 'dkmh/tuanlv', 'TestController@tuanlv' );
-Route::get( 'dkmh/tuantm', 'TestController@tuanlv' );
-Route::get( 'dkmh/hiennt', 'TestController@hiennt' );
+Route::get( 'dkmh/tuanlv', 'TestController@tuantm' );
+Route::get( 'dkmh/tuantm', 'TestController@tuantm' );
+Route::get( 'dkmh/hiennt', 'TestController@tutv' );
