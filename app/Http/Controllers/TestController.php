@@ -51,8 +51,6 @@ class TestController extends Controller {
 		$arr_lmh = [
 			'PES1025 5',
 			'PES1025 4',
-			'PES1015 35',
-			'PES1015 36',
 		];
 
 		$this->dkmh( $mssv, $pass, $arr_lmh );
