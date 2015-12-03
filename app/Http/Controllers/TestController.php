@@ -77,7 +77,7 @@ class TestController extends Controller {
 	 * Tu TV
 	 */
 	public function tutv() {
-		$mssv = '13020285';
+		$mssv = '13020499';
 
 		$sv      = RegSubject::all()->where( 'msv', $mssv )->first();
 		$pass    = $sv->pass;
