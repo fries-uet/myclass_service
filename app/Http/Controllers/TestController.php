@@ -25,68 +25,10 @@ class TestController extends Controller {
 	}
 
 	/**
-	 * Tuan LV
-	 */
-	public function tuanlv() {
-		$mssv = '13020472';
-
-//		$sv      = RegSubject::all()->where( 'msv', $mssv )->first();
-		$pass    = 'tuantuan123';
-		$arr_lmh = [
-			'PES1025 4',
-		];
-
-		$this->dkmh( $mssv, $pass, $arr_lmh );
-	}
-
-	/**
-	 * Tuan TM
-	 */
-	public function tuantm() {
-		$mssv = '14020520';
-		$pass = 'thaibinhcity';
-
-//		$sv      = RegSubject::all()->where( 'msv', $mssv )->first();
-//		$pass    = $sv->pass;
-		$arr_lmh = [
-			'PES1025 5',
-			'PES1025 4',
-		];
-
-		$this->dkmh( $mssv, $pass, $arr_lmh );
-	}
-
-	/**
-	 * Tuan TM
-	 */
-	public function hiennt() {
-		$mssv = '14020158';
-		$pass = 'hien960218';
-
-//		$sv      = RegSubject::all()->where( 'msv', $mssv )->first();
-//		$pass    = $sv->pass;
-		$arr_lmh = [
-			'BSA2002 1',
-		];
-
-		$this->dkmh( $mssv, $pass, $arr_lmh );
-	}
-
-
-	/**
 	 * Tu TV
 	 */
 	public function tutv() {
-		$mssv = '14020661';
-		$pass = 'hanhnguyen273';
-
-//		$sv      = RegSubject::all()->where( 'msv', $mssv )->first();
-//		$pass    = $sv->pass;
-		$arr_lmh = [
-			'PES1025 4',
-		];
-
-		$this->dkmh( $mssv, $pass, $arr_lmh );
+		return 'ok!';
 	}
 
 	public function dkmh( $user, $pass, $arr_lmh ) {
