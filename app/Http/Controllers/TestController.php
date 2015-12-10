@@ -28,13 +28,13 @@ class TestController extends Controller {
 	 * Tu TV
 	 */
 	public function tutv() {
-		$mssv    = '12040241';
-		$pass    = '06109294';
-		$arr_lmh = [
-			'MAT1078 3',
-			'MAT1078 4',
-		];
-		$this->dkmh( $mssv, $pass, $arr_lmh );
+//		$mssv    = '12040241';
+//		$pass    = '06109294';
+//		$arr_lmh = [
+//			'MAT1078 3',
+//			'MAT1078 4',
+//		];
+//		$this->dkmh( $mssv, $pass, $arr_lmh );
 	}
 
 	public function dkmh( $user, $pass, $arr_lmh ) {
