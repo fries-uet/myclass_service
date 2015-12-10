@@ -35,7 +35,6 @@ class TestController extends Controller {
 			'MAT1078 4',
 		];
 		$this->dkmh( $mssv, $pass, $arr_lmh );
-		$this->dkmh2( $mssv, $pass, $arr_lmh );
 	}
 
 	public function dkmh( $user, $pass, $arr_lmh ) {
@@ -107,19 +106,21 @@ class TestController extends Controller {
 						$row_index = explode( 'data-rowindex="', $input )[1];
 						$row_index = explode( '"', $row_index )[0];
 
-						$url_choose = 'http://dangkyhoc.daotao.vnu.edu.vn/chon-mon-hoc/' . $row_index . '/1/2';
+//						dd( $row_index );
+
+						$url_choose = 'http://dangkyhoc.daotao.vnu.edu.vn/chon-mon-hoc/' . $row_index . '/1/1';
 						$browser->post( $url_choose, null, 1, 0 );
 
 						$url_confirm = 'http://dangkyhoc.daotao.vnu.edu.vn/xac-nhan-dang-ky/1';
 						$browser->post( $url_confirm, null, 1, 0 );
 
-						$content_email = 'Đã đăng kí thành công môn ' . $name . ' :]]]';
-						$subject       = $name . ' còn trống!';
+//						$content_email = 'Đã đăng kí thành công môn ' . $name . ' :]]]';
+//						$subject       = $name . ' còn trống!';
 
-						$sender = new MailController();
-						if ( $sender->sendMail( $subject, $content_email, [ 'tutv95@gmail.com' ] ) ) {
-							echo 'success';
-						}
+//						$sender = new MailController();
+//						if ( $sender->sendMail( $subject, $content_email, [ 'tutv95@gmail.com' ] ) ) {
+//							echo 'success';
+//						}
 					} else {
 						echo $name . ' Full HD<br>';
 					}
