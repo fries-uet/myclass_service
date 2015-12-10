@@ -121,6 +121,8 @@ class TestController extends Controller {
 //						if ( $sender->sendMail( $subject, $content_email, [ 'tutv95@gmail.com' ] ) ) {
 //							echo 'success';
 //						}
+
+						echo $name . ' success<br>';
 					} else {
 						echo $name . ' Full HD<br>';
 					}
