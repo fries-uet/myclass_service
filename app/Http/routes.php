@@ -83,10 +83,6 @@ Route::group( [ 'prefix' => 'seed' ], function () {
  */
 Route::get( 'test', 'TestController@test_helper' );
 
-
-Route::get( 'dkmh', 'TestController@tutv' );
-
-Route::get( 'dkmh/tutv', 'TestController@tutv' );
-Route::get( 'dkmh/tuanlv', 'TestController@tutv' );
-Route::get( 'dkmh/tuantm', 'TestController@tutv' );
-Route::get( 'dkmh/hiennt', 'TestController@tutv' );
+Route::group( [ 'prefix' => 'subscribe' ], function () {
+	Route::get( 'test', 'ScoreUET@updateScoreUET' );
+} );

@@ -14,6 +14,7 @@ return array(
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePostsTable' => $baseDir . '/database/migrations/2015_11_20_230223_create_posts_table.php',
     'CreateRegSubjectsTable' => $baseDir . '/database/migrations/2015_12_02_114252_create_reg_subjects_table.php',
+    'CreateSUsersTable' => $baseDir . '/database/migrations/2015_12_23_160229_create_s_users_table.php',
     'CreateSubClassSubjectsTable' => $baseDir . '/database/migrations/2015_11_21_033125_create_sub_class_subjects_table.php',
     'CreateSubjectsTable' => $baseDir . '/database/migrations/2015_11_21_031738_create_subjects_table.php',
     'CreateTimeTablesTable' => $baseDir . '/database/migrations/2015_11_21_090853_create_time_tables_table.php',

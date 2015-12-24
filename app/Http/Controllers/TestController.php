@@ -2,39 +2,78 @@
 
 namespace App\Http\Controllers;
 
-use App\RegSubject;
 use FCurl;
-use FriesMail;
-use Hash;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use Session;
 
 class TestController extends Controller {
 	public function test_helper() {
-//		$friesMap = new FriesMail( 'Đây là title', 'Đây là nội dung' );
-//		$friesMap->setFromName( 'Fries Team' )->setFrom( 'fries.uet@gmail.com' )->addTo( 'tutv95@gmail.com' )
-//		         ->sendMail();
+		$url = 'http://www.coltech.vnu.edu.vn/news4st/test.php';
 
-		$a = bcrypt( 'aaa' );
+		$browser        = new fCurl();
+		$browser->refer = $url;
+		$browser->resetopt();
+		$fields = [
+			'lstClass' => 819,
+		];
+		$browser->post( $url, $fields, 1, 0 );
 
-		Session::put( 'key', "{$a}" );
+		$content = $browser->return;
 
-		dd( session( 'key' ) );
+		$table = explode( '<table border="0" cellspacing="2" cellpadding="0" width="100%">', $content )[1];
+		$table = trim( $table );
+
+		$li = explode( '<LI>', $table );
+
+		$arr_score = [ ];
+
+		for ( $i = 1; $i < count( $li ); $i ++ ) {
+			$name = explode( '</td>', $li[ $i ] )[0];
+			$name = trim( $name );
+
+			/**
+			 * Đã có điểm
+			 */
+			if ( strpos( $name, '<b>' ) !== false ) {
+				$link = explode( 'href="../', $name )[1];
+				$link = explode( '" class=', $link )[0];
+				$href = 'http://www.coltech.vnu.edu.vn/' . $link;
+
+				$maLMH = explode( '<b>', $name )[1];
+				$maLMH = explode( '</b>', $maLMH )[0];
+				$maLMH = explode( '(', $maLMH )[0];
+				$maLMH = explode( ' - ', $maLMH );
+
+				if ( count( $maLMH ) > 1 ) {
+					$maLMH = $maLMH[ count( $maLMH ) - 1 ];
+					$maLMH = strtoupper( $maLMH );
+
+					$arr_score[] = [
+						'href'  => $href,
+						'maLMH' => $maLMH,
+					];
+				}
+			} else {// Chưa có điểm
+				$maLMH = explode( ' - ', $name );
+
+				if ( count( $maLMH ) > 1 ) {
+					$maLMH = $maLMH[ count( $maLMH ) - 1 ];
+					$maLMH = strtoupper( $maLMH );
+
+					$arr_score[] = [
+						'href'  => false,
+						'maLMH' => $maLMH,
+					];
+				}
+			}
+		}
 	}
 
 	/**
 	 * Tu TV
 	 */
 	public function tutv() {
-//		$mssv    = '12040241';
-//		$pass    = '06109294';
-//		$arr_lmh = [
-//			'MAT1078 3',
-//			'MAT1078 4',
-//		];
-//		$this->dkmh( $mssv, $pass, $arr_lmh );
 	}
 
 	public function dkmh( $user, $pass, $arr_lmh ) {
@@ -105,8 +144,6 @@ class TestController extends Controller {
 						//dk
 						$row_index = explode( 'data-rowindex="', $input )[1];
 						$row_index = explode( '"', $row_index )[0];
-
-//						dd( $row_index );
 
 						$url_choose = 'http://dangkyhoc.daotao.vnu.edu.vn/chon-mon-hoc/' . $row_index . '/1/1';
 						$browser->post( $url_choose, null, 1, 0 );
