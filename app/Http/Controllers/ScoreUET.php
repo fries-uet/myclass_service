@@ -114,6 +114,8 @@ class ScoreUET extends Controller
         $myHost = url('/');
         $host = $request->getHost();
 
+        return ($host . PHP_EOL . '___' . $myHost);
+
         if (strpos($myHost, $host) === false) {
             abort(404);
         }

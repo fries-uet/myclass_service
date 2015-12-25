@@ -21,7 +21,8 @@
                                 <span class="input-group-addon"><span
                                             class="glyphicon glyphicon-education"></span></span>
                                 <input type="number" name="msv" id="msv" class="form-control"
-                                       data-remote="{{ route('getInfo') }}">
+                                       data-remote="{{ route('getInfo') }}"
+                                       data-error="Mã số sinh viên không đúng! Hoặc đã có vấn đề gì đó đã xảy ra.">
                             </div>
                             <div class="help-block with-errors"></div>
                         </div>
