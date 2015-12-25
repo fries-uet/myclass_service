@@ -1,3 +1,5 @@
-/**
- * Created by tutv95 on 30/11/2015.
- */
+jQuery(document).ready(function ($) {
+    $('body').on('valid.bs.validator', function (event) {
+        console.log(event);
+    });
+});

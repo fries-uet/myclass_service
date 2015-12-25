@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use FCurl;
 use Illuminate\Http\Request;
 
@@ -118,56 +119,61 @@ class ScoreUET extends Controller
             abort(404);
         }
 
-        $url = 'http://203.113.130.218:50223/congdaotao/module/qldt/?SinhvienLmh%5BmasvTitle%5D=' . $maSV
-            . '&SinhvienLmh%5BhotenTitle%5D=&SinhvienLmh%5BngaysinhTitle%5D=&SinhvienLmh%5BlopkhoahocTitle%5D=&SinhvienLmh%5BtenlopmonhocTitle%5D=&SinhvienLmh%5BtenmonhocTitle%5D=&SinhvienLmh%5Bnhom%5D=&SinhvienLmh%5BsotinchiTitle%5D=&SinhvienLmh%5Bghichu%5D=&SinhvienLmh%5Bterm_id%5D=019&SinhvienLmh_page=1&ajax=sinhvien-lmh-grid';
-
+        $url = 'http://203.113.130.218:50223/congdaotao/module/dsthi_new/';
         $browser = new fCurl();
         $browser->refer = $url;
         $browser->resetopt();
-        $browser->get($browser->refer, true, 0);
+        $fields = [
+            'keysearch' => $maSV,
+        ];
+
+        $browser->post($browser->refer, $fields, true, 0);
 
         $content = $browser->return;
-        $content = explode('id="sinhvien-lmh-grid"', $content)[1];
-        $content = explode('</tbody>', $content)[0];
-        $content = explode('<tbody>', $content)[1];
+        $content = explode('<table class="items">', $content)[1];
+        $content = explode('</table>', $content)[0];
+
+        if (strpos($content, '<td colspan="14" class="empty">') !== false) {
+            abort(404);
+        }
 
         $trs = explode('</tr>', $content);
         $count_str = count($trs);
 
         if ($count_str == 2) {
-            return false;
+            abort(404);
         }
 
-        $tr_first = $trs[0];
-        //Name
-        $name_sv = explode('<td style="width: 100px">', $tr_first)[1];
-        $name_sv = explode('</td>', $name_sv)[0];
+        $tr_first = $trs[1];
+        $sv = explode('</td><td>', $tr_first);
 
-        //QH-2013-I/CQ-C-CLC
-        $qh = explode('<td style="width: 100px">', $tr_first)[2];
-        $qh = explode('</td>', $qh)[0];
+        $maSV_ = intval($sv[1]);
+        if ($maSV_ != $maSV) {
+            abort(404);
+        }
+        $name_sv = $sv[2];
+        $qh = $sv[4];
 
         $arrLMH = [];
-        for ($i = 0; $i < $count_str - 1; $i++) {
-            $tr = $trs[$i];
+        for ($i = 1; $i < $count_str - 1; $i++) {
+            try {
+                $tr = $trs[$i];
+                $td = explode('</td><td>', $tr);
+                $maLMH = $td[6];
+                $name_subject = $td[7];
 
-            $maLMH = explode('<td style="width: 50px">', $tr)[1];
-            $maLMH = explode('</td>', $maLMH)[0];
+                $lmh = new stdClass();
+                $lmh->code = $maLMH;
+                $lmh->name = $name_subject;
 
-            $nhom = explode('<td style="width: 15px">', $tr)[1];
-            $nhom = explode('</td>', $nhom)[0];
-            if ($nhom == 'CL') {
-                $nhom = 0;
+                $arrLMH[] = $lmh;
+            } catch (Exception $e) {
+                abort(404, $e->getMessage());
             }
-
-            $lmh = new stdClass();
-            $lmh->maLMH = $maLMH;
-            $lmh->nhom = intval($nhom);
-
-            $arrLMH[] = $lmh;
         }
 
         return [
+            'msv' => $maSV_,
             'name' => $name_sv,
             'qh' => $qh,
             'timetable' => $arrLMH,

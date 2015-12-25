@@ -10,11 +10,13 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
+            <h2>Đăng ký</h2>
+
             <form action="{{ route('getInfo') }}" data-toggle="validator" method="POST">
                 {!! csrf_field() !!}
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group">
+                        <div class="form-group" id="form_msv">
                             <label for="msv">Mã số Sinh Viên:</label>
 
                             <div class="input-group">
@@ -56,7 +58,19 @@
             </form>
         </div>
         <div class="col-md-6">
+            <h2>Danh sách môn thi</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Mã LMH</th>
+                    <th>Tên môn học</th>
+                </tr>
+                </thead>
+                <tbody>
 
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
