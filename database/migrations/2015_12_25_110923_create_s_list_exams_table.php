@@ -3,20 +3,18 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSUsersTable extends Migration {
+class CreateSListExamsTable extends Migration {
 	/**
 	 * Run the migrations.
 	 *
 	 * @return void
 	 */
 	public function up() {
-		Schema::create( 's_users', function ( Blueprint $table ) {
+		Schema::create( 's_list_exams', function ( Blueprint $table ) {
 			$table->increments( 'id' );
 
-			$table->string( 'email' );
-			$table->string( 'msv' );
-			$table->boolean( 'is_active' );
-
+			$table->integer( 'user_id' );
+			$table->integer( 'subject' );
 
 			$table->timestamps();
 		} );
@@ -28,6 +26,6 @@ class CreateSUsersTable extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::drop( 's_users' );
+		Schema::drop( 's_list_exams' );
 	}
 }

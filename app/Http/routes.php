@@ -11,78 +11,95 @@
 |
 */
 
-Route::get( '/', function () {
-	return view( 'welcome' );
-} );
+Route::get(
+    '/', function () {
+    return view('welcome');
+}
+);
 
-Route::group( [ 'prefix' => 'v1' ], function () {
-	/**
-	 * Get group by base
-	 */
-	Route::any( 'getGroup', 'ClassXController@getGroup' );
+Route::group(
+    ['prefix' => 'v1'], function () {
+    /**
+     * Get group by base
+     */
+    Route::any('getGroup', 'ClassXController@getGroup');
 
-	/**
-	 * Post
-	 */
-	Route::group( [ 'prefix' => 'post' ], function () {
-		Route::any( '', 'PostController@post' );
+    /**
+     * Post
+     */
+    Route::group(['prefix' => 'post'], function () {
+        Route::any('', 'PostController@post');
 
-		/**
-		 * Post comment
-		 */
-		Route::any( 'comment', 'CommentController@comment' );
-	} );
+        /**
+         * Post comment
+         */
+        Route::any('comment', 'CommentController@comment');
+    });
 
-	Route::any( 'timetable', 'TimetableController@getTimetable' );
+    Route::any('timetable', 'TimetableController@getTimetable');
 
-	/**
-	 * Get post
-	 */
-	Route::any( 'getPosts', 'PostController@getPosts' );
+    /**
+     * Get post
+     */
+    Route::any('getPosts', 'PostController@getPosts');
 
-	/**
-	 * Like
-	 */
-	Route::any( 'like', 'LikeConfirmedController@like' );
+    /**
+     * Like
+     */
+    Route::any('like', 'LikeConfirmedController@like');
 
-	/**
-	 * Vote
-	 */
-	Route::any( 'vote', 'LikeConfirmedController@vote' );
+    /**
+     * Vote
+     */
+    Route::any('vote', 'LikeConfirmedController@vote');
 
-	/**
-	 * Login
-	 */
-	Route::any( 'login', 'UserController@login' );
+    /**
+     * Login
+     */
+    Route::any('login', 'UserController@login');
 
-	/**
-	 * Register
-	 */
-	Route::any( 'register', 'UserController@register' );
+    /**
+     * Register
+     */
+    Route::any('register', 'UserController@register');
 
-	/**
-	 * Update
-	 */
-	Route::any( 'update', 'UserController@update' );
-} );
+    /**
+     * Update
+     */
+    Route::any('update', 'UserController@update');
+}
+);
 
 /**
  * Seed databases
  */
-Route::group( [ 'prefix' => 'seed' ], function () {
-	Route::get( 'classX', 'SeedDataController@seedDataClassX_es' );
-	Route::get( 'time', 'SeedDataController@seedTimetable' );//1
-	Route::get( 'subject', 'SeedDataController@seedSubject' );//2
-	Route::get( 'classSubject', 'SeedDataController@seedClassSubject' );//3
-	Route::get( 'teacher', 'SeedDataController@createTeacherUser' );//4
-	Route::get( 'subClassSubject', 'SeedDataController@seedSubClassSubject' );//5
-} );
+Route::group(
+    ['prefix' => 'seed'], function () {
+    Route::get('classX', 'SeedDataController@seedDataClassX_es');
+    Route::get('time', 'SeedDataController@seedTimetable');//1
+    Route::get('subject', 'SeedDataController@seedSubject');//2
+    Route::get('classSubject', 'SeedDataController@seedClassSubject');//3
+    Route::get('teacher', 'SeedDataController@createTeacherUser');//4
+    Route::get('subClassSubject', 'SeedDataController@seedSubClassSubject');//5
+}
+);
 
 /**
  * Test
  */
-Route::get( 'test', 'TestController@test_helper' );
+Route::get('test', 'TestController@test_helper');
 
-Route::group( [ 'prefix' => 'subscribe' ], function () {
-	Route::get( 'test', 'ScoreUET@updateScoreUET' );
-} );
+Route::group(
+    ['prefix' => 'subscribe'], function () {
+    Route::get('test', 'ScoreUET@updateScoreUET');
+
+    Route::any('/', [
+        'as' => 'subscribe',
+        'uses' => 'ScoreUET@registerSubscriber'
+    ]);
+
+    Route::any('getInfo', [
+        'as' => 'getInfo',
+        'uses' => 'ScoreUET@getInfoStudent',
+    ]);
+});
