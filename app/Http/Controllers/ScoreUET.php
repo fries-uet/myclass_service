@@ -119,7 +119,6 @@ class ScoreUET extends Controller
         var_dump($host);
         var_dump($host_1);
         var_dump($host_2);
-        var_dump($request);
         dd($request);
         die();
 
