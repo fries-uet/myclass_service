@@ -111,22 +111,8 @@ class ScoreUET extends Controller
 
     public function getInfoStudent(Request $request)
     {
-        $myHost = url('/');
-        $host = $request->getHost();
-        $host_1 = $request->getHttpHost();
-        $host_2 = $request->getRequestUri();
-
-        var_dump($host);
-        var_dump($host_1);
-        var_dump($host_2);
-        dd($request);
-        die();
-
-        if ($host == '' || strpos($myHost, $host) === false) {
-            abort(404);
-        }
-
         $maSV = $request->get('msv');
+        $maSV = intval($maSV);
 
         if (strlen($maSV) !== 8) {
             abort(404);
