@@ -77,12 +77,12 @@
 
 </div>
 <script>
-    var url_ajax = "{{ route('getInfo') }}";
+    var url_ajax = "{{ base64_encode(route('getInfo')) }}";
 </script>
-<script src='//www.google.com/recaptcha/api.js'></script>
-<script src="{{ url('/')  }}/assets/js/jquery.min.js"></script>
-<script src="{{ url('/')  }}/assets/js/bootstrap.min.js"></script>
-<script src="{{ url('/')  }}/assets/js/validator.min.js"></script>
-<script src="{{ url('/')  }}/assets/js/main.js"></script>
+<?php enqueueScript('//www.google.com/recaptcha/api.js'); ?>
+<?php enqueueScript(url('/') . '/assets/js/jquery.min.js', '1.11.3'); ?>
+<?php enqueueScript(url('/') . '/assets/js/bootstrap.min.js', '3.3.6'); ?>
+<?php enqueueScript(url('/') . '/assets/js/validator.min.js', '0.9.0'); ?>
+<?php enqueueScript(url('/') . '/assets/js/main.js', '1.0.1'); ?>
 </body>
 </html>
