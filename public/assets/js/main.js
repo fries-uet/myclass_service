@@ -6,6 +6,11 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    var msv = $('#msv').val();
+    if (msv != '' && msv.length == 8) {
+        loadTimetable();
+    }
+
     function loadTimetable() {
         var msv = $('#msv').val();
         var url = window.atob(url_ajax) + '?msv=' + msv;

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\s_user;
 use Exception;
 use FCurl;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use Illuminate\Support\Facades\Log;
 use stdClass;
+use Validator;
 
 class ScoreUET extends Controller
 {
@@ -26,19 +27,79 @@ class ScoreUET extends Controller
 
     public function registerSubscriber(Request $request)
     {
+        $email = (!$request->get('email') ? '' : $request->get('email'));
+        $msv = (!$request->get('msv') ? '' : $request->get('msv'));
+        $recapcha = (!$request->get('g-recaptcha-response') ? '' : $request->get('g-recaptcha-response'));
+
+        $data = [];
+        $data['data'] = [
+            'email' => $email,
+            'msv' => $msv,
+        ];
+        $data['error'] = false;
+        $data['msg'] = 'Bạn vui lòng kiểm tra mail để xác nhận đăng ký. Nếu không có hãy kiểm tra trong mục Spam.';
+
         if ($request->getMethod() != 'POST') {
-            return view('subscribe')->with('recapcha', 'a');
+            return view('subscribe')->with('data', $data);
         }
 
-        $recapcha = $request->get('g-recaptcha-response');
-        if ($recapcha) {
-            $email = $request->get('email');
+        $validator = $this->validator($data['data']);
+        $errors = $validator->errors()->getMessages();
+        if (count($errors) > 0) {
+            return view('subscribe')->with('data', $data)
+                ->withErrors($errors);
         }
-        $mssv = $request->get('mssv');
 
-        return view('subscribe')->with('recapcha', $recapcha);
+        /**
+         * Chưa xác thực Captcha
+         */
+        if ($recapcha == '') {
+            return view('subscribe')->with('data', $data)
+                ->withErrors([
+                    'msg' => 'Vui lòng xác nhận CAPTCHA.'
+                ]);
+        }
+
+        // Create
+        try {
+            $this->create($data['data']);
+        } catch (Exception $e) {
+            return view('subscribe')->with('data', $data)
+                ->withErrors([
+                    'msg' => $e->getMessage()
+                ]);
+        }
+
+        return view('subscribe')->with('data', $data);
     }
 
+    /**
+     * Validate request
+     *
+     * @param array $data
+     * @return \Illuminate\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'msv' => 'required|max:8|min:8',
+            'email' => 'required|email|max:255|unique:s_users',
+        ], [
+                'email.unique' => 'Email đã được sử dụng.',
+                'email.email' => 'Email không hợp lệ.',
+                'email.required' => 'Trường Email là bắt buộc',
+                'msv.required' => 'Trường Mã số Sinh Viên là bắt buộc',
+            ]
+        );
+    }
+
+    protected function create(array $data)
+    {
+        return s_user::create([
+            'email' => $data['email'],
+            'msv' => $data['msv'],
+        ]);
+    }
 
     /**
      * Get list status score UET
