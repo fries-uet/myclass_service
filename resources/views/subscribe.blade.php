@@ -24,7 +24,8 @@
                                             class="glyphicon glyphicon-education"></span></span>
                                 <input type="number" name="msv" id="msv" class="form-control"
                                        data-remote="{{ route('getInfo') }}"
-                                       data-error="Mã số sinh viên không đúng! Hoặc đã có vấn đề gì đó đã xảy ra.">
+                                       data-error="Mã số sinh viên không đúng! Hoặc đã có vấn đề gì đó đã xảy ra."
+                                       data-minlength="8">
                             </div>
                             <div class="help-block with-errors"></div>
                         </div>
@@ -49,17 +50,17 @@
                     <div class="help-block with-errors"></div>
                 </div>
 
-                {{--@include('api.recapcha')--}}
+                {{--                @include('api.recapcha')--}}
 
                 <div class="form-group">
-                    <button class="btn btn-success btn-block" type="submit">Submit</button>
+                    <button class="btn btn-success btn-block" type="submit">Subscribe</button>
                 </div>
 
             </form>
         </div>
         <div class="col-md-6">
             <h2>Danh sách môn thi</h2>
-            <table class="table">
+            <table class="table" id="timetable">
                 <thead>
                 <tr>
                     <th>STT</th>
@@ -68,7 +69,6 @@
                 </tr>
                 </thead>
                 <tbody>
-
                 </tbody>
             </table>
         </div>
