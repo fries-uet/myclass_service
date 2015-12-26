@@ -8,7 +8,7 @@ jQuery(document).ready(function ($) {
 
     function loadTimetable() {
         var msv = $('#msv').val();
-        var url = 'http://tu.me/myclass/subscribe/getInfo?msv=' + msv;
+        var url = url_ajax + '?msv=' + msv;
 
         $.ajax({
             url: url,

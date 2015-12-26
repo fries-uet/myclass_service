@@ -76,7 +76,9 @@
 </div>
 
 </div>
-
+<script>
+    var url_ajax = "{{ route('getInfo') }}";
+</script>
 <script src='//www.google.com/recaptcha/api.js'></script>
 <script src="{{ url('/')  }}/assets/js/jquery.min.js"></script>
 <script src="{{ url('/')  }}/assets/js/bootstrap.min.js"></script>
