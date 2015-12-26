@@ -16,6 +16,7 @@ class CreateSUsersTable extends Migration
             $table->increments('id');
 
             $table->string('email')->unique();
+            $table->string('name');
             $table->string('msv');
             $table->boolean('is_active')->default(0);
 

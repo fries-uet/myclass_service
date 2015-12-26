@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\s_list_exam;
 use App\s_user;
 use Exception;
 use FCurl;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Hash;
 use stdClass;
 use Validator;
 
@@ -29,12 +31,14 @@ class ScoreUET extends Controller
     {
         $email = (!$request->get('email') ? '' : $request->get('email'));
         $msv = (!$request->get('msv') ? '' : $request->get('msv'));
+        $name = (!$request->get('name') ? '' : $request->get('name'));
         $recapcha = (!$request->get('g-recaptcha-response') ? '' : $request->get('g-recaptcha-response'));
 
         $data = [];
         $data['data'] = [
             'email' => $email,
             'msv' => $msv,
+            'name' => $name,
         ];
         $data['error'] = false;
         $data['msg'] = 'Bạn vui lòng kiểm tra mail để xác nhận đăng ký. Nếu không có hãy kiểm tra trong mục Spam.';
@@ -74,6 +78,92 @@ class ScoreUET extends Controller
     }
 
     /**
+     * Xác nhận đăng ký
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function confirm(Request $request)
+    {
+        $token = (!$request->get('token') ? '' : $request->get('token'));
+        $email = (!$request->get('email') ? '' : $request->get('email'));
+
+        $validation = Validator::make(
+            array(
+                'token' => $token,
+                'email' => $email,
+            ),
+            array(
+                'token' => 'required',
+                'email' => 'required|email|max:255',
+            )
+        );
+        $errors = $validation->errors()->getMessages();
+
+        if (count($errors) > 0) {
+            return view('confirm')->withErrors($errors);
+        }
+
+        $check = Hash::check($email, $token);
+        if (!$check) {
+            return view('confirm')->withErrors([
+                'token_broken' => 'Email và token không khớp!'
+            ]);
+        }
+
+        $user = s_user::all()
+            ->where('email', $email)->first();
+
+        $msv = $user->msv;
+        $id = $user->id;
+        $info = getInfoStudent($msv);
+        if ($info == false) {
+            return view('confirm')->withErrors([
+                'info' => 'Đã có cái gì đó sai sai ở đây!'
+            ]);
+        }
+
+        $timetable = $info['timetable'];
+        foreach ($timetable as $i => $t) {
+            $code = $t->code;
+            $name = $t->name;
+
+            $check_again = s_list_exam::all()
+                ->where('user_id', $id)
+                ->where('subject_code', $code)->count();
+
+            if ($check_again == 0) {
+                s_list_exam::create([
+                    'user_id' => $id,
+                    'subject_code' => $code,
+                    'subject_name' => $name,
+                ]);
+            }
+        }
+
+        // Tài khoản đã được active
+        if ($user->is_active) {
+            return view('confirm')->withErrors([
+                'confirmed' => 'Tài khoản của bạn đã được xác nhận trước đó.!'
+            ]);
+        }
+
+        // Update is_active
+        $active = $user->update([
+            'is_active' => 1
+        ]);
+
+        // Update active thất bại
+        if (!$active) {
+            return view('confirm')->withErrors([
+                'active_broken' => 'Có cái gì đó sai sai ở đây!'
+            ]);
+        }
+
+        return view('confirm');
+    }
+
+    /**
      * Validate request
      *
      * @param array $data
@@ -84,6 +174,7 @@ class ScoreUET extends Controller
         return Validator::make($data, [
             'msv' => 'required|max:8|min:8',
             'email' => 'required|email|max:255|unique:s_users',
+            'name' => 'required',
         ], [
                 'email.unique' => 'Email đã được sử dụng.',
                 'email.email' => 'Email không hợp lệ.',
@@ -98,6 +189,7 @@ class ScoreUET extends Controller
         return s_user::create([
             'email' => $data['email'],
             'msv' => $data['msv'],
+            'name' => $data['name'],
         ]);
     }
 
@@ -180,64 +272,11 @@ class ScoreUET extends Controller
             abort(404);
         }
 
-        $url = 'http://203.113.130.218:50223/congdaotao/module/dsthi_new/';
-        $browser = new fCurl();
-        $browser->refer = $url;
-        $browser->resetopt();
-        $fields = [
-            'keysearch' => $maSV,
-        ];
-
-        $browser->post($browser->refer, $fields, true, 0);
-
-        $content = $browser->return;
-        $content = explode('<table class="items">', $content)[1];
-        $content = explode('</table>', $content)[0];
-
-        if (strpos($content, '<td colspan="14" class="empty">') !== false) {
+        $info = getInfoStudent($maSV);
+        if (!$info) {
             abort(404);
         }
 
-        $trs = explode('</tr>', $content);
-        $count_str = count($trs);
-
-        if ($count_str == 2) {
-            abort(404);
-        }
-
-        $tr_first = $trs[1];
-        $sv = explode('</td><td>', $tr_first);
-
-        $maSV_ = intval($sv[1]);
-        if ($maSV_ != $maSV) {
-            abort(404);
-        }
-        $name_sv = $sv[2];
-        $qh = $sv[4];
-
-        $arrLMH = [];
-        for ($i = 1; $i < $count_str - 1; $i++) {
-            try {
-                $tr = $trs[$i];
-                $td = explode('</td><td>', $tr);
-                $maLMH = $td[6];
-                $name_subject = $td[7];
-
-                $lmh = new stdClass();
-                $lmh->code = $maLMH;
-                $lmh->name = $name_subject;
-
-                $arrLMH[] = $lmh;
-            } catch (Exception $e) {
-                abort(404, $e->getMessage());
-            }
-        }
-
-        return [
-            'msv' => $maSV_,
-            'name' => $name_sv,
-            'qh' => $qh,
-            'timetable' => $arrLMH,
-        ];
+        return $info;
     }
 }

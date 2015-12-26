@@ -87,7 +87,8 @@ $msg = $data['msg'];
         <div class="row">
             <div class="col-md-12">
                 @if(count($errors) > 0)
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger errors">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <strong>Đã có lỗi xảy ra!</strong>
                         <ul>
                             @foreach($errors->all() as $key => $error)

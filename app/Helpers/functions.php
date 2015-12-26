@@ -25,9 +25,84 @@ function onlyAllowPostRequest(Request $request)
     }
 }
 
+/**
+ * Enqueue script
+ *
+ * @param $uri
+ * @param string $version
+ */
 function enqueueScript($uri, $version = '1.0.0')
 {
     echo '<script src="' . $uri . '?v=' . $version . '"></script>';
+}
+
+function getInfoStudent($maSV)
+{
+    $maSV = intval($maSV);
+
+    if (strlen($maSV) !== 8) {
+        return false;
+    }
+
+    $url = 'http://203.113.130.218:50223/congdaotao/module/dsthi_new/';
+    $browser = new fCurl();
+    $browser->refer = $url;
+    $browser->resetopt();
+    $fields = [
+        'keysearch' => $maSV,
+    ];
+
+    $browser->post($browser->refer, $fields, true, 0);
+
+    $content = $browser->return;
+    $content = explode('<table class="items">', $content)[1];
+    $content = explode('</table>', $content)[0];
+
+    if (strpos($content, '<td colspan="14" class="empty">') !== false) {
+        return false;
+    }
+
+    $trs = explode('</tr>', $content);
+    $count_str = count($trs);
+
+    if ($count_str == 2) {
+        return false;
+    }
+
+    $tr_first = $trs[1];
+    $sv = explode('</td><td>', $tr_first);
+
+    $maSV_ = intval($sv[1]);
+    if ($maSV_ != $maSV) {
+        return false;
+    }
+    $name_sv = $sv[2];
+    $qh = $sv[4];
+
+    $arrLMH = [];
+    for ($i = 1; $i < $count_str - 1; $i++) {
+        try {
+            $tr = $trs[$i];
+            $td = explode('</td><td>', $tr);
+            $maLMH = $td[6];
+            $name_subject = $td[7];
+
+            $lmh = new stdClass();
+            $lmh->code = $maLMH;
+            $lmh->name = $name_subject;
+
+            $arrLMH[] = $lmh;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    return [
+        'msv' => $maSV_,
+        'name' => $name_sv,
+        'qh' => $qh,
+        'timetable' => $arrLMH,
+    ];
 }
 
 function getTimeTableVNU($user, $pass)

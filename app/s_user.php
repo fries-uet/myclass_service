@@ -10,6 +10,8 @@ class s_user extends Model
 
     protected $fillable = [
         'email',
+        'name',
         'msv',
+        'is_active',
     ];
 }
