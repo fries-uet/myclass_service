@@ -14,7 +14,7 @@ $msv = $data['data']['msv'];
 
 @section('body')
     <div class="container text-center" style="padding-top: 50px;">
-        <h1>Dịch vụ thông báo điểm thi qua Email</h1>
+        <h1>Công cụ hóng điểm thi chính xác và nhanh nhất!</h1>
     </div>
     <div class="container">
         <div class="row">
