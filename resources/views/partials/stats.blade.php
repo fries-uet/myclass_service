@@ -1,0 +1,9 @@
+<div class="stats">
+    <div class="row text-center">
+        <div class="col-md-12">
+            <p class="text">Đã có <span>{{ $count_subject  }}</span> môn có điểm thi và <span>{{ $count_user }}</span>
+                người dùng tin tưởng và sử dụng.
+            </p>
+        </div>
+    </div>
+</div>

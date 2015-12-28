@@ -5,11 +5,13 @@
 @endsection
 
 @section('head.style')
-    <link rel="stylesheet" href="{{ url('/') }}/assets/css/style.css"/>
+    <link rel="stylesheet" href="{{ url('/') }}/assets/css/style.css?v=1.1.0"/>
 @endsection
 <?php
 $email = $data['data']['email'];
 $msv = $data['data']['msv'];
+$count_subject = $data['count_subject'];
+$count_user = $data['count_user'];
 ?>
 
 @section('body')
@@ -98,6 +100,8 @@ $msv = $data['data']['msv'];
                 @endif
             </div>
         </div>
+
+        @include('partials.stats')
     </div>
 @endsection
 

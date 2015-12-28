@@ -110,11 +110,25 @@ class ScoreUET extends Controller
         $recapcha = (!$request->get('g-recaptcha-response') ? '' : $request->get('g-recaptcha-response'));
 
         $data = [];
+
         $data['data'] = [
             'email' => $email,
             'msv' => $msv,
             'name' => $name,
         ];
+
+        /**
+         * Đếm số môn có điểm
+         */
+        $x_scores = s_score::all();
+        $x_scores_count = $x_scores->count() - $x_scores->where('href', '')->count();
+        $data['count_subject'] = $x_scores_count;
+
+        /**
+         * Số người dùng
+         */
+        $x_user_count = s_user::all()->count();
+        $data['count_user'] = $x_user_count;
 
         if ($request->getMethod() != 'POST') {
             return view('subscribe')->with('data', $data);
