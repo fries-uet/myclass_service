@@ -278,12 +278,12 @@ class ScoreUET extends Controller
         /**
          * Chưa xác thực Captcha
          */
-//        if ($recapcha == '') {
-//            return view('reconfirm')->with('data', $data)
-//                ->withErrors([
-//                    'msg' => 'Vui lòng xác nhận CAPTCHA.'
-//                ]);
-//        }
+        if ($recapcha == '') {
+            return view('reconfirm')->with('data', $data)
+                ->withErrors([
+                    'msg' => 'Vui lòng xác nhận CAPTCHA.'
+                ]);
+        }
 
         $user = s_user::all()
             ->where('email', $email);
