@@ -278,12 +278,12 @@ class ScoreUET extends Controller
         /**
          * Chưa xác thực Captcha
          */
-        if ($recapcha == '') {
-            return view('reconfirm')->with('data', $data)
-                ->withErrors([
-                    'msg' => 'Vui lòng xác nhận CAPTCHA.'
-                ]);
-        }
+//        if ($recapcha == '') {
+//            return view('reconfirm')->with('data', $data)
+//                ->withErrors([
+//                    'msg' => 'Vui lòng xác nhận CAPTCHA.'
+//                ]);
+//        }
 
         $user = s_user::all()
             ->where('email', $email);
@@ -292,6 +292,14 @@ class ScoreUET extends Controller
             return view('reconfirm')->with('data', $data)
                 ->withErrors([
                     'msg' => 'Không tồn tại người dùng này.'
+                ]);
+        }
+
+        $count_active = $user->where('is_active', 1)->count();
+        if ($count_active > 0) {
+            return view('reconfirm')->with('data', $data)
+                ->withErrors([
+                    'msg' => 'Tài khoản đã được kích hoạt rồi.'
                 ]);
         }
 
