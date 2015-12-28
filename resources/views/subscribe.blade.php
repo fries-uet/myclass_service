@@ -62,7 +62,7 @@ $msv = $data['data']['msv'];
                     @include('api.recapcha')
 
                     <div class="form-group">
-                        <button class="btn btn-success btn-block" type="submit">Subscribe</button>
+                        <button class="btn btn-success btn-block" type="submit">Đăng ký</button>
                     </div>
 
                 </form>
