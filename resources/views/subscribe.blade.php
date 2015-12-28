@@ -109,5 +109,5 @@ $msv = $data['data']['msv'];
     <?php enqueueScript(url('/') . '/assets/js/jquery.min.js', '1.11.3'); ?>
     <?php enqueueScript(url('/') . '/assets/js/bootstrap.min.js', '3.3.6'); ?>
     <?php enqueueScript(url('/') . '/assets/js/validator.min.js', '0.9.0'); ?>
-    <?php enqueueScript(url('/') . '/assets/js/main.js', time()); ?>
+    <?php enqueueScript(url('/') . '/assets/js/main.min.js', '1.0.1'); ?>
 @endsection
