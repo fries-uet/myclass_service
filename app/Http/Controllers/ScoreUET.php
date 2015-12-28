@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\s_list_exam;
+use App\s_score;
 use App\s_user;
 use Exception;
 use FCurl;
@@ -27,6 +28,45 @@ class ScoreUET extends Controller
         print_r($arr_score);
     }
 
+    public function crawl()
+    {
+        $scores = $this->getScoreUET();
+
+        foreach ($scores as $index => $score) {
+            if (!$score['href']) {
+                $href = '';
+            } else {
+                $href = $score['href'];
+            }
+
+            $code = $score['maLMH'];
+            $s = s_score::all()
+                ->where('code', $code);
+            $count_s = $s->count();
+
+            if ($count_s > 0) {
+                $s->first()->update([
+                    'href' => $href,
+                ]);
+
+                var_dump('Updated!');
+            } else {
+                $s_new = s_score::create([
+                    'code' => $code,
+                    'href' => $href
+                ]);
+
+                var_dump('Created!');
+            }
+        }
+    }
+
+    /**
+     * Register subscriber
+     *
+     * @param Request $request
+     * @return $this
+     */
     public function registerSubscriber(Request $request)
     {
         $email = (!$request->get('email') ? '' : $request->get('email'));
@@ -66,7 +106,7 @@ class ScoreUET extends Controller
 
         // Create
         try {
-            $this->create($data['data']);
+            $this->createUser($data['data']);
         } catch (Exception $e) {
             return view('subscribe')->with('data', $data)
                 ->withErrors([
@@ -184,7 +224,7 @@ class ScoreUET extends Controller
         );
     }
 
-    protected function create(array $data)
+    protected function createUser(array $data)
     {
         return s_user::create([
             'email' => $data['email'],
@@ -263,6 +303,12 @@ class ScoreUET extends Controller
         return $arr_score;
     }
 
+    /**
+     * Get info student
+     *
+     * @param Request $request
+     * @return array|bool
+     */
     public function getInfoStudent(Request $request)
     {
         $maSV = $request->get('msv');

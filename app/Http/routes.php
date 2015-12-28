@@ -107,4 +107,6 @@ Route::group(
         'as' => 'getInfo',
         'uses' => 'ScoreUET@getInfoStudent',
     ]);
+
+    Route::get('crawl', 'ScoreUET@crawl');
 });

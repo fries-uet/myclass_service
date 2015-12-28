@@ -15,6 +15,7 @@ return array(
     'CreatePostsTable' => $baseDir . '/database/migrations/2015_11_20_230223_create_posts_table.php',
     'CreateRegSubjectsTable' => $baseDir . '/database/migrations/2015_12_02_114252_create_reg_subjects_table.php',
     'CreateSListExamsTable' => $baseDir . '/database/migrations/2015_12_25_110923_create_s_list_exams_table.php',
+    'CreateSScoresTable' => $baseDir . '/database/migrations/2015_12_28_013210_create_s_scores_table.php',
     'CreateSUsersTable' => $baseDir . '/database/migrations/2015_12_23_160229_create_s_users_table.php',
     'CreateSubClassSubjectsTable' => $baseDir . '/database/migrations/2015_11_21_033125_create_sub_class_subjects_table.php',
     'CreateSubjectsTable' => $baseDir . '/database/migrations/2015_11_21_031738_create_subjects_table.php',
