@@ -109,4 +109,9 @@ Route::group(
     ]);
 
     Route::get('crawl', 'ScoreUET@crawl');
+
+    /**
+     * Updated and send mail
+     */
+    Route::any('update', 'ScoreUET@update');
 });

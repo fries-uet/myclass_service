@@ -10,8 +10,6 @@
 <?php
 $email = $data['data']['email'];
 $msv = $data['data']['msv'];
-$error = $data['error'];
-$msg = $data['msg'];
 ?>
 
 @section('body')

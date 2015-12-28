@@ -21,11 +21,46 @@ class ScoreUET extends Controller
         return view('subscribe');
     }
 
-    public function updateScoreUET()
+    public function update()
     {
-        $arr_score = $this->getScoreUET();
+        $scores = s_score::all()->toArray();
 
-        print_r($arr_score);
+        $s_list = s_list_exam::all()
+            ->where('sent', 0);
+
+        foreach ($scores as $index => $score) {
+            $code = $score['code'];
+            $href = $score['href'];
+
+            if ($href != '') {
+                $href = str_replace(' ', '%20', $href);
+                $s_l = $s_list->where('subject_code', $code);
+
+                if ($s_l->count() > 0) {
+                    $arrTemp = $s_l->toArray();
+
+                    foreach ($arrTemp as $i => $a) {
+                        $id = intval($a['id']);
+                        $user_id = intval($a['user_id']);
+                        $subject_name = $a['subject_name'];
+
+                        $user = s_user::all()
+                            ->where('id', $user_id)->first();
+                        $email = $user->email;
+
+                        $mailController = new MailController();
+                        $send = $mailController->sendMailResultExam($email, $subject_name, $href);
+
+                        if ($send) {
+                            $s_l_update = $s_l->where('id', $id)->first();
+                            $s_l_update->update([
+                                'sent' => 1
+                            ]);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public function crawl()
@@ -80,8 +115,6 @@ class ScoreUET extends Controller
             'msv' => $msv,
             'name' => $name,
         ];
-        $data['error'] = false;
-        $data['msg'] = 'Bạn vui lòng kiểm tra mail để xác nhận đăng ký. Nếu không có hãy kiểm tra trong mục Spam.';
 
         if ($request->getMethod() != 'POST') {
             return view('subscribe')->with('data', $data);
@@ -113,6 +146,9 @@ class ScoreUET extends Controller
                     'msg' => $e->getMessage()
                 ]);
         }
+
+        $emailController = new MailController();
+        $emailController->sendMailConfirm($email);
 
         return view('subscribe')->with('data', $data);
     }
