@@ -259,6 +259,48 @@ class ScoreUET extends Controller
         return view('confirm');
     }
 
+    public function reconfirm_front()
+    {
+        $data['email'] = '';
+
+        return view('reconfirm')->with('data', $data);
+    }
+
+    public function reconfirm(Request $request)
+    {
+        $email = (!$request->get('email') ? '' : $request->get('email'));
+        $recapcha = (!$request->get('g-recaptcha-response') ? '' : $request->get('g-recaptcha-response'));
+
+        $data = [];
+
+        $data['email'] = $email;
+
+        /**
+         * Chưa xác thực Captcha
+         */
+        if ($recapcha == '') {
+            return view('reconfirm')->with('data', $data)
+                ->withErrors([
+                    'msg' => 'Vui lòng xác nhận CAPTCHA.'
+                ]);
+        }
+
+        $user = s_user::all()
+            ->where('email', $email);
+
+        if ($user->count() == 0) {
+            return view('reconfirm')->with('data', $data)
+                ->withErrors([
+                    'msg' => 'Không tồn tại người dùng này.'
+                ]);
+        }
+
+        $emailController = new MailController();
+        $emailController->sendMailConfirm($email);
+
+        return view('reconfirm')->with('data', $data);
+    }
+
     /**
      * Validate request
      *

@@ -65,6 +65,9 @@ $count_user = $data['count_user'];
 
                     <div class="form-group">
                         <button class="btn btn-success btn-block" type="submit">Đăng ký</button>
+                        <div class="reconfirm text-center" style="padding-top: 20px">
+                            <a href="{{ route('reconfirm') }}">Xác nhận lại</a>
+                        </div>
                     </div>
 
                 </form>

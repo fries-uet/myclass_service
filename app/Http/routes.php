@@ -103,6 +103,16 @@ Route::group(
         'uses' => 'ScoreUET@confirm'
     ]);
 
+    Route::get('reconfirm', [
+        'as' => 'reconfirm',
+        'uses' => 'ScoreUET@reconfirm_front'
+    ]);
+
+    Route::post('reconfirm', [
+        'as' => 'reconfirm',
+        'uses' => 'ScoreUET@reconfirm'
+    ]);
+
     Route::any('getInfo', [
         'as' => 'getInfo',
         'uses' => 'ScoreUET@getInfoStudent',
