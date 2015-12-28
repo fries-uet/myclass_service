@@ -120,13 +120,6 @@ class ScoreUET extends Controller
             return view('subscribe')->with('data', $data);
         }
 
-        $validator = $this->validator($data['data']);
-        $errors = $validator->errors()->getMessages();
-        if (count($errors) > 0) {
-            return view('subscribe')->with('data', $data)
-                ->withErrors($errors);
-        }
-
         /**
          * Chưa xác thực Captcha
          */
@@ -135,6 +128,13 @@ class ScoreUET extends Controller
                 ->withErrors([
                     'msg' => 'Vui lòng xác nhận CAPTCHA.'
                 ]);
+        }
+
+        $validator = $this->validator($data['data']);
+        $errors = $validator->errors()->getMessages();
+        if (count($errors) > 0) {
+            return view('subscribe')->with('data', $data)
+                ->withErrors($errors);
         }
 
         // Create
@@ -150,7 +150,13 @@ class ScoreUET extends Controller
         $emailController = new MailController();
         $emailController->sendMailConfirm($email);
 
-        return view('subscribe')->with('data', $data);
+
+        return redirect()->route('subscribe.success');
+    }
+
+    public function success()
+    {
+        return view('subscribe_success');
     }
 
     /**

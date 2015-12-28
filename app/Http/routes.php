@@ -98,6 +98,11 @@ Route::group(
         'uses' => 'ScoreUET@registerSubscriber'
     ]);
 
+    Route::get('success', [
+        'as' => 'subscribe.success',
+        'uses' => 'ScoreUET@success'
+    ]);
+
     Route::any('confirm', [
         'as' => 'confirm',
         'uses' => 'ScoreUET@confirm'

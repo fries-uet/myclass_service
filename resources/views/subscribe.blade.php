@@ -13,7 +13,8 @@ $msv = $data['data']['msv'];
 ?>
 
 @section('body')
-    <div class="subscriber" style="padding-top: 50px;">
+    <div class="container text-center" style="padding-top: 50px;">
+        <h1>Dịch vụ thông báo điểm thi qua Email</h1>
     </div>
     <div class="container">
         <div class="row">
