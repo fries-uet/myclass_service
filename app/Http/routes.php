@@ -90,7 +90,7 @@ Route::group(
 Route::get('test', 'TestController@test_helper');
 
 Route::group(
-    ['prefix' => 'subscribe'], function () {
+    ['prefix' => ''], function () {
     Route::get('test', 'ScoreUET@updateScoreUET');
 
     Route::any('/', [
