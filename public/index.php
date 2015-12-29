@@ -7,6 +7,8 @@
  * @author   Taylor Otwell <taylorotwell@gmail.com>
  */
 
+include_once('compress.php');
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
@@ -19,7 +21,7 @@
 |
 */
 
-require __DIR__.'/../bootstrap/autoload.php';
+require __DIR__ . '/../bootstrap/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +35,7 @@ require __DIR__.'/../bootstrap/autoload.php';
 |
 */
 
-$app = require_once __DIR__.'/../bootstrap/app.php';
+$app = require_once __DIR__ . '/../bootstrap/app.php';
 
 /*
 |--------------------------------------------------------------------------
