@@ -6,4 +6,7 @@
             </p>
         </div>
     </div>
+    <div class="link_results">
+        <a href="{{ route('results') }}">Danh sách chi tiết</a>
+    </div>
 </div>

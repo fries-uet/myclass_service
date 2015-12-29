@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\ClassSubject;
 use App\s_list_exam;
 use App\s_score;
 use App\s_user;
+use App\Subject;
 use Exception;
 use FCurl;
 use Illuminate\Http\Request;
@@ -96,6 +98,38 @@ class ScoreUET extends Controller
         }
     }
 
+    public function results()
+    {
+        /**
+         * Đếm số môn có điểm
+         */
+        $x_scores = s_score::all()->toArray();
+        $subjects = Subject::all();
+
+        $arrTemp = [];
+        foreach ($x_scores as $index => $x_score) {
+            $href = $x_score['href'];
+            $code = $x_score['code'];
+
+            $code_subject = explode(' ', $code)[0];
+            $subject = $subjects->where('maMH', $code_subject);
+            $name_subject = false;
+            if ($subject->count() > 0) {
+                $name_subject = $subject->first()->name;
+            }
+
+            if ($href != '') {
+                $arrTemp[] = [
+                    'code' => $code,
+                    'href' => $href,
+                    'name' => $name_subject
+                ];
+            }
+        }
+
+        return view('results')->with('data', $arrTemp);
+    }
+
     /**
      * Register subscriber
      *
@@ -120,9 +154,16 @@ class ScoreUET extends Controller
         /**
          * Đếm số môn có điểm
          */
-        $x_scores = s_score::all();
-        $x_scores_count = $x_scores->count() - $x_scores->where('href', '')->count();
-        $data['count_subject'] = $x_scores_count;
+        $x_scores = s_score::all()->toArray();
+
+        $countTemp = 0;
+        foreach ($x_scores as $index => $x_score) {
+            if ($x_score['href'] != '') {
+                $countTemp++;
+            }
+        }
+
+        $data['count_subject'] = $countTemp;
 
         /**
          * Số người dùng
