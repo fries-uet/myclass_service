@@ -7,6 +7,6 @@
         </div>
     </div>
     <div class="link_results">
-        <a href="{{ route('results') }}">Danh sách chi tiết</a>
+        <a href="{{ route('results') }}">Danh sách điểm thi của các lớp</a>
     </div>
 </div>
