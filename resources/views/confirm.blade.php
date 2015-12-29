@@ -5,7 +5,7 @@
 @endsection
 
 @section('head.style')
-    <link rel="stylesheet" href="{{ url('/') }}/assets/css/style.css"/>
+    <link rel="stylesheet" href="{{ url('/') }}/assets/css/style.css?v=1.2.0"/>
 @endsection
 <?php
 ?>
