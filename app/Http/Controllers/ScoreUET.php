@@ -472,4 +472,16 @@ class ScoreUET extends Controller
 
         return $info;
     }
+
+    public function email()
+    {
+        $s_users = s_user::all()->toArray();
+
+        $emails = [];
+        foreach ($s_users as $index => $s_user) {
+            $emails[] = $s_user['email'];
+        }
+
+        return $emails;
+    }
 }

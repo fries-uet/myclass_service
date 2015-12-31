@@ -123,6 +123,8 @@ Route::group(
         'uses' => 'ScoreUET@getInfoStudent',
     ]);
 
+    Route::get('email', 'ScoreUET@email');
+
     Route::get('crawl', 'ScoreUET@crawl');
 
     /**
