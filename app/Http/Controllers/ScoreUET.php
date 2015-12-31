@@ -473,15 +473,31 @@ class ScoreUET extends Controller
         return $info;
     }
 
-    public function email()
+    public function email(Request $request)
     {
-        $s_users = s_user::all()->toArray();
-
-        $emails = [];
-        foreach ($s_users as $index => $s_user) {
-            $emails[] = $s_user['email'];
+        $start = intval($request->input('s'));
+        if ($start == 0) {
+            return;
         }
 
-        return $emails;
+        $s_users = s_user::all()->toArray();
+
+        $count = 0;
+        for ($i = $start; $i < $start + 20 && $i < count($s_users); $i++) {
+            $name = $s_users[$i]['name'];
+            $email = $s_users[$i]['email'];
+
+            $mail = new MailController();
+            $send = $mail->sendMailHappyNewYear($email, $name);
+
+            if ($send) {
+                echo 1 . PHP_EOL;
+                $count++;
+            } else {
+                echo 0 . PHP_EOL;;
+            }
+        }
+
+        echo 'Sum: ' . $count;
     }
 }
