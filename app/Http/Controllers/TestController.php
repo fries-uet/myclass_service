@@ -281,5 +281,9 @@ class TestController extends Controller
             'email' => $email,
             'regID' => $regID,
         ]);
+
+        if ($user) {
+            echo 'done!';
+        }
     }
 }
