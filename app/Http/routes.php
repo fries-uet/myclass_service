@@ -136,4 +136,6 @@ Route::group(
 Route::group(['prefix' => 'gcm'], function () {
     Route::any('register', 'TestController@register');
 
+    Route::any('send', 'TestController@send_push_notification');
+
 });

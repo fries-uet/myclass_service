@@ -24,5 +24,6 @@ class VerifyCsrfToken extends BaseVerifier
             'v1/like',
             'v1/vote',
             'gcm/register',
+            'gcm/send',
         ];
 }
