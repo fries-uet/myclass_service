@@ -132,3 +132,8 @@ Route::group(
      */
     Route::any('update', 'ScoreUET@update');
 });
+
+Route::group(['prefix' => 'gcm'], function () {
+    Route::any('register', 'TestController@register');
+
+});
