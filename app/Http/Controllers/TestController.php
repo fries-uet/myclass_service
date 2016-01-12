@@ -298,7 +298,6 @@ class TestController extends Controller
         $url = 'https://android.googleapis.com/gcm/send';
 
         $fields = array(
-            'registration_ids' => $regID,
             'data' => array(
                 'to' => $regID,
                 'message' => $message
