@@ -7,6 +7,7 @@ use FCurl;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use stdClass;
 
 class TestController extends Controller
 {
@@ -297,12 +298,19 @@ class TestController extends Controller
         // Set POST variables
         $url = 'https://android.googleapis.com/gcm/send';
 
-        $fields = array(
-            'data' => array(
-                'to' => '/topics/global',
-                'message' => $message
-            ),
-        );
+//        $fields = array(
+//            'data' => array(
+//                'to' => '/topics/global',
+//                'message' => $message
+//            ),
+//        );
+
+        $jData = new stdClass();
+        $jData->message = $message;
+
+        $jGcmData = new stdClass();
+        $jGcmData->to = '/topics/global';
+        $jGcmData->data = $jData;
 
         $headers = array(
             'Authorization: key=' . GOOGLE_API_KEY,
@@ -322,7 +330,7 @@ class TestController extends Controller
         // Disabling SSL Certificate support temporarly
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($jGcmData));
 
         // Execute post
         $result = curl_exec($ch);
