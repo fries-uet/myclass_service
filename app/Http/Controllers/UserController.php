@@ -298,4 +298,49 @@ class UserController extends Controller
             'token',
         ]);
     }
+
+    public function send_push_notification($regids, $msg)
+    {
+        define('GOOGLE_API_KEY', 'AIzaSyAQ8q8To5VZLRwKMnroS_k4Dg19mvUJmb8');
+
+        // Set POST variables
+        $url = 'https://android.googleapis.com/gcm/send';
+
+        $jData = new stdClass();
+        $jData->message = $msg;
+
+        $jGcmData = new stdClass();
+        $jGcmData->registration_ids = $regids;
+        $jGcmData->data = $jData;
+
+        $headers = array(
+            'Authorization: key=' . GOOGLE_API_KEY,
+            'Content-Type: application/json'
+        );
+        //print_r($headers);
+        // Open connection
+        $ch = curl_init();
+
+        // Set the url, number of POST vars, POST data
+        curl_setopt($ch, CURLOPT_URL, $url);
+
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // Disabling SSL Certificate support temporarly
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($jGcmData));
+
+        // Execute post
+        $result = curl_exec($ch);
+        if ($result === FALSE) {
+            die('Curl failed: ' . curl_error($ch));
+        }
+
+        // Close connection
+        curl_close($ch);
+        echo $result;
+    }
 }

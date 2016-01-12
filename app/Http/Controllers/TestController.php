@@ -305,19 +305,11 @@ class TestController extends Controller
         // Set POST variables
         $url = 'https://android.googleapis.com/gcm/send';
 
-//        $fields = array(
-//            'data' => array(
-//                'to' => '/topics/global',
-//                'message' => $message
-//            ),
-//        );
-
         $jData = new stdClass();
         $jData->message = $message;
 
         $jGcmData = new stdClass();
-        $jGcmData->to = $regID;
-//        $jGcmData->registration_ids = (object)array($regID);
+        $jGcmData->registration_ids = array($regID);
         $jGcmData->data = $jData;
 
         $headers = array(
