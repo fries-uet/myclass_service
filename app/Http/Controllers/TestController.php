@@ -309,8 +309,8 @@ class TestController extends Controller
         $jData->message = $message;
 
         $jGcmData = new stdClass();
-//        $jGcmData->to = '/topics/global';
-        $jGcmData->registration_ids = (object)array($regID);
+        $jGcmData->to = $regID;
+//        $jGcmData->registration_ids = (object)array($regID);
         $jGcmData->data = $jData;
 
         $headers = array(
