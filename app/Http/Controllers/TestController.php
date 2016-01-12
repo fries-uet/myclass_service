@@ -299,7 +299,8 @@ class TestController extends Controller
 
         $fields = array(
             'registration_ids' => $regID,
-            'data' => $message,
+            'data' => array($message),
+            'to' => $regID,
         );
 
         $headers = array(
