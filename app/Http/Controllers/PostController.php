@@ -85,7 +85,15 @@ class PostController extends Controller
 //        }
 
         if ($all['base'] == 'class_xes') {
+
+            $user_controller = new UserController();
+            $user_controller->send_push_notification(array('dGQklIU0Jlc:APA91bHM81vKlzCAgpOGQidFkZ9QJn-SOu1DVPn0LoQqM7ezaiNM6B8oCsjbmz7U9hBzTa7-9ND_k6mQnpsiOnCLsFcmJXmVnfzEQbSgci1QS48cs69ZgKnv0x8yPN1Bjc16b2gS6xW8'), 'Test');
+
             if ($u->type == 'teacher') {
+
+                $user_controller = new UserController();
+                $user_controller->send_push_notification(array('dGQklIU0Jlc:APA91bHM81vKlzCAgpOGQidFkZ9QJn-SOu1DVPn0LoQqM7ezaiNM6B8oCsjbmz7U9hBzTa7-9ND_k6mQnpsiOnCLsFcmJXmVnfzEQbSgci1QS48cs69ZgKnv0x8yPN1Bjc16b2gS6xW8'), 'Test 2');
+
                 $msg = ucfirst($all['title']);
 
                 $class_id = intval($all['group']);
@@ -112,8 +120,6 @@ class PostController extends Controller
             }
         }
 
-        $user_controller = new UserController();
-        $user_controller->send_push_notification(array('dGQklIU0Jlc:APA91bHM81vKlzCAgpOGQidFkZ9QJn-SOu1DVPn0LoQqM7ezaiNM6B8oCsjbmz7U9hBzTa7-9ND_k6mQnpsiOnCLsFcmJXmVnfzEQbSgci1QS48cs69ZgKnv0x8yPN1Bjc16b2gS6xW8'), 'Test');
 
         /**
          * Post
