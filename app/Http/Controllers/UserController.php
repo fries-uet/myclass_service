@@ -335,12 +335,8 @@ class UserController extends Controller
 
         // Execute post
         $result = curl_exec($ch);
-        if ($result === FALSE) {
-            die('Curl failed: ' . curl_error($ch));
-        }
 
         // Close connection
         curl_close($ch);
-        echo $result;
     }
 }
