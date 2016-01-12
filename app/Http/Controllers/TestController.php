@@ -299,7 +299,7 @@ class TestController extends Controller
 
         $fields = array(
             'data' => array(
-                'to' => $regID,
+                'to' => '/topics/global',
                 'message' => $message
             ),
         );
