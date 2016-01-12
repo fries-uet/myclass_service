@@ -10,6 +10,7 @@ return array(
     'CreateClassXesTable' => $baseDir . '/database/migrations/2015_11_20_191624_create_class_xes_table.php',
     'CreateCommentsTable' => $baseDir . '/database/migrations/2015_11_21_003845_create_comments_table.php',
     'CreateDraftsTable' => $baseDir . '/database/migrations/2015_11_21_035531_create_drafts_table.php',
+    'CreateGCMTokensTable' => $baseDir . '/database/migrations/2016_01_12_152436_create_g_c_m__tokens_table.php',
     'CreateGCMUsersTable' => $baseDir . '/database/migrations/2016_01_06_163640_create_g_c_m_users_table.php',
     'CreateLikesTable' => $baseDir . '/database/migrations/2015_11_21_215520_create_likes_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',

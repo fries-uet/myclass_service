@@ -54,6 +54,11 @@ Route::group(
     Route::any('login', 'UserController@login');
 
     /**
+     * Login token
+     */
+    Route::any('login_token', 'UserController@login_token');
+
+    /**
      * Register
      */
     Route::any('register', 'UserController@register');

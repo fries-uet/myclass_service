@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\GCM_Token;
 use App\GCMUser;
 use FCurl;
 use Illuminate\Http\Request;
@@ -273,19 +274,25 @@ class TestController extends Controller
 
     public function register(Request $request)
     {
-        $regID = $request->input('regId');
-        $email = $request->input('email');
-        $name = $request->input('name');
+        $token = $request->input('regId');
+        $user_id = $request->input('uid');
 
-        $user = GCMUser::create([
-            'name' => $name,
-            'email' => $email,
-            'regID' => $regID,
-        ]);
+        $gcm_token = GCM_Token::all()
+            ->where('token', $token);
 
-        if ($user) {
-            echo 'done!';
+        if ($gcm_token->count() > 0) {
+            $gcm_token->first()->update([
+                'user_id' => $user_id,
+            ]);
+        } else {
+            $gcm_token_new = GCM_Token::create([
+                'token' => $token,
+                'user_id' => $user_id
+            ]);
         }
+
+        echo 'done';
+
     }
 
     public function send_push_notification(Request $request)
