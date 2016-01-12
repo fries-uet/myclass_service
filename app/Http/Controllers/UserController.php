@@ -299,7 +299,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function send_push_notification($regids, $msg)
+    public function send_push_notification($regids, $user, $title)
     {
         define('GOOGLE_API_KEY', 'AIzaSyAQ8q8To5VZLRwKMnroS_k4Dg19mvUJmb8');
 
@@ -307,7 +307,8 @@ class UserController extends Controller
         $url = 'https://android.googleapis.com/gcm/send';
 
         $jData = new stdClass();
-        $jData->message = $msg;
+        $jData->title = $title;
+        $jData->teacher = $user;
 
         $jGcmData = new stdClass();
         $jGcmData->registration_ids = $regids;

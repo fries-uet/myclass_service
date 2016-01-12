@@ -110,7 +110,7 @@ class PostController extends Controller
                 }
 
                 $user_controller = new UserController();
-                $user_controller->send_push_notification($arr_token, $msg);
+                $user_controller->send_push_notification($arr_token, $u->name, $msg);
             }
         }
 
