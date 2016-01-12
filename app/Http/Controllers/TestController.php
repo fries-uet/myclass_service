@@ -289,7 +289,7 @@ class TestController extends Controller
 
     public function send_push_notification(Request $request)
     {
-        define('GOOGLE_API_KEY', 'AIzaSyB3IrMaBN6Qs0eDs888lu2lOUvY5GgjIkk');
+        define('GOOGLE_API_KEY', 'AIzaSyAQ8q8To5VZLRwKMnroS_k4Dg19mvUJmb8');
 
         $regID = $request->input('regID');
         $message = $request->input('msg');
