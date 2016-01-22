@@ -49,8 +49,6 @@ class ScoreUET extends Controller
                         $user = s_user::all()
                             ->where('id', $user_id)->first();
                         if ($user != null) {
-
-                            dd($user);
                             $email = $user->email;
 
                             $mailController = new MailController();
