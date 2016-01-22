@@ -50,7 +50,7 @@ class ScoreUET extends Controller
                             ->where('id', $user_id)->first();
                         if (!$user) {
 
-                            dd('ok');
+                            dd($user);
                             $email = $user->email;
 
                             $mailController = new MailController();
