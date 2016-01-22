@@ -41,8 +41,6 @@ class ScoreUET extends Controller
                 if ($s_l->count() > 0) {
                     $arrTemp = $s_l->toArray();
 
-                    var_dump($arrTemp);
-
                     foreach ($arrTemp as $i => $a) {
                         $id = intval($a['id']);
                         $user_id = intval($a['user_id']);
@@ -50,17 +48,20 @@ class ScoreUET extends Controller
 
                         $user = s_user::all()
                             ->where('id', $user_id)->first();
-                        dd($user);
-                        $email = $user->email;
+                        if (!$user) {
 
-                        $mailController = new MailController();
-                        $send = $mailController->sendMailResultExam($email, $subject_name, $href);
+                            dd('ok');
+                            $email = $user->email;
 
-                        if ($send) {
-                            $s_l_update = $s_l->where('id', $id)->first();
-                            $s_l_update->update([
-                                'sent' => 1
-                            ]);
+                            $mailController = new MailController();
+                            $send = $mailController->sendMailResultExam($email, $subject_name, $href);
+
+                            if ($send) {
+                                $s_l_update = $s_l->where('id', $id)->first();
+                                $s_l_update->update([
+                                    'sent' => 1
+                                ]);
+                            }
                         }
                     }
                 }
