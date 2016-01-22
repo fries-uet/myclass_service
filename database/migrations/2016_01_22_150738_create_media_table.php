@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGCMUsersTable extends Migration
+class CreateMediaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,11 @@ class CreateGCMUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('g_c_m_users', function (Blueprint $table) {
+        Schema::create('media', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('regID');
-            $table->string('name');
-            $table->string('email');
-            $table->string('avatar');
+            $table->string('path');
+            $table->string('type');
 
             $table->timestamps();
         });
@@ -31,6 +29,6 @@ class CreateGCMUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('g_c_m_users');
+        Schema::drop('media');
     }
 }

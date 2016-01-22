@@ -13,6 +13,7 @@ return array(
     'CreateGCMTokensTable' => $baseDir . '/database/migrations/2016_01_12_152436_create_g_c_m__tokens_table.php',
     'CreateGCMUsersTable' => $baseDir . '/database/migrations/2016_01_06_163640_create_g_c_m_users_table.php',
     'CreateLikesTable' => $baseDir . '/database/migrations/2015_11_21_215520_create_likes_table.php',
+    'CreateMediaTable' => $baseDir . '/database/migrations/2016_01_22_150738_create_media_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePostsTable' => $baseDir . '/database/migrations/2015_11_20_230223_create_posts_table.php',
     'CreateRegSubjectsTable' => $baseDir . '/database/migrations/2015_12_02_114252_create_reg_subjects_table.php',

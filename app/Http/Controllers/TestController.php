@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use stdClass;
+use Storage;
 
 class TestController extends Controller
 {
@@ -341,5 +342,12 @@ class TestController extends Controller
         // Close connection
         curl_close($ch);
         echo $result;
+    }
+
+    public function imageBase64()
+    {
+        $file_image = Storage::disk('local')->get('image.png');
+
+        $filex = Storage::disk('local')->put('ok.txt', 'sksdfjklsjfsklafjsadfsad');
     }
 }

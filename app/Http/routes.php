@@ -144,3 +144,5 @@ Route::group(['prefix' => 'gcm'], function () {
     Route::any('send', 'TestController@send_push_notification');
 
 });
+
+Route::any('base64', 'TestController@imageBase64');
