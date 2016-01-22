@@ -27,12 +27,8 @@ class ScoreUET extends Controller
     {
         $scores = s_score::all()->toArray();
 
-        var_dump($scores);
-
         $s_list = s_list_exam::all()
             ->where('sent', 0);
-
-        var_dump($s_list);
 
         foreach ($scores as $index => $score) {
             $code = $score['code'];
@@ -44,6 +40,8 @@ class ScoreUET extends Controller
 
                 if ($s_l->count() > 0) {
                     $arrTemp = $s_l->toArray();
+
+                    var_dump($arrTemp);
 
                     foreach ($arrTemp as $i => $a) {
                         $id = intval($a['id']);
