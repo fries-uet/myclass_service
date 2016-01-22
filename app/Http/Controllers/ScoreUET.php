@@ -27,8 +27,12 @@ class ScoreUET extends Controller
     {
         $scores = s_score::all()->toArray();
 
+        var_dump($scores);
+
         $s_list = s_list_exam::all()
             ->where('sent', 0);
+
+        var_dump($s_list);
 
         foreach ($scores as $index => $score) {
             $code = $score['code'];
