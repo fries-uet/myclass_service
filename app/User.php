@@ -29,6 +29,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     protected $fillable
         = [
+            'id',
             'name',
             'email',
             'password',
@@ -54,9 +55,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public static function getInfoById($id)
     {
         var_dump($id);
-        $users = User::all()->where('id', 173);
+        $users = User::all();
 
         var_dump($users);
+        die();
 
         if ($users->count() == 0) {
             return null;
