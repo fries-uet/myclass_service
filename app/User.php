@@ -54,7 +54,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public static function getInfoById($id)
     {
-        $users = User::find(intval(173));
+        $users = User::where('id', intval(173));
 
         if ($users->count() == 0) {
             return null;
