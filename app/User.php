@@ -54,8 +54,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public static function getInfoById($id)
     {
-        var_dump($id);
-        $users = User::all()->where('id', '173');
+        $users = User::find(173);
 
         var_dump($users);
         die();
