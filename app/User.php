@@ -11,70 +11,74 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use stdClass;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract {
-	use Authenticatable, Authorizable, CanResetPassword;
+class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
+{
+    use Authenticatable, Authorizable, CanResetPassword;
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'users';
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
 
-	/**
-	 * The attributes that are mass assignable.
-	 *
-	 * @var array
-	 */
-	protected $fillable
-		= [
-			'name',
-			'email',
-			'password',
-			'msv',
-			'type',
-			'class'
-		];
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable
+        = [
+            'name',
+            'email',
+            'password',
+            'msv',
+            'type',
+            'class'
+        ];
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
-	protected $hidden = [ 'password', 'remember_token' ];
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = ['password', 'remember_token'];
 
-	/**
-	 * Get user object by id
-	 *
-	 * @param $id
-	 *
-	 * @return null|stdClass
-	 */
-	public static function getInfoById( $id ) {
-		$users = User::all()->where( 'id', intval( $id ) );
+    /**
+     * Get user object by id
+     *
+     * @param $id
+     *
+     * @return null|stdClass
+     */
+    public static function getInfoById($id)
+    {
+        $users = User::all()->where('id', intval($id));
 
-		if ( $users->count() == 0 ) {
-			return null;
-		}
+        var_dump($users);
 
-		$user     = $users->first();
-		$u        = new stdClass();
-		$u->id    = $user->id;
-		$u->name  = $user->name;
-		$u->lop   = ClassX::getClassName( $user->class );
-		$u->email = $user->email;
-		$u->type  = $user->type;
-		if ( $u->type == 'teacher' ) {
-			$u->avatar = '0';
-		} else {
-			$u->avatar = '1';
-		}
-		if ( $u->type == 'student' ) {
-			$u->mssv = $user->msv;
-		} else {
-			$u->mssv = '';
-		}
+        if ($users->count() == 0) {
+            return null;
+        }
 
-		return $u;
-	}
+        $user = $users->first();
+        $u = new stdClass();
+        $u->id = $user->id;
+        $u->name = $user->name;
+        $u->lop = ClassX::getClassName($user->class);
+        $u->email = $user->email;
+        $u->type = $user->type;
+        if ($u->type == 'teacher') {
+            $u->avatar = '0';
+        } else {
+            $u->avatar = '1';
+        }
+        if ($u->type == 'student') {
+            $u->mssv = $user->msv;
+        } else {
+            $u->mssv = '';
+        }
+
+        return $u;
+    }
 }
