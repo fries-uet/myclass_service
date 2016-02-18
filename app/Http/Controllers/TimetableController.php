@@ -74,7 +74,7 @@ class TimetableController extends Controller {
 			}
 		} else {
 
-			$timetable = TimeTable::all()->where( 'user', intval( $user_id ) );
+			$timetable = TimeTable::where( 'user', intval( $user_id ) );
 			if ( $timetable->count() == 0 ) {
 				$response->error     = true;
 				$response->error_msg = 'Bạn chưa đồng bộ thời khóa biểu!';

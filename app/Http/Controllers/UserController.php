@@ -258,7 +258,7 @@ class UserController extends Controller
         /**
          * Tìm user bằng email
          */
-        $users = DB::table('users')->where('email', $all['email']);
+        $users = User::where('email', $all['email']);
 
         if ($users->count() == 0) {
             $response->error = true;
