@@ -78,7 +78,6 @@ class TimetableController extends Controller
 
             $timetable = TimeTable::all()->where('user', intval($user_id));
 
-            var_dump($timetable);
             if ($timetable->count() == 0) {
                 $response->error = true;
                 $response->error_msg = 'Bạn chưa đồng bộ thời khóa biểu!';
@@ -108,8 +107,7 @@ class TimetableController extends Controller
                 $item_s->soSV = $subClassSubject->soSV;
                 $item_s->nhom = $subClassSubject->nhom;
                 $item_s->address = $subClassSubject->address;
-                $item_s->teacher
-                    = User::getInfoById($subClassSubject->teacher);
+                $item_s->teacher = User::getInfoById($subClassSubject->teacher);
 
                 $arr_items[] = $item_s;
             }
