@@ -222,7 +222,7 @@ class UserController extends Controller
 
     public function updateAvatar(Request $request)
     {
-        $user_id = $request->get('id');
+        $user_id = $request->get('uid');
         $avatar = $request->get('avatar');
 
         /**
