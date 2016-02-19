@@ -239,6 +239,8 @@ class UserController extends Controller
         }
 
         $user = $users->first();
+
+        dd($user);
         $msv = $user->msv;
 
         if (isset($avatar) || $avatar == '') {
