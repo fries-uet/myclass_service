@@ -261,9 +261,7 @@ class UserController extends Controller
             'type' => 'jpg'
         ]);
 
-        dd($media);
-
-        return null;
+        return response()->json($media);
     }
 
     /**
