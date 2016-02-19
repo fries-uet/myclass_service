@@ -9,10 +9,12 @@ use App\Media;
 use App\SubClassSubject;
 use App\TimeTable;
 use App\User;
+use File;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
+use Response;
 use stdClass;
 use Storage;
 
@@ -253,15 +255,38 @@ class UserController extends Controller
         $file_avatar = base64_decode($avatar);
         $name_file_avatar = $msv . '.jpg';
         $dir_uploads = 'uploads';
+
+        $exists = Storage::disk('local')->exists($dir_uploads . '/' . $name_file_avatar);
         Storage::disk('local')->put($dir_uploads . '/' . $name_file_avatar, $file_avatar);
 
-        $media = Media::create([
-            'name' => $name_file_avatar,
-            'dir' => 'uploads',
-            'type' => 'jpg'
-        ]);
+        if (!$exists) {
+            $media = Media::create([
+                'name' => $name_file_avatar,
+                'dir' => 'uploads',
+                'type' => 'jpg'
+            ]);
+        }
 
         return response()->json($media);
+    }
+
+    public function getAvatar($msv)
+    {
+        $file_avatar = $msv . '.jpg';
+        $dir_uploads = 'uploads';
+
+        $exists = Storage::disk('local')->exists($dir_uploads . '/' . $file_avatar);
+
+        if (!$exists) {
+            abort(404);
+        }
+
+        $file = $disk = Storage::disk('local')->get($dir_uploads . '/' . $file_avatar);
+
+        $response = Response::make($file, 200);
+        $response->header('Content-Type', 'image/jpeg');
+
+        return $response;
     }
 
     /**

@@ -72,6 +72,11 @@ Route::group(
      * Update avartar
      */
     Route::any('updateAvatar', 'UserController@updateAvatar');
+
+    Route::get('avatar/{msv}', [
+        'as' => 'getAvatar',
+        'uses' => 'UserController@getAvatar'
+    ]);
 }
 );
 

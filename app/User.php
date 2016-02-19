@@ -72,9 +72,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         $u->email = $user->email;
         $u->type = $user->type;
         if ($u->type == 'teacher') {
-            $u->avatar = $storagePath . ('ok.txt');
+            $u->avatar = route('getAvatar', $user->msv);
         } else {
-            $u->avatar = $storagePath . ('ok.txt');
+            $u->avatar = route('getAvatar', $user->msv);
         }
         if ($u->type == 'student') {
             $u->mssv = $user->msv;
