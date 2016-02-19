@@ -228,6 +228,7 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
+        $error = true;
         onlyAllowPostRequest($request);
 
         $all = $request->only([

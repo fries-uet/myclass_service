@@ -9,7 +9,8 @@ class Media extends Model
     protected $table = 'media';
 
     protected $fillable = [
-        'path',
+        'dir',
+        'name',
         'type',
     ];
 }

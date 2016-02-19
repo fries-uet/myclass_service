@@ -35,7 +35,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             'password',
             'msv',
             'type',
-            'class'
+            'class',
+            'avatar'
         ];
 
     /**
