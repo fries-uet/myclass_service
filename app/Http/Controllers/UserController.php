@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use stdClass;
+use Storage;
 
 class UserController extends Controller
 {
@@ -219,6 +220,40 @@ class UserController extends Controller
         return response()->json($response);
     }
 
+    public function updateAvatar(Request $request)
+    {
+        $user_id = $request->get('id');
+        $avatar = $request->get('avatar');
+
+        /**
+         * Dữ liệu trả về
+         */
+        $response = new stdClass();
+
+        $users = User::all()->where('id', intval($user_id));
+        if ($users->count() < 0) {//Không tồn tại người dùng
+            $response->error = true;
+            $response->error_msg = 'Không tồn tại người dùng này';
+
+            return response()->json($response);
+        }
+
+        $user = $users->first();
+        $msv = $user->msv;
+
+        if (isset($avatar) || $avatar == '') {
+            $response->error = true;
+            $response->error_msg = 'Ava rỗng!';
+
+            return response()->json($response);
+        }
+
+        $file_avatar = base64_decode($avatar);
+        Storage::disk('local')->put($msv . '.jpg', $file_avatar);
+
+        return null;
+    }
+
     /**
      * Update information user
      *
@@ -236,6 +271,7 @@ class UserController extends Controller
             'name',
             'mssv',
             'lop',
+            'avartar'
         ]);
 
         /**

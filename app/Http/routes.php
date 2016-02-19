@@ -67,6 +67,11 @@ Route::group(
      * Update
      */
     Route::any('update', 'UserController@update');
+
+    /**
+     * Update avartar
+     */
+    Route::any('updateAvatar', 'UserController@updateAvatar');
 }
 );
 

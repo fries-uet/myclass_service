@@ -10,6 +10,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use stdClass;
+use Storage;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
@@ -61,6 +62,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             return null;
         }
 
+        $storagePath = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
+
         $user = $users->first();
         $u = new stdClass();
         $u->id = $user->id;
@@ -69,9 +72,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         $u->email = $user->email;
         $u->type = $user->type;
         if ($u->type == 'teacher') {
-            $u->avatar = '0';
+            $u->avatar = $storagePath . ('ok.txt');
         } else {
-            $u->avatar = '1';
+            $u->avatar = $storagePath . ('ok.txt');
         }
         if ($u->type == 'student') {
             $u->mssv = $user->msv;
