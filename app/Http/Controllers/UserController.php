@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\ClassSubject;
 use App\ClassX;
 use App\GCM_Token;
+use App\Media;
 use App\SubClassSubject;
 use App\TimeTable;
 use App\User;
@@ -250,7 +251,17 @@ class UserController extends Controller
         }
 
         $file_avatar = base64_decode($avatar);
-        Storage::disk('local')->put($msv . '.jpg', $file_avatar);
+        $name_file_avatar = $msv . '.jpg';
+        $dir_uploads = 'uploads';
+        Storage::disk('local')->put($dir_uploads . '/' . $name_file_avatar, $file_avatar);
+
+        $media = Media::create([
+            'name' => $name_file_avatar,
+            'dir' => 'uploads',
+            'type' => 'jpg'
+        ]);
+
+        dd($media);
 
         return null;
     }
