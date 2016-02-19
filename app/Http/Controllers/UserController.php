@@ -267,7 +267,10 @@ class UserController extends Controller
             ]);
         }
 
-        return response()->json($media);
+        $response->error = false;
+        $response->url = route('getAvatar', $msv);
+
+        return response()->json($response);
     }
 
     public function getAvatar($msv)
