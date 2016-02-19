@@ -242,7 +242,7 @@ class UserController extends Controller
 
         $msv = $user->msv;
 
-        if (isset($avatar) || $avatar == '') {
+        if (!isset($avatar) || $avatar == '') {
             $response->error = true;
             $response->error_msg = 'Ava rỗng!';
 
