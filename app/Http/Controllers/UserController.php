@@ -6,6 +6,7 @@ use App\ClassSubject;
 use App\ClassX;
 use App\GCM_Token;
 use App\Media;
+use App\Post;
 use App\SubClassSubject;
 use App\TimeTable;
 use App\User;
@@ -13,7 +14,7 @@ use File;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use Illuminate\Support\Facades\DB;
+use DB;
 use Response;
 use stdClass;
 use Storage;
@@ -92,6 +93,8 @@ class UserController extends Controller
             return response()->json($response);
         }
 
+        $mail = new MailController();
+
         /**
          * Tìm user đã tồn tại chưa?
          */
@@ -141,7 +144,6 @@ class UserController extends Controller
 
         $activate_code = generate_activate_code();
 
-        $mail = new MailController();
         $mail->sendMailActivateCode($all['email'], $activate_code, $name);
 
         $type = 'student';//Mặc định người dùng đăng ký là sinh viên
@@ -466,11 +468,9 @@ class UserController extends Controller
          * Dữ liệu trả về
          */
         $response = new stdClass();
+        $user_id = intval($user_id);
 
-        $users = User::all()->where('id', intval($user_id));
-
-        var_dump($users);
-        var_dump($users->count());
+        $users = User::all()->where('id', $user_id);
         if ($users->count() == 0) {//Không tồn tại người dùng
             $response->error = true;
             $response->error_msg = 'Không tồn tại người dùng này';
@@ -479,8 +479,15 @@ class UserController extends Controller
         }
 
         $user = $users->first();
+        $class_x_id = intval($user->class);
 
-        dd($user);
+        $class_subjects = DB::table('time_tables')->where('user', $user_id)
+            ->join('sub_class_subjects', 'time_tables.subClass', '=', 'sub_class_subjects.id')
+            ->join('class_subjects', 'class_subjects.id', '=', 'sub_class_subjects.classSubject')
+            ->get();
+
+        dd($class_subjects);
+
 
         return null;
     }
