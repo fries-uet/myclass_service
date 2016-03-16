@@ -498,7 +498,9 @@ class UserController extends Controller
             }
         }
 
-        dd($arr_group);
+        $posts = DB::table('posts')->whereIn('group', $arr_group)->get();
+
+        dd($posts);
 
         return null;
     }
