@@ -462,13 +462,14 @@ class UserController extends Controller
         curl_close($ch);
     }
 
-    public function feed($user_id)
+    public function feed(Request $request)
     {
+        $user_id = $request->get('uid');
+        $user_id = intval($user_id);
         /**
          * Dữ liệu trả về
          */
         $response = new stdClass();
-        $user_id = intval($user_id);
 
         $users = User::all()->where('id', $user_id);
         if ($users->count() == 0) {//Không tồn tại người dùng

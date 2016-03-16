@@ -86,7 +86,7 @@ Route::group(
     /**
      * New feed
      */
-    Route::get('feed/{user}', [
+    Route::post('feed', [
         'as' => 'feed',
         'uses' => 'UserController@feed'
     ]);
