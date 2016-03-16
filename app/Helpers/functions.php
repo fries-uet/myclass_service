@@ -26,6 +26,19 @@ function onlyAllowPostRequest(Request $request)
 }
 
 /**
+ * Generate activate code
+ *
+ * @return string
+ */
+function generate_activate_code()
+{
+    $string = str_random(40);
+    $activate_code = substr(md5($string), 0, 20);
+
+    return $activate_code;
+}
+
+/**
  * Enqueue script
  *
  * @param $uri

@@ -14,7 +14,7 @@ class CreatePostsTable extends Migration {
 			$table->increments( 'id' );
 
 			$table->string( 'title' );
-			$table->string( 'content' );
+			$table->longText( 'content' );
 			$table->integer( 'group' );//Nằm trong lớp nào
 			$table->integer( 'author' );
 			$table->integer( 'like' )->default( 0 );

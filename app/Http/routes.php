@@ -77,8 +77,12 @@ Route::group(
         'as' => 'getAvatar',
         'uses' => 'UserController@getAvatar'
     ]);
-}
-);
+
+    Route::get('activate/{mail}&{activate_code}', [
+        'as' => 'activate_code',
+        'uses' => 'UserController@activate_code'
+    ]);
+});
 
 /**
  * Seed databases

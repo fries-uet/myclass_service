@@ -37,7 +37,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             'msv',
             'type',
             'class',
-            'avatar'
+            'avatar',
+            'activated',
+            'activate_code'
         ];
 
     /**

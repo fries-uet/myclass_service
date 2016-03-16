@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
             $table->integer('class');//Lớp khóa học
             $table->string('type');
             $table->string('password', 60);
+            $table->boolean('activated')->default(0);
+            $table->string('activate_code', 100);
             $table->integer('avatar');
             $table->rememberToken();
 

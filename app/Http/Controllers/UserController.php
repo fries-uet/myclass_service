@@ -20,6 +20,15 @@ use Storage;
 
 class UserController extends Controller
 {
+    public function activate_code($mail, $activate_code)
+    {
+        $str = generate_activate_code();
+        var_dump($activate_code);
+        $x = route('activate_code', array('tutv95@gmail.com', 'asdfsdfsdf'));
+        var_dump($x);
+        return $activate_code;
+    }
+
     /**
      * API Register
      *
@@ -108,6 +117,11 @@ class UserController extends Controller
             $classX_id = $classX->id;
         }
 
+        $activate_code = generate_activate_code();
+
+        $mail = new MailController();
+        $mail->sendMailActivateCode($all['email'], $activate_code, $name);
+
         $type = 'student';//Mặc định người dùng đăng ký là sinh viên
         $user = User::create([
             'email' => $all['email'],
@@ -116,6 +130,7 @@ class UserController extends Controller
             'class' => $classX_id,
             'type' => $type,
             'name' => $name,
+            'activate_code' => $activate_code
         ]);
 
         /**

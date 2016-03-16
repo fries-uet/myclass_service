@@ -173,6 +173,8 @@ class FriesMail
 
         $re = json_decode($response);
 
+//        dd($re);
+
         if ($re->message == 'success') {
             return true;
         }

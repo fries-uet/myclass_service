@@ -62,4 +62,22 @@ class MailController extends Controller
 
         return $this->sendMail($subject, $content, [$email]);
     }
+
+    public function sendMailActivateCode($email, $activate_code, $name)
+    {
+        $link_confirm = route('activate_code', array($email, $activate_code));
+
+        $subject = 'Xác nhận tài khoản';
+
+        $content = 'Chào ' . $name . ',<br>' . PHP_EOL;
+        $content .= 'Chỉ còn 1 bước nữa là xong. Hãy click vào link dưới đây để hoàn tất.' . '<br>' . PHP_EOL;
+        $content .= 'Cảm ơn bạn đã tin tưởng và sử dụng dịch vụ của bọn mình.' . '<br>' . PHP_EOL;
+        $content .= 'Link: ' . $link_confirm . '<br><br>' . PHP_EOL . PHP_EOL;
+        $content .= 'Thân chào và quyết thắng,<br>' . PHP_EOL . 'Fries Team.' . PHP_EOL;
+        $content .= '<div style="color: #eeeeee; padding-top: 20px;">----------------------------------------------------<br>' . PHP_EOL;
+        $content .= 'Mọi ý kiến đóng góp bạn có thể gửi cho bọn mình tại email này.<br> ' . PHP_EOL . 'Cảm ơn bạn.';
+        $content .= '</div>';
+
+        return $this->sendMail($subject, $content, [$email]);
+    }
 }
