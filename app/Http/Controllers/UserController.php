@@ -101,6 +101,20 @@ class UserController extends Controller
         $user = User::all()->where('email', $all['email']);
 
         if ($user->count() > 0) {//Đã tồn tại người dùng
+            $u = $user->first();
+
+            // Not active email
+            if ((bool)$u->activated === false) {
+                $response->error = false;
+                $response->uid = $u->id;
+                $response->user = User::getInfoById($u->id);
+
+                $mail->sendMailActivateCode($u->email, $u->activate_code, $u->name);
+
+                return response()->json($response);
+            }
+
+
             $response->error = true;
             $response->error_msg = 'Đã tồn tại người dùng với email ' . $all['email'];
 
