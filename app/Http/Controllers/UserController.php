@@ -44,9 +44,7 @@ class UserController extends Controller
             return response()->json($response);
         }
 
-        $updated = $users->update([
-            'activated' => 1,
-        ]);
+        $updated = User::where('email', $mail)->update(['activated' => 1]);
 
         $response->activated = $updated;
 
