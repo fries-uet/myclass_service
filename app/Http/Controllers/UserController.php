@@ -498,7 +498,7 @@ class UserController extends Controller
             }
         }
 
-        $posts = DB::table('posts')->whereIn('group', $arr_group)->orderBy('created_at')->get();
+        $posts = DB::table('posts')->whereIn('group', $arr_group)->orderBy('updated_at', 'DESC')->get();
 
         dd($posts);
 
