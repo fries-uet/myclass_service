@@ -71,7 +71,6 @@ class MailController extends Controller
 
         $content = 'Chào ' . $name . ',<br>' . PHP_EOL;
         $content .= 'Chỉ còn 1 bước nữa là xong. Hãy click vào link dưới đây để hoàn tất.' . '<br>' . PHP_EOL;
-        $content .= 'Cảm ơn bạn đã tin tưởng và sử dụng dịch vụ của bọn mình.' . '<br>' . PHP_EOL;
         $content .= 'Link: ' . $link_confirm . '<br><br>' . PHP_EOL . PHP_EOL;
         $content .= 'Thân chào và quyết thắng,<br>' . PHP_EOL . 'Fries Team.' . PHP_EOL;
         $content .= '<div style="color: #eeeeee; padding-top: 20px;">----------------------------------------------------<br>' . PHP_EOL;

@@ -22,11 +22,35 @@ class UserController extends Controller
 {
     public function activate_code($mail, $activate_code)
     {
-        $str = generate_activate_code();
-        var_dump($activate_code);
-        $x = route('activate_code', array('tutv95@gmail.com', 'asdfsdfsdf'));
-        var_dump($x);
-        return $activate_code;
+        /**
+         * Dữ liệu trả về
+         */
+        $response = new stdClass();
+
+        $users = User::all()->where('email', $mail);
+        if ($users->count() < 0) {//Không tồn tại người dùng
+            $response->error = true;
+            $response->error_msg = 'Không tồn tại người dùng này';
+
+            return response()->json($response);
+        }
+
+        $user = $users->first();
+        $activate_code_ = $user->activate_code;
+        if ($activate_code_ != $activate_code) {
+            $response->error = true;
+            $response->error_msg = 'Mã xác nhận chưa đúng';
+
+            return response()->json($response);
+        }
+
+        $updated = $users->update([
+            'activated' => 1,
+        ]);
+
+        $response->activated = $updated;
+
+        return response()->json($response);
     }
 
     /**
