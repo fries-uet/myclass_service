@@ -249,6 +249,13 @@ class UserController extends Controller
             return response()->json($response);
         }
 
+        if ((boolean)$user->getAttribute('activated') == false) {//Chưa kích hoạt
+            $response->error = true;
+            $response->error_msg = 'Bạn chưa xác thực tài khoản!';
+
+            return response()->json($response);
+        }
+
         $response->error = false;
         $response->uid = $user->getAttribute('id');
         /**
