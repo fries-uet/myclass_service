@@ -468,7 +468,7 @@ class UserController extends Controller
         $response = new stdClass();
 
         $users = User::all()->where('id', $user_id);
-        if ($users->count() < 0) {//Không tồn tại người dùng
+        if ($users->count() == 0) {//Không tồn tại người dùng
             $response->error = true;
             $response->error_msg = 'Không tồn tại người dùng này';
 
