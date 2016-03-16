@@ -481,14 +481,24 @@ class UserController extends Controller
         $user = $users->first();
         $class_x_id = intval($user->class);
 
+        // Array ID groups which user attend
+        $arr_group = array();
+        $arr_group[] = $class_x_id;
+
         $class_subjects = DB::table('time_tables')->where('user', $user_id)
             ->join('sub_class_subjects', 'time_tables.subClass', '=', 'sub_class_subjects.id')
             ->join('class_subjects', 'class_subjects.id', '=', 'sub_class_subjects.classSubject')
             ->groupBy('classSubject')
             ->get();
 
-        dd($class_subjects);
 
+        if (count($class_subjects) > 0) {
+            foreach ($class_subjects as $index => $c) {
+                $arr_group[] = intval($c->classSubject);
+            }
+        }
+
+        dd($arr_group);
 
         return null;
     }
