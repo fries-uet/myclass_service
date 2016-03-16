@@ -459,4 +459,26 @@ class UserController extends Controller
         // Close connection
         curl_close($ch);
     }
+
+    public function feed($user_id)
+    {
+        /**
+         * Dữ liệu trả về
+         */
+        $response = new stdClass();
+
+        $users = User::where('id', $user_id);
+        if ($users->count() < 0) {//Không tồn tại người dùng
+            $response->error = true;
+            $response->error_msg = 'Không tồn tại người dùng này';
+
+            return response()->json($response);
+        }
+
+        $user = $users->first();
+
+        dd($user);
+
+        return null;
+    }
 }

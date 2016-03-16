@@ -82,6 +82,14 @@ Route::group(
         'as' => 'activate_code',
         'uses' => 'UserController@activate_code'
     ]);
+
+    /**
+     * New feed
+     */
+    Route::get('feed/{user}', [
+        'as' => 'feed',
+        'uses' => 'UserController@feed'
+    ]);
 });
 
 /**
