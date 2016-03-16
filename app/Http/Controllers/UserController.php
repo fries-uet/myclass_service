@@ -498,10 +498,23 @@ class UserController extends Controller
             }
         }
 
-        $posts = DB::table('posts')->whereIn('group', $arr_group)->orderBy('updated_at', 'DESC')->get();
+        $posts = DB::table('posts')->whereIn('group', $arr_group)->orderBy('updated_at', 'DESC')->limit(10)->get();
 
-        dd($posts);
+        /**
+         * Danh sách các bài viết
+         */
+        $arrPost = [];
+        foreach ($posts as $index => $post) {
+            /**
+             * Post
+             */
+            $p = Post::getPostInfoById($post->id);
+            $arrPost[] = $p;
+        }
 
-        return null;
+        $response->error = false;
+        $response->posts = $arrPost;
+
+        return response()->json($response);
     }
 }
