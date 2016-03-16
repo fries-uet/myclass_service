@@ -484,6 +484,7 @@ class UserController extends Controller
         $class_subjects = DB::table('time_tables')->where('user', $user_id)
             ->join('sub_class_subjects', 'time_tables.subClass', '=', 'sub_class_subjects.id')
             ->join('class_subjects', 'class_subjects.id', '=', 'sub_class_subjects.classSubject')
+            ->groupBy('classSubject')
             ->get();
 
         dd($class_subjects);
