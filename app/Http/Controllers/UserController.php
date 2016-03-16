@@ -467,7 +467,7 @@ class UserController extends Controller
          */
         $response = new stdClass();
 
-        $users = User::all()->where('id', intval($user_id));
+        $users = User::where('id', intval($user_id));
 
         var_dump($users);
         var_dump($users->count());
