@@ -7,6 +7,7 @@ use App\GCM_Token;
 use App\Post;
 use App\User;
 use DateTimeZone;
+use DB;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -149,7 +150,7 @@ class PostController extends Controller
             }
         }
 
-        $postClassXes = Post::all()->where('base', $base)->where('group', intval($id_classX));
+        $postClassXes = DB::table('posts')->where('group', intval($id_classX))->where('base', $base)->orderBy('updated_at', 'DESC');
         if ($postClassXes->count() == 0) {//Chưa có bài viết nào
             $response->error = true;
             $response->error_msg = 'Chưa có bài viết nào trong lớp!';
@@ -168,8 +169,6 @@ class PostController extends Controller
             $p = Post::getPostInfoById($post->id);
             $arrPost[] = $p;
         }
-
-        $arrPost = array_reverse($arrPost);
 
         $response->error = false;
         $response->posts = $arrPost;
