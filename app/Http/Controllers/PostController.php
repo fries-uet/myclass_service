@@ -150,10 +150,9 @@ class PostController extends Controller
             }
         }
 
-        $postClassXes = DB::table('posts')->where('group', intval($id_classX))->where('base', $base)->orderBy('updated_at', 'DESC');
+        $postClassXes = DB::table('posts')->where('group', intval($id_classX))->where('base', $base)->orderBy('updated_at', 'DESC')->get();
 
-        dd($postClassXes->get());
-        if ($postClassXes->count() == 0) {//Chưa có bài viết nào
+        if (count($postClassXes) == 0) {//Chưa có bài viết nào
             $response->error = true;
             $response->error_msg = 'Chưa có bài viết nào trong lớp!';
 
