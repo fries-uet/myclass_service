@@ -109,7 +109,15 @@ class UserController extends Controller
                 $response->uid = $u->id;
                 $response->user = User::getInfoById($u->id);
 
-                $mail->sendMailActivateCode($u->email, $u->activate_code, $u->name);
+                $send = $mail->sendMailActivateCode($u->email, $u->activate_code, $u->name);
+                if ($send) {
+                    $update = DB::table('users')
+                        ->where('email', $u->email)
+                        ->update([
+                            'password' => md5($all['password'])
+                        ]);
+                    $response->update = $update;
+                }
 
                 return response()->json($response);
             }
