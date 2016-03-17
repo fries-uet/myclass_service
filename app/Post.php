@@ -38,7 +38,7 @@ class Post extends Model
         $p->isIncognito = boolval($post->isIncognito);
         $p->type = $post->type;
         $p->base = $post->base;
-        $date = new Carbon($p->created_at);
+        $date = new Carbon($post->created_at);
         $p->created_at = $date->format('d/m/Y');
         $p->comments = Comment::getCommentsByPostId($post->id);
 
