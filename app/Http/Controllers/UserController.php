@@ -114,7 +114,8 @@ class UserController extends Controller
                     $update = DB::table('users')
                         ->where('email', $u->email)
                         ->update([
-                            'password' => md5($all['password'])
+                            'password' => md5($all['password']),
+                            'msv' => $all['mssv'],
                         ]);
                     $response->update = $update;
                 }
