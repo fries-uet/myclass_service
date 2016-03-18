@@ -48,7 +48,7 @@ class SeedDataController extends Controller
                 if ($class->count() == 0) {
                     $cl = ClassX::create([
                         'name' => $k . $n,
-                        'teacher' => 68,
+                        'teacher' => 2,
                     ]);
                 }
             }
