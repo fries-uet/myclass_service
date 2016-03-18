@@ -21,6 +21,9 @@ class LikeConfirmedController extends Controller
         $post_id = $request->input('id');
         $user_id = $request->input('user');
 
+        $posts = Post::all()->where('id', intval($post_id));
+        $count_like = intval($posts->first()->like);
+
         /**
          * Dữ liệu trả về
          */
@@ -29,28 +32,38 @@ class LikeConfirmedController extends Controller
         $likes = Like::all()->where('user_id', intval($user_id))->where('post_id', intval($post_id));
 
         if ($likes->count() > 0) {
-            $response->error = true;
-            $response->error_msg = 'Bạn đã cảm ơn bài viết này!';
+            $is_like = (bool)$likes->first()->is_like;
+            if (!$is_like) {
+                DB::table('likes')
+                    ->where('user_id', intval($user_id))->where('post_id', intval($post_id))
+                    ->update([
+                        'is_like' => 1,
+                        'updated_at' => Carbon::now(),
+                    ]);
 
-            return response()->json($response);
+                $count_like += 2;
+            } else {
+                $response->error = true;
+                $response->error_msg = 'Bạn đã thích bài viết này!';
+
+                return response()->json($response);
+            }
+        } else {
+            $like = Like::create([
+                'user_id' => $user_id,
+                'post_id' => $post_id,
+                'is_like' => 0
+            ]);
+
+            $count_like++;
         }
-
-        $like = Like::create([
-            'user_id' => $user_id,
-            'post_id' => $post_id,
-        ]);
-
-        $posts = Post::all()->where('id', intval($post_id));
 
         if ($posts->count() == 0) {
             $response->error = true;
-            $response->error_msg = 'Bạn đã thích bài viết này!';
+            $response->error_msg = 'Bài viết không tồn tại!';
 
             return response()->json($response);
         }
-
-        $count_like = intval($posts->first()->like);
-        $count_like++;
 
         $p = DB::table('posts')->where('id', intval($post_id))->update([
             'like' => $count_like,
