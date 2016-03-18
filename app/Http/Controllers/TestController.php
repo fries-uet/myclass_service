@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\GCM_Token;
 use App\GCMUser;
+use DB;
 use FCurl;
 use Illuminate\Http\Request;
 
@@ -349,5 +350,22 @@ class TestController extends Controller
         $file_image = Storage::disk('local')->get('image.png');
 
         $filex = Storage::disk('local')->put('ok.txt', 'sksdfjklsjfsklafjsadfsad');
+    }
+
+    public function testseed()
+    {
+        DB::table('users')->truncate();
+
+        $user = DB::table('users')->insertGetId([
+            'name' => 'Trần Văn Tú',
+            'msv' => '13020499',
+            'class' => '1',
+            'type' => 'student',
+            'activated' => 1,
+            'email' => 'tutv95@gmail.com',
+            'password' => md5('123456')
+        ]);
+
+        dd($user);
     }
 }
