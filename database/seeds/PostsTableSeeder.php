@@ -12,10 +12,7 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->truncate();
-
         $user_id = 1;
-
         $teacher_id = 2;
 
         $post = DB::table('posts')->insert([
