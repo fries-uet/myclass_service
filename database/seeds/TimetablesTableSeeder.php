@@ -30,6 +30,8 @@ class TimetablesTableSeeder extends Seeder
             ->where('email', 'tutv_58@vnu.edu.vn')
             ->get();
 
+        dd($user);
+
         /**
          * Get timetable UET
          */
