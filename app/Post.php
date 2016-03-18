@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use DB;
 use Illuminate\Database\Eloquent\Model;
 use stdClass;
 
@@ -22,10 +23,17 @@ class Post extends Model
 
     public static function getPostInfoById($id)
     {
-        $posts = Post::all()->where('id', intval($id));
+        $id = intval($id);
+        $posts = Post::all()->where('id', ($id));
         if ($posts->count() == 0) {
             return null;
         }
+
+        $likes = DB::table('likes')
+            ->where('post_id', $id)
+            ->get();
+
+        var_dump($likes);
 
         $post = $posts->first();
         $p = new stdClass();

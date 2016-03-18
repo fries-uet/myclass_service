@@ -18,6 +18,7 @@ class CreateLikesTable extends Migration
             $table->integer('post_id');
             $table->integer('user_id');
             $table->boolean('is_like')->default(1);
+            $table->index('post_id');
 
             $table->timestamps();
         });
