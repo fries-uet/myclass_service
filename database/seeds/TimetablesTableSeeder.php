@@ -1,6 +1,11 @@
 <?php
 
+use App\ClassSubject;
+use App\ClassX;
 use App\Http\Controllers\SeedDataController;
+use App\SubClassSubject;
+use App\TimeTable;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class TimetablesTableSeeder extends Seeder
