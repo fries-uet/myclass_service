@@ -44,6 +44,11 @@ Route::group(
     Route::any('like', 'LikeConfirmedController@like');
 
     /**
+     * Dislike
+     */
+    Route::any('dislike', 'LikeConfirmedController@dislike');
+
+    /**
      * Vote
      */
     Route::any('vote', 'LikeConfirmedController@vote');
