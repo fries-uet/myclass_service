@@ -33,7 +33,17 @@ class Post extends Model
             ->where('post_id', $id)
             ->get();
 
-        var_dump($likes);
+        $arr_likes = array();
+        $arr_dislikes = array();
+
+        foreach ($likes as $index => $l) {
+            $is_like = (bool)$l->is_like;
+            if ($is_like) {
+                $arr_likes[] = intval($l->user_id);
+            } else {
+                $arr_dislikes[] = intval($l->user_id);
+            }
+        }
 
         $post = $posts->first();
         $p = new stdClass();
@@ -42,6 +52,8 @@ class Post extends Model
         $p->content = $post->content;
         $p->group = $post->group;
         $p->like = intval($post->like);
+        $p->likes = $arr_likes;
+        $p->dislikes = $arr_dislikes;
         $p->author = User::getInfoById($post->author);
         $p->isIncognito = boolval($post->isIncognito);
         $p->type = $post->type;
