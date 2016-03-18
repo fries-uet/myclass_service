@@ -47,6 +47,8 @@ class TimetablesTableSeeder extends Seeder
          */
         $res = getTimeTableUET($user->msv);
 
+        dd($res);
+
         /**
          * Dữ liệu trả về
          */
