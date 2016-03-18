@@ -14,11 +14,11 @@ class PostsTableSeeder extends Seeder
     {
         $user = DB::table('users')
             ->where('email', 'tutv_58@vnu.edu.vn')->get();
-
         $user_id = intval($user->id);
 
-        dd($user_id);
-        $teacher_id = 2;
+        $user_t = DB::table('users')
+            ->where('email', 'khanhtv@vnu.edu.vn')->get();
+        $teacher_id = intval($user_t->id);
 
         $post = DB::table('posts')->insert([
             'title' => 'Tốc độ môn học',

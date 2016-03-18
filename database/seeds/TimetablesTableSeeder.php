@@ -19,27 +19,15 @@ class TimetablesTableSeeder extends Seeder
     {
         $t = new SeedDataController();
 
-        $t->seedDataClassX_es();
-        $t->seedTimetable();
-        $t->seedSubject();
-        $t->seedClassSubject();
-        $t->createTeacherUser();
-        $t->seedSubClassSubject();
-
-        $user_id = DB::table('users')->insertGetId([
-            'name' => 'Trần Văn Tú',
-            'msv' => '13020499',
-            'class' => 6,
-            'type' => 'student',
-            'activated' => 1,
-            'email' => 'tutv_58@vnu.edu.vn',
-            'password' => md5('123456'),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+//        $t->seedDataClassX_es();
+//        $t->seedTimetable();
+//        $t->seedSubject();
+//        $t->seedClassSubject();
+//        $t->createTeacherUser();
+//        $t->seedSubClassSubject();
 
         $user = DB::table('users')
-            ->where('id', intval($user_id))
+            ->where('email', 'tutv_58@vnu.edu.vn')
             ->get();
 
         /**
