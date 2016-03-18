@@ -34,6 +34,8 @@ class UsersTableSeeder extends Seeder
             ->where('id', intval($user_id))
             ->get();
 
+        dd($user);
+
         /**
          * Get timetable UET
          */
