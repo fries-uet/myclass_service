@@ -16,6 +16,8 @@ class PostsTableSeeder extends Seeder
             ->where('email', 'tutv_58@vnu.edu.vn')->get();
 
         $user_id = intval($user->id);
+
+        dd($user_id);
         $teacher_id = 2;
 
         $post = DB::table('posts')->insert([
