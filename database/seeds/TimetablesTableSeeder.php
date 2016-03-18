@@ -19,25 +19,22 @@ class TimetablesTableSeeder extends Seeder
     {
         $t = new SeedDataController();
 
-//        $t->seedDataClassX_es();
-//        $t->seedTimetable();
-//        $t->seedSubject();
-//        $t->seedClassSubject();
-//        $t->createTeacherUser();
-//        $t->seedSubClassSubject();
+        $t->seedDataClassX_es();
+        $t->seedTimetable();
+        $t->seedSubject();
+        $t->seedClassSubject();
+        $t->createTeacherUser();
+        $t->seedSubClassSubject();
 
-        $user = DB::table('users')
+        $users = DB::table('users')
             ->where('email', 'tutv_58@vnu.edu.vn')
             ->get();
-
-        dd($user);
+        $user = $users[0];
 
         /**
          * Get timetable UET
          */
         $res = getTimeTableUET($user->msv);
-
-        dd($res);
 
         /**
          * Dữ liệu trả về
