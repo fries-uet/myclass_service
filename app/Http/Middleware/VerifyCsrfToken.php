@@ -24,6 +24,7 @@ class VerifyCsrfToken extends BaseVerifier
             'v1/getPosts',
             'v1/timetable',
             'v1/like',
+            'v1/dislike',
             'v1/vote',
             'gcm/register',
             'gcm/send',
