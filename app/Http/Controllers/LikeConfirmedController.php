@@ -52,7 +52,7 @@ class LikeConfirmedController extends Controller
             $like = Like::create([
                 'user_id' => $user_id,
                 'post_id' => $post_id,
-                'is_like' => 0
+                'is_like' => 1
             ]);
 
             $count_like++;
