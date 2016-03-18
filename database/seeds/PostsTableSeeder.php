@@ -13,7 +13,7 @@ class PostsTableSeeder extends Seeder
     public function run()
     {
         $user = DB::table('users')
-            ->where('email', 'tutv_58@vfnu.edu.vn')->get();
+            ->where('email', 'tutv_58@vnu.edu.vn')->get();
         $user = $user[0];
         $user_id = intval($user->id);
 
