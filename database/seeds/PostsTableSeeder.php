@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class PostsTableSeeder extends Seeder
@@ -13,32 +14,18 @@ class PostsTableSeeder extends Seeder
     {
         DB::table('users')->truncate();
 
-        $user_id = DB::table('users')->insertGetId([
-            'name' => 'Trần Văn Tú',
-            'msv' => '13020499',
-            'class' => 6,
-            'type' => 'student',
-            'activated' => 1,
-            'email' => 'tutv_58@vnu.edu.vn',
-            'password' => md5('123456')
-        ]);
+        $user_id = 1;
 
-        $teacher_id = DB::table('users')->insertGetId([
-            'name' => 'TS.Tô Văn Khánh',
-            'msv' => '99999999',
-            'class' => 6,
-            'type' => 'teacher',
-            'activated' => 1,
-            'email' => 'khanhtv@vnu.edu.vn',
-            'password' => md5('123456')
-        ]);
+        $teacher_id = 2;
 
         $post = DB::table('posts')->insert([
             'title' => 'Tốc độ môn học',
             'content' => 'Các bạn cần chữa / code mẫu cho những bài nào? Edit vào phần trả lời chung của sinh viên nhé.',
             'author' => $teacher_id,
             'base' => 'class_xes',
-            'group' => 6
+            'group' => 6,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         $post = DB::table('posts')->insert([
@@ -51,7 +38,9 @@ Kết quả chấm bài tập (đã xong b1)
 Bài giảng 03_Arrays.pptx',
             'author' => $teacher_id,
             'base' => 'class_xes',
-            'group' => 6
+            'group' => 6,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         $post = DB::table('posts')->insert([
@@ -61,7 +50,9 @@ https://docs.google.com/document/d/18ljhH1-lVpDCctg7h7iMXXp1OvM27fc9W5XBq8ZFd9o/
 Chỉ cần làm được một bài trong số đó là đủ yêu cầu của tôi cho môn học này.',
             'author' => $teacher_id,
             'base' => 'class_xes',
-            'group' => 6
+            'group' => 6,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         $post = DB::table('posts')->insert([
@@ -71,7 +62,9 @@ phần a bảo khai báo phần một mảng a[2][12];
 nhưng phần b lại bảo bỏ bớt kích thước mảng (số cột hoặc số dòng) vậy thì phải làm sang 1 file cpp khác hay khai báo 1 mảng khác hay xóa mảng cũ đi viết lại.',
             'author' => $user_id,
             'base' => 'class_xes',
-            'group' => 6
+            'group' => 6,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         $post = DB::table('posts')->insert([
@@ -79,7 +72,9 @@ nhưng phần b lại bảo bỏ bớt kích thước mảng (số cột hoặc 
             'content' => 'Em thưa cô là từ giờ hạn nộp bài là 23:59 thứ 7 hàng tuần chứ ạ?',
             'author' => $user_id,
             'base' => 'class_xes',
-            'group' => 6
+            'group' => 6,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         $post = DB::table('posts')->insert([
@@ -88,7 +83,9 @@ nhưng phần b lại bảo bỏ bớt kích thước mảng (số cột hoặc 
 Em cảm ơn cô rất nhiều ạ.',
             'author' => $user_id,
             'base' => 'class_xes',
-            'group' => 6
+            'group' => 6,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         $post = DB::table('posts')->insert([
@@ -96,9 +93,9 @@ Em cảm ơn cô rất nhiều ạ.',
             'content' => 'Thưa cô , em thấy trong trang https://docs.google.com/spreadsheets/d/1SB9Lmb5Wzpn3X4DZu8oHfxgKNWdxp-A4q3YehWgUxaA/edit#gid=0 nick bitbucket của em chưa có. Nên em mong cô thể điền vào giúp em được không ạ? nick bitbucket của em là minh_chau. Em xin cảm ơn!',
             'author' => $user_id,
             'base' => 'class_xes',
-            'group' => 6
+            'group' => 6,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
-
-
     }
 }
