@@ -19,7 +19,7 @@ class PostsTableSeeder extends Seeder
             'class' => 6,
             'type' => 'student',
             'activated' => 1,
-            'email' => 'tutv95@gmail.com',
+            'email' => 'tutv_58@vnu.edu.vn',
             'password' => md5('123456')
         ]);
 
