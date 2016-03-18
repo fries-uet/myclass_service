@@ -16,8 +16,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->truncate();
-
         $teacher_id = DB::table('users')->insertGetId([
             'name' => 'TS.Tô Văn Khánh',
             'msv' => '99999999',
