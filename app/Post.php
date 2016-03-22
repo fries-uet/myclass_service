@@ -51,6 +51,7 @@ class Post extends Model
         $p->title = $post->title;
         $p->content = $post->content;
         $p->group = $post->group;
+        $p->read = false;
         $p->like = intval($post->like);
         $p->likes = $arr_likes;
         $p->dislikes = $arr_dislikes;
