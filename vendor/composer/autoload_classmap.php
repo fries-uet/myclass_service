@@ -16,6 +16,7 @@ return array(
     'CreateMediaTable' => $baseDir . '/database/migrations/2016_01_22_150738_create_media_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePostsTable' => $baseDir . '/database/migrations/2015_11_20_230223_create_posts_table.php',
+    'CreateReadsTable' => $baseDir . '/database/migrations/2016_03_22_172931_create_reads_table.php',
     'CreateRegSubjectsTable' => $baseDir . '/database/migrations/2015_12_02_114252_create_reg_subjects_table.php',
     'CreateSListExamsTable' => $baseDir . '/database/migrations/2015_12_25_110923_create_s_list_exams_table.php',
     'CreateSScoresTable' => $baseDir . '/database/migrations/2015_12_28_013210_create_s_scores_table.php',
